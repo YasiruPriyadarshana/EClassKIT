@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    Button bt_NotesAndPP,bt_Home;
+    Button bt_NotesAndPP,bt_Home,bt_Event,bt_Class;
     private float x1,x2,y1,y2;
     private int changer=0;
     @Override
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         ft.add(R.id.Fragment_place, new Home());
         ft.commit();
 
-        bt_Home=(Button)findViewById(R.id.bt_home);
+
         bt_NotesAndPP=(Button)findViewById(R.id.bt_notes);
         bt_NotesAndPP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,11 +50,30 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
         });
+        bt_Home=(Button)findViewById(R.id.bt_home);
         bt_Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.Fragment_place, new Home());
+                ft.commit();
+            }
+        });
+        bt_Class=(Button)findViewById(R.id.bt_class);
+        bt_Class.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Fragment_place, new Class());
+                ft.commit();
+            }
+        });
+        bt_Event=(Button)findViewById(R.id.bt_event);
+        bt_Event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Fragment_place, new Event());
                 ft.commit();
             }
         });
