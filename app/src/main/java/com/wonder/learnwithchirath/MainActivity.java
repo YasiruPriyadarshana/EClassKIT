@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     Button bt_NotesAndPP,bt_Home;
-
+    private float x1,x2,y1,y2;
+    private int changer=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,5 +80,63 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onTouchEvent(MotionEvent touchEvent){
+        switch (touchEvent.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if(x1>x2){
+                    if (changer == 0) {
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new NotesAndPastPapers());
+                        ft.commit();
+                        changer = 1;
+                    }else if (changer == 1){
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new Event());
+                        ft.commit();
+                        changer = 2;
+                    }else if (changer == 2){
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new Class());
+                        ft.commit();
+                        changer = 3;
+                    }else{
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new Home());
+                        ft.commit();
+                        changer = 0;
+                    }
+                }else if(x1<x2){
+                    if (changer == 0) {
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new Class());
+                        ft.commit();
+                        changer = 3;
+                    }else if (changer == 1){
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new Home());
+                        ft.commit();
+                        changer = 0;
+                    }else if (changer == 2){
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new NotesAndPastPapers());
+                        ft.commit();
+                        changer = 1;
+                    }else {
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.Fragment_place, new Event());
+                        ft.commit();
+                        changer = 2;
+                    }
+                }
+                break;
+        }
+        return false;
     }
 }
