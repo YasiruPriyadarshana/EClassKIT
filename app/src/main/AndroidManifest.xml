@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutUs"></activity>
+        <activity android:name=".Notes"></activity>
+        <activity android:name=".ModelPapers" />
+        <activity android:name=".PastPapers" />
+        <activity android:name=".AboutUs" />
         <activity android:name=".GetInfo" />
         <activity android:name=".Starting">
             <intent-filter>
