@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.wonder.learnwithchirath.MainActivity">
     <item
+        android:id="@+id/action_aboutUs"
+        android:orderInCategory="100"
+        android:title="About Us"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
