@@ -24,8 +24,6 @@ public class Home extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        view.performClick();
-
         return view;
 
     }
