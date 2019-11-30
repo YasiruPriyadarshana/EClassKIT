@@ -1,5 +1,6 @@
 package com.wonder.learnwithchirath;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -7,12 +8,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    Button bt_NotesAndPP,bt_Home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.Fragment_place, new Home());
+        ft.commit();
+
+        bt_Home=(Button)findViewById(R.id.bt_home);
+        bt_NotesAndPP=(Button)findViewById(R.id.bt_notes);
+        bt_NotesAndPP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Fragment_place, new NotesAndPastPapers());
+                ft.commit();
+            }
+        });
+        bt_Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.Fragment_place, new Home());
+                ft.commit();
             }
         });
     }
