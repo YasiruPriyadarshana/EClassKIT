@@ -1,10 +1,10 @@
 package com.wonder.learnwithchirath;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -12,28 +12,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class GetInfo extends AppCompatActivity {
-    boolean skip=false;
+public class User extends AppCompatActivity {
+    private TextView Name,Email,Number,Class;
+    private String[] array;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_info);
-
-
-        if (readFile()){
-            skip=true;
-        }
-        if(!skip) {
-            FragmentTransaction fr = getSupportFragmentManager().beginTransaction();
-            fr.add(R.id.fragmentplace, new FragmentName());
-            fr.commit();
-        }else {
-            Intent intent=new Intent(GetInfo.this,MainActivity.class);
-            startActivity(intent);
-        }
+        setContentView(R.layout.activity_user);
+        Name=(TextView)findViewById(R.id.name_txt);
+        Email=(TextView)findViewById(R.id.email_txt);
+        Number=(TextView)findViewById(R.id.number_txt);
+        Class=(TextView)findViewById(R.id.class_txt);
+        readFile();
     }
-
-    public boolean readFile(){
+    public void readFile(){
         try {
             FileInputStream fileInputStream = openFileInput("apprequirement.txt");
             InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
@@ -41,17 +33,22 @@ public class GetInfo extends AppCompatActivity {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuffer stringBuffer =new StringBuffer();
 
+
             String lines;
-            if ((lines = bufferedReader.readLine()) != null){
-                return true;
+            while ((lines = bufferedReader.readLine()) != null){
+                stringBuffer.append(lines + "\n");
             }
+            String str =stringBuffer.toString();
+            array = str.split(",");
 
-
+            Name.setText(array[0]);
+            Number.setText(array[1]);
+            Email.setText(array[3]);
+            Class.setText(array[2]);
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
         }
-        return false;
     }
 }

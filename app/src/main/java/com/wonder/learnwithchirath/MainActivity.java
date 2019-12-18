@@ -8,6 +8,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MotionEvent;
@@ -15,11 +17,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     Button bt_NotesAndPP,bt_Home,bt_Event,bt_Class;
     private float x1,x2,y1,y2;
     private int changer=0;
+    private long backPressedTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(this,AboutUs.class);
             startActivity(intent);
             return true;
+        }if (id == R.id.action_user) {
+            Intent intent=new Intent(this,User.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -161,5 +169,19 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime +2000 > System.currentTimeMillis()){
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+            return;
+        } else {
+            Toast.makeText(getBaseContext(),"Press again to exit",Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }

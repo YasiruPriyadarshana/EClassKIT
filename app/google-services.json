@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "831902598961",
+    "firebase_url": "https://learn-with-chirath.firebaseio.com",
+    "project_id": "learn-with-chirath",
+    "storage_bucket": "learn-with-chirath.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831902598961:android:06e1c20623169597add210",
+        "android_client_info": {
+          "package_name": "com.wonder.learnwithchirath"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831902598961-v25vcljdbfvhg5s3g31hr76scjeup4mh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wonder.learnwithchirath",
+            "certificate_hash": "31d63016b0f695678ef5a915e4fab3dffe2f518d"
+          }
+        },
+        {
+          "client_id": "831902598961-vn9b6mgnmbvnv108l93ajue7i24fp3go.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAnuvy1pFuvGaI0LKDkB_k1A_AknvpGLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831902598961-vn9b6mgnmbvnv108l93ajue7i24fp3go.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
