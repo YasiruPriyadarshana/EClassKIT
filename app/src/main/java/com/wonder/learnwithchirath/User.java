@@ -43,8 +43,8 @@ public class User extends AppCompatActivity {
 
             Name.setText(array[0]);
             Number.setText(array[1]);
-            Email.setText(array[3]);
-            Class.setText(array[2]);
+            Email.setText(array[2]);
+            Class.setText(array[3]);
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){

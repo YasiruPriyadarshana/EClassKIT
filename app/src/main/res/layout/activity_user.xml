@@ -43,7 +43,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:layout_weight="1"
             android:text="Email"
             android:textStyle="bold" />
 
@@ -90,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
+            android:layout_weight="1"
             android:text="Class"
             android:textStyle="bold" />
 
