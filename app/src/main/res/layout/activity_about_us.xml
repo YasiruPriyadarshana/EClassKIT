@@ -4,12 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AboutUs">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight=".76"
+        android:background="@drawable/button_states"
+        app:srcCompat="@mipmap/chirath" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:text="Chirath Uyanahewa"
+        android:textColor="#342E6D"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
-        android:text="about us" />
+        android:text="Founder & CEO at Learn with Chirath Publications.  Biology and Science teacher at I-Gate College – Colombo  Member at Toastmasters International  Former Teacher at Lyceum International School Panadura  Studied BSc Natural Sciences at Open University of Sri Lanka – (Nawala)  Teacher & Publisher"
+        android:textColor="#3D5E5D"
+        android:textSize="18sp" />
 </LinearLayout>

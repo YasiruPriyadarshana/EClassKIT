@@ -192,7 +192,6 @@ public class PastPapers extends AppCompatActivity {
 
     private void uplodeFile(final Uri pdfUri) {
         final ProgressDialog progressDialog=new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle("Uploading File");
         progressDialog.show();
 
