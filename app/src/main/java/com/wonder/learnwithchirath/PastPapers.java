@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -22,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -34,27 +32,25 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-
 import in.gauriinfotech.commons.Commons;
 
 public class PastPapers extends AppCompatActivity {
-    ListView PDFListView;
-    DatabaseReference databaseReference;
-    StorageReference storage;
-    ArrayList<UploadPDF> uploadPDFS;
-    ImageButton selectFile;
-    TextView nameUpfile;
-    Bitmap bitmap;
-    Uri pdfUri;
-    byte[] data1;
-    static String name;
-    Button uplode;
-    FirebaseDatabaseHelper databaseHelper;
-    Uri url2;
+    private ListView PDFListView;
+    private DatabaseReference databaseReference;
+    private StorageReference storage;
+    private ArrayList<UploadPDF> uploadPDFS;
+    private ImageButton selectFile;
+    private TextView nameUpfile;
+    private Bitmap bitmap;
+    private Uri pdfUri;
+    private byte[] data1;
+    private static String name;
+    private Button uplode;
+    private FirebaseDatabaseHelper databaseHelper;
+    private Uri url2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

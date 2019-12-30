@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -22,7 +21,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -34,27 +32,25 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-
 import in.gauriinfotech.commons.Commons;
 
 public class Notes extends AppCompatActivity {
-    ListView PDFListView;
-    DatabaseReference databaseReference;
-    StorageReference storage;
-    ArrayList<UploadPDF> uploadPDFS;
-    ImageButton selectFile;
-    TextView nameUpfile;
-    Bitmap bitmap;
-    Uri pdfUri;
-    byte[] data1;
-    static String name;
-    Button uplode;
-    FirebaseDatabaseHelper databaseHelper;
-    Uri url2;
+    private ListView PDFListView;
+    private DatabaseReference databaseReference;
+    private StorageReference storage;
+    private ArrayList<UploadPDF> uploadPDFS;
+    private ImageButton selectFile;
+    private TextView nameUpfile;
+    private Bitmap bitmap;
+    private Uri pdfUri;
+    private byte[] data1;
+    private static String name;
+    private Button uplode;
+    private FirebaseDatabaseHelper databaseHelper;
+    private Uri url2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +58,7 @@ public class Notes extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("notes");
         storage= FirebaseStorage.getInstance().getReference();
 
-        PDFListView=(ListView)findViewById(R.id.recyclerview);
+        PDFListView=(ListView)findViewById(R.id.recyclerviewn);
 
         uploadPDFS = new ArrayList<>();
         viewAllFiles();
@@ -200,7 +196,7 @@ public class Notes extends AppCompatActivity {
         progressDialog.show();
 
         //imageuploade
-        StorageReference reference2 =storage.child("uploads/"+System.currentTimeMillis()+".png");
+        StorageReference reference2 =storage.child("uploads1/"+System.currentTimeMillis()+".png");
         reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -210,7 +206,7 @@ public class Notes extends AppCompatActivity {
 
                 Uri p=pdfUri;
                 //pdf uplode
-                StorageReference reference =storage.child("uploads/"+name);
+                StorageReference reference =storage.child("uploads1/"+name);
                 reference.putFile(p).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
