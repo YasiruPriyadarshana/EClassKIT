@@ -5,4 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="aboutusdesc"><![CDATA[Founder & CEO at Learn with Chirath Publications.  Biology and Science teacher at I-Gate College – Colombo  Member at Toastmasters International  Former Teacher at Lyceum International School Panadura  Studied BSc Natural Sciences at Open University of Sri Lanka – (Nawala)  Teacher & Publisher]]></string>
+    <string name="eventtitle">Learn With Chirath Science Seminar</string>
+    <string name="eventdesc">One day is all it takes to change your results.  Learn With Chirath – Science English Medium Seminar  November 18th @ Osis – Maharagama From 8.30 am to 12.30 pm  November 18th @ L.I.T- Malabe From 1.00 am to 4.30 pm  Grade 11  – For term test.  Tickets are available @ LIT Malabe. Osis Maharagama.  Call – 071 5770580</string>
+    <string name="eventtime">00 Days 00 Hours 00 Minutes 00 Seconds</string>
 </resources>
