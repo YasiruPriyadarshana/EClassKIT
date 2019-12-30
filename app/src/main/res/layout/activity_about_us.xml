@@ -11,7 +11,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="30dp"
         android:layout_weight=".76"
         android:background="@drawable/button_states"
         app:srcCompat="@mipmap/chirath" />
@@ -24,7 +24,8 @@
         android:layout_marginTop="20dp"
         android:text="Chirath Uyanahewa"
         android:textColor="#342E6D"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView2"
@@ -35,5 +36,6 @@
         android:layout_weight="1"
         android:text="@string/aboutusdesc"
         android:textColor="#3D5E5D"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="italic" />
 </LinearLayout>
