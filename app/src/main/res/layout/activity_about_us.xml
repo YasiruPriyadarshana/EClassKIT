@@ -33,7 +33,7 @@
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
         android:layout_weight="1"
-        android:text="Founder & CEO at Learn with Chirath Publications.  Biology and Science teacher at I-Gate College – Colombo  Member at Toastmasters International  Former Teacher at Lyceum International School Panadura  Studied BSc Natural Sciences at Open University of Sri Lanka – (Nawala)  Teacher & Publisher"
+        android:text="@string/aboutusdesc"
         android:textColor="#3D5E5D"
         android:textSize="18sp" />
 </LinearLayout>
