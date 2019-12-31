@@ -16,7 +16,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/monday"
+        android:id="@+id/dayofweek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
@@ -130,6 +130,13 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/deleteclass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="Delete" />
+
     <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
@@ -139,6 +146,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="10dp"
         android:background="#4E229C" />
+
+
 
 
 </LinearLayout>

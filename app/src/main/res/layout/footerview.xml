@@ -28,6 +28,7 @@
         android:layout_height="130dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
         android:src="@mipmap/uploadepdf"
         tools:src="@mipmap/uploadepdf"
         tools:srcCompat="@mipmap/uploadepdf" />

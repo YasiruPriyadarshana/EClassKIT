@@ -1,4 +1,4 @@
-package com.wonder.learnwithchirath;
+package com.wonder.learnwithchirath.Adpter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.wonder.learnwithchirath.R;
+import com.wonder.learnwithchirath.Object.UploadPDF;
 
 import java.util.ArrayList;
 
@@ -45,3 +47,7 @@ public class ListAdapter extends ArrayAdapter<UploadPDF> {
         return convertView;
     }
 }
+
+
+
+

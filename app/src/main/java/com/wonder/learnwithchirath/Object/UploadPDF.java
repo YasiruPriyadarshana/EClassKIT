@@ -1,4 +1,4 @@
-package com.wonder.learnwithchirath;
+package com.wonder.learnwithchirath.Object;
 
 public class UploadPDF {
     private String name;
@@ -46,3 +46,5 @@ public class UploadPDF {
         this.url = url;
     }
 }
+
+

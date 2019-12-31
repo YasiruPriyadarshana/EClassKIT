@@ -1,4 +1,4 @@
-package com.wonder.learnwithchirath;
+package com.wonder.learnwithchirath.Object;
 
 public class Student {
     private String name;

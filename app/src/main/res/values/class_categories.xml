@@ -4,4 +4,30 @@
         <item>10</item>
         <item>11</item>
     </string-array>
+    <string-array name="grade_categories">
+        <item>Grade 9 (English Medium)</item>
+        <item>Grade 10(English Medium)</item>
+        <item>Grade 11(English Medium</item>
+    </string-array>
+    <string-array name="institute_categories">
+        <item>OSIS Maharagama</item>
+        <item>Siplin Thalawathugoda</item>
+        <item>Wisdom Piliyandala</item>
+        <item>LIT Maharagama</item>
+        <item>Excel Maradana</item>
+    </string-array>
+    <string-array name="class1_categories">
+        <item>Theory / Paper</item>
+        <item>Theory</item>
+        <item>Paper</item>
+    </string-array>
+    <string-array name="day_categories">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
 </resources>
