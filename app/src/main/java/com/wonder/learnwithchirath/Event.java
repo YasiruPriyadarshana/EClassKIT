@@ -22,6 +22,7 @@ import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -80,7 +81,6 @@ public class Event extends Fragment {
         EventListView=(ListView)v.findViewById(R.id.recyclerviewevent);
         eventobjs = new ArrayList<>();
         viewAllFiles();
-
         return v;
     }
 
@@ -97,7 +97,7 @@ public class Event extends Fragment {
                 }
 
 
-                ListAdapterEvent adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs);
+                final ListAdapterEvent adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs);
 
                 View v = getLayoutInflater().inflate(R.layout.footerviewevent, null);
                 EventListView.addFooterView(v);
@@ -120,15 +120,18 @@ public class Event extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (imgUri != null) {
-                            uplodeFile(imgUri);
                             title_st=event.getText().toString();
                             desc_st=desc.getText().toString();
                             time_st=time.getText().toString();
+                            uplodeFile(imgUri);
+                            adapter.clear();
                         } else
                             Toast.makeText(getContext(), "select a File", Toast.LENGTH_SHORT).show();
                     }
                 });
+
                 EventListView.setAdapter(adapter);
+
             }
 
             @Override

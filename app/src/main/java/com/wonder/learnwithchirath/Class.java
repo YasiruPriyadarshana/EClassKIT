@@ -32,13 +32,15 @@ public class Class extends Fragment {
     private DatabaseReference databaseReference;
     private ArrayList<Timetable> timetables;
     private ListView TimetableListView;
-    private View v;
+    private View v,v1;
     private Spinner Category_day;
     private Spinner Category_grade;
     private Spinner Category_institute;
     private Spinner Category_class;
     private Button Addclassdet;
     private EditText time;
+
+    ListAdapterTimetable adapter;
     String tmp;
     int e1,e2,e3,e4,e5,e6,e7=0;
     ArrayList<Timetable> t1,t2,t3,t4,t5,t6,t7;
@@ -46,18 +48,18 @@ public class Class extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_class, container, false);
+        v1=inflater.inflate(R.layout.fragment_class, container, false);
 
         // Inflate the layout for this fragment
         databaseReference = FirebaseDatabase.getInstance().getReference("timetable");
-        TimetableListView=(ListView)v.findViewById(R.id.recyclerviewclass);
+        TimetableListView=(ListView)v1.findViewById(R.id.recyclerviewclass);
         timetables = new ArrayList<>();
         viewAllFiles();
 
         //add class data
 
 
-        return v;
+        return v1;
     }
 
     private void viewAllFiles() {
@@ -112,10 +114,17 @@ public class Class extends Fragment {
 
 
 
-                ListAdapterTimetable adapter = new ListAdapterTimetable(getContext(),R.layout.itemclass,timetables);
-                adapter.notifyDataSetChanged();
-                View v=getLayoutInflater().inflate(R.layout.footerviewclass, null);
+                adapter = new ListAdapterTimetable(getContext(),R.layout.itemclass,timetables);
+
+                if (TimetableListView.getFooterViewsCount() > 0)
+                {
+                    TimetableListView.removeFooterView(v);
+                }
+
+
+                v=getLayoutInflater().inflate(R.layout.footerviewclass, null);
                 TimetableListView.addFooterView(v);
+                getActivity().onContentChanged();
                 Category_day = (Spinner)v.findViewById(R.id.category_day);
                 Category_grade = (Spinner)v.findViewById(R.id.category_grade);
                 Category_institute = (Spinner)v.findViewById(R.id.category_institute);
@@ -133,6 +142,8 @@ public class Class extends Fragment {
                         timetable.setTime(time.getText().toString());
                         timetable.setInstitute(Category_institute.getSelectedItem().toString());
                         timetable.setGcalss(Category_class.getSelectedItem().toString());
+
+
 
                         new FirebaseDatabaseHelper2().addClassDetails(timetable, new FirebaseDatabaseHelper2.DataStatus() {
                             @Override
@@ -155,12 +166,18 @@ public class Class extends Fragment {
 
                             }
                         });
-
+                        adapter.clear();
+                        e1=0;
+                        e2=0;
+                        e3=0;
+                        e4=0;
+                        e5=0;
+                        e6=0;
+                        e7=0;
                     }
                 });
-
-
                 TimetableListView.setAdapter(adapter);
+
             }
 
             @Override
