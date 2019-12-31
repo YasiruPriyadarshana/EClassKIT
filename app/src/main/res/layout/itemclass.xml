@@ -4,16 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/titleclass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Timetable And Classes"
-        android:textAlignment="center"
-        android:textColor="#673AB7"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/dayofweek"
@@ -135,7 +126,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:text="Delete" />
+        android:text="Delete"
+        android:textColor="#DCDF044F" />
 
     <View
         android:id="@+id/divider2"

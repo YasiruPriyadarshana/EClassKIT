@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <TextView
@@ -105,7 +106,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/title_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -130,5 +131,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="230dp"
         android:layout_weight="1"
-        android:text="Add Class" />
+        android:text="Add Class"
+        android:textColor="#E11A9C5F" />
 </LinearLayout>

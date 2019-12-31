@@ -42,7 +42,11 @@ public class ListAdapterTimetable extends ArrayAdapter<Timetable> {
         Button instituteb=(Button)convertView.findViewById(R.id.minstitute);
         Button gcalssb=(Button)convertView.findViewById(R.id.mclass);
 
-        dateb.setText(date);
+        if (date.isEmpty()){
+            dateb.setVisibility(View.GONE);
+        }else {
+            dateb.setText(date);
+        }
         gradeb.setText(grade);
         timeb.setText(time);
         instituteb.setText(institute);

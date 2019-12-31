@@ -24,6 +24,7 @@ import com.wonder.learnwithchirath.Object.Timetable;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -38,7 +39,9 @@ public class Class extends Fragment {
     private Spinner Category_class;
     private Button Addclassdet;
     private EditText time;
-
+    String tmp;
+    int e1,e2,e3,e4,e5,e6,e7=0;
+    ArrayList<Timetable> t1,t2,t3,t4,t5,t6,t7;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,12 +68,52 @@ public class Class extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Timetable ttable = postSnapshot.getValue(Timetable.class);
+//                    make list in order
+                    tmp=ttable.getDate();
+                    if (tmp.equals("Monday")){
+                        if (e1==1) {
+                            ttable.setDate("");
+                        }
+                        e1=1;
+                    }else if (tmp.equals("Tuesday")){
+                        if (e2==2) {
+                            ttable.setDate("");
+                        }
+                        e2=2;
+                    }else if (tmp.equals("Wednesday")){
+                        if (e3==3) {
+                            ttable.setDate("");
+                        }
+                        e3=3;
+                    }else if (tmp.equals("Thursday")){
+                        if (e4==4) {
+                            ttable.setDate("");
+                        }
+                        e4=4;
+                    }else if (tmp.equals("Friday")){
+                        if (e5==5) {
+                            ttable.setDate("");
+                        }
+                        e5=5;
+                    }else if (tmp.equals("Saturday")){
+                        if (e6==6) {
+                            ttable.setDate("");
+                        }
+                        e6=6;
+                    }else if (tmp.equals("Sunday")){
+                        if (e7==7) {
+                            ttable.setDate("");
+                        }
+                        e7=7;
+                    }
                     timetables.add(ttable);
                 }
 
 
-                ListAdapterTimetable adapter = new ListAdapterTimetable(getContext(),R.layout.itemclass,timetables);
 
+
+                ListAdapterTimetable adapter = new ListAdapterTimetable(getContext(),R.layout.itemclass,timetables);
+                adapter.notifyDataSetChanged();
                 View v=getLayoutInflater().inflate(R.layout.footerviewclass, null);
                 TimetableListView.addFooterView(v);
                 Category_day = (Spinner)v.findViewById(R.id.category_day);
