@@ -141,49 +141,54 @@ public class Class extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getContext(), "class record has been inserted", Toast.LENGTH_SHORT).show();
-                        Timetable timetable=new Timetable();
+                        Timetable timetable = new Timetable();
                         timetable.setDate(Category_day.getSelectedItem().toString());
                         timetable.setGrade(Category_grade.getSelectedItem().toString());
                         timetable.setTime(time.getText().toString());
                         timetable.setInstitute(Category_institute.getSelectedItem().toString());
                         timetable.setGcalss(Category_class.getSelectedItem().toString());
 
+                        if (time.getText().toString().isEmpty()) {
+                            Toast.makeText(getContext(), "Enter time", Toast.LENGTH_SHORT).show();
+                        } else {
 
 
-                        new FirebaseDatabaseHelper2().addClassDetails(timetable, new FirebaseDatabaseHelper2.DataStatus() {
-                            @Override
-                            public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
+                            new FirebaseDatabaseHelper2().addClassDetails(timetable, new FirebaseDatabaseHelper2.DataStatus() {
+                                @Override
+                                public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
 
-                            }
+                                }
 
-                            @Override
-                            public void DataIsInserted() {
-                                Toast.makeText(getContext(), "class record has been inserted", Toast.LENGTH_SHORT).show();
-                            }
+                                @Override
+                                public void DataIsInserted() {
+                                    Toast.makeText(getContext(), "class record has been inserted", Toast.LENGTH_SHORT).show();
+                                }
 
-                            @Override
-                            public void DataIsUpdated() {
+                                @Override
+                                public void DataIsUpdated() {
 
-                            }
+                                }
 
-                            @Override
-                            public void DataIsDeleted() {
+                                @Override
+                                public void DataIsDeleted() {
 
-                            }
-                        });
-                        adapter.clear();
-                        e1=0;
-                        e2=0;
-                        e3=0;
-                        e4=0;
-                        e5=0;
-                        e6=0;
-                        e7=0;
+                                }
+                            });
+                            adapter.clear();
+                            e1 = 0;
+                            e2 = 0;
+                            e3 = 0;
+                            e4 = 0;
+                            e5 = 0;
+                            e6 = 0;
+                            e7 = 0;
+                        }
                     }
                 });
                 TimetableListView.setAdapter(adapter);
 
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

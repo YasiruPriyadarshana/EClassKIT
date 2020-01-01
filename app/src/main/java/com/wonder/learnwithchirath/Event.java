@@ -29,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -70,6 +71,8 @@ public class Event extends Fragment {
     private Uri imgUri;
     private byte[] data1;
     private String title_st,desc_st,time_st;
+    private View v;
+    private ListAdapterEvent adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,10 +100,16 @@ public class Event extends Fragment {
                 }
 
 
-                final ListAdapterEvent adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs);
+                adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs);
 
-                View v = getLayoutInflater().inflate(R.layout.footerviewevent, null);
+                if (EventListView.getFooterViewsCount() > 0)
+                {
+                    EventListView.removeFooterView(v);
+                }
+                v = getLayoutInflater().inflate(R.layout.footerviewevent, null);
                 EventListView.addFooterView(v);
+
+
                 selectimage = (ImageButton) v.findViewById(R.id.evnt_imgbtn);
                 event = (TextView) v.findViewById(R.id.title_in);
                 desc = (TextView) v.findViewById(R.id.desc_in);
@@ -123,8 +132,11 @@ public class Event extends Fragment {
                             title_st=event.getText().toString();
                             desc_st=desc.getText().toString();
                             time_st=time.getText().toString();
-                            uplodeFile(imgUri);
-                            adapter.clear();
+                            if (title_st.isEmpty() || desc_st.isEmpty() || time_st.isEmpty()){
+                                Toast.makeText(getContext(), "fill details", Toast.LENGTH_SHORT).show();
+                            }else {
+                                uplodeFile(imgUri);
+                            }
                         } else
                             Toast.makeText(getContext(), "select a File", Toast.LENGTH_SHORT).show();
                     }
@@ -167,15 +179,17 @@ public class Event extends Fragment {
             Toast.makeText(getContext(), "see: "+fullPath, Toast.LENGTH_SHORT).show();
 
 
-            Picasso.with(getContext()).load(imgUri).into(selectimage);
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),imgUri);
+                selectimage.setImageBitmap(bitmap);
+            }catch (IOException e){
+                Toast.makeText(getContext(), "fucked: "+e, Toast.LENGTH_SHORT).show();
+            }
 
 
-            selectimage.setDrawingCacheEnabled(true);
-            selectimage.buildDrawingCache();
-            Bitmap bitmap = selectimage.getDrawingCache();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            data1 = baos.toByteArray();
+
+
         } else {
             Toast.makeText(getContext(), "Please select a file", Toast.LENGTH_SHORT).show();
         }
@@ -188,7 +202,7 @@ public class Event extends Fragment {
 
         //imageuploade
         StorageReference reference2 =storage.child("uploads3/"+System.currentTimeMillis()+".png");
-        reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Task<Uri> uri=taskSnapshot.getStorage().getDownloadUrl();
@@ -211,6 +225,11 @@ public class Event extends Fragment {
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                 double currentProgress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
                 progressDialog.setMessage("Upoaded: "+(int)currentProgress+"%");
+            }
+        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                adapter.clear();
             }
         });;//end
 
