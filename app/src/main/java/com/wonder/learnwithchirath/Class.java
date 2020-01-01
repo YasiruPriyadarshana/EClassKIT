@@ -32,7 +32,7 @@ public class Class extends Fragment {
     private DatabaseReference databaseReference;
     private ArrayList<Timetable> timetables;
     private ListView TimetableListView;
-    private View v,v1;
+    private View v,v1,v2;
     private Spinner Category_day;
     private Spinner Category_grade;
     private Spinner Category_institute;
@@ -119,11 +119,16 @@ public class Class extends Fragment {
                 if (TimetableListView.getFooterViewsCount() > 0)
                 {
                     TimetableListView.removeFooterView(v);
+                }if (TimetableListView.getHeaderViewsCount() > 0)
+                {
+                    TimetableListView.removeHeaderView(v2);
                 }
 
-
+                v2=getLayoutInflater().inflate(R.layout.header_class, null);
                 v=getLayoutInflater().inflate(R.layout.footerviewclass, null);
+                TimetableListView.addHeaderView(v2);
                 TimetableListView.addFooterView(v);
+
                 getActivity().onContentChanged();
                 Category_day = (Spinner)v.findViewById(R.id.category_day);
                 Category_grade = (Spinner)v.findViewById(R.id.category_grade);

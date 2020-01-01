@@ -21,6 +21,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -55,6 +57,8 @@ public class PastPapers extends AppCompatActivity {
     private Button uplode;
     private FirebaseDatabaseHelper databaseHelper;
     private Uri url2;
+    private View v,v2;
+    private ListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,10 +161,21 @@ public class PastPapers extends AppCompatActivity {
                 }
 
 
-                ListAdapter adapter = new ListAdapter(getApplicationContext(),R.layout.item,uploadPDFS);
+                adapter = new ListAdapter(getApplicationContext(),R.layout.item,uploadPDFS);
 
-                View v=getLayoutInflater().inflate(R.layout.footerview, null);
+                if (PDFListView.getFooterViewsCount() > 0)
+                {
+                    PDFListView.removeFooterView(v);
+                }if (PDFListView.getHeaderViewsCount() > 0)
+                {
+                    PDFListView.removeHeaderView(v2);
+                }
+
+                v2=getLayoutInflater().inflate(R.layout.header_pastpapers, null);
+                v=getLayoutInflater().inflate(R.layout.footerview, null);
+                PDFListView.addHeaderView(v2);
                 PDFListView.addFooterView(v);
+
                 selectFile=(ImageButton)v.findViewById(R.id.pdfImgBtn);
                 nameUpfile=(TextView)v.findViewById(R.id.nameofUpfile);
                 uplode=(Button)v.findViewById(R.id.update_btn);
@@ -179,6 +194,7 @@ public class PastPapers extends AppCompatActivity {
                     public void onClick(View v) {
                         if (pdfUri!=null) {
                             uplodeFile(pdfUri);
+
                         }else
                             Toast.makeText(PastPapers.this, "select a File", Toast.LENGTH_SHORT).show();
                     }
@@ -229,6 +245,11 @@ public class PastPapers extends AppCompatActivity {
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                         double currentProgress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
                         progressDialog.setMessage("Upoaded: "+(int)currentProgress+"%");
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        adapter.clear();
                     }
                 });
                 //end
