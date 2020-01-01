@@ -10,9 +10,8 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_margin="30dp"
-        android:layout_weight=".76"
         android:background="@drawable/button_states"
         app:srcCompat="@mipmap/chirath" />
 
@@ -33,9 +32,53 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:layout_weight="1"
         android:text="@string/aboutusdesc"
         android:textColor="#3D5E5D"
         android:textSize="18sp"
         android:textStyle="italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/facebok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="17dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@mipmap/facebook" />
+
+        <ImageButton
+            android:id="@+id/twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="17dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@mipmap/twitter" />
+
+        <ImageButton
+            android:id="@+id/youtube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="17dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@mipmap/youtube" />
+
+        <ImageButton
+            android:id="@+id/web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="17dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            app:srcCompat="@mipmap/web" />
+
+    </LinearLayout>
 </LinearLayout>

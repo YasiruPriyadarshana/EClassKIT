@@ -51,25 +51,28 @@ public class Class extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v1=inflater.inflate(R.layout.fragment_class, container, false);
+        v1 = inflater.inflate(R.layout.fragment_class, container, false);
 
         // Inflate the layout for this fragment
         databaseReference = FirebaseDatabase.getInstance().getReference("timetable");
-        TimetableListView=(ListView)v1.findViewById(R.id.recyclerviewclass);
+        TimetableListView = (ListView) v1.findViewById(R.id.recyclerviewclass);
         timetables = new ArrayList<>();
         viewAllFiles();
 
-//        //delete class data
-//        Thread myThred=new Thread(){
-//            public void run(){
-//                try{
-//
-//                } catch (InterruptedException e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        myThred.start();
+        //delete class data
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return v1;
     }
@@ -80,80 +83,75 @@ public class Class extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> keys=new ArrayList<>();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                ArrayList<String> keys = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Timetable ttable = postSnapshot.getValue(Timetable.class);
 //                    make list in order
-                    tmp=ttable.getDate();
+                    tmp = ttable.getDate();
                     String mkey = postSnapshot.getKey();
-                    if (tmp.equals("Monday")){
-                        if (e1==1) {
+                    if (tmp.equals("Monday")) {
+                        if (e1 == 1) {
                             ttable.setDate("");
                         }
-                        e1=1;
-                    }else if (tmp.equals("Tuesday")){
-                        if (e2==2) {
+                        e1 = 1;
+                    } else if (tmp.equals("Tuesday")) {
+                        if (e2 == 2) {
                             ttable.setDate("");
                         }
-                        e2=2;
-                    }else if (tmp.equals("Wednesday")){
-                        if (e3==3) {
+                        e2 = 2;
+                    } else if (tmp.equals("Wednesday")) {
+                        if (e3 == 3) {
                             ttable.setDate("");
                         }
-                        e3=3;
-                    }else if (tmp.equals("Thursday")){
-                        if (e4==4) {
+                        e3 = 3;
+                    } else if (tmp.equals("Thursday")) {
+                        if (e4 == 4) {
                             ttable.setDate("");
                         }
-                        e4=4;
-                    }else if (tmp.equals("Friday")){
-                        if (e5==5) {
+                        e4 = 4;
+                    } else if (tmp.equals("Friday")) {
+                        if (e5 == 5) {
                             ttable.setDate("");
                         }
-                        e5=5;
-                    }else if (tmp.equals("Saturday")){
-                        if (e6==6) {
+                        e5 = 5;
+                    } else if (tmp.equals("Saturday")) {
+                        if (e6 == 6) {
                             ttable.setDate("");
                         }
-                        e6=6;
-                    }else if (tmp.equals("Sunday")){
-                        if (e7==7) {
+                        e6 = 6;
+                    } else if (tmp.equals("Sunday")) {
+                        if (e7 == 7) {
                             ttable.setDate("");
                         }
-                        e7=7;
+                        e7 = 7;
                     }
                     timetables.add(ttable);
                     keys.add(mkey);
                 }
 
 
+                adapter = new ListAdapterTimetable(getContext(), R.layout.itemclass, timetables, keys);
 
 
-                adapter = new ListAdapterTimetable(getContext(),R.layout.itemclass,timetables,keys);
-
-
-
-
-                if (TimetableListView.getFooterViewsCount() > 0)
-                {
+                if (TimetableListView.getFooterViewsCount() > 0) {
                     TimetableListView.removeFooterView(v);
-                }if (TimetableListView.getHeaderViewsCount() > 0)
-                {
+                }
+                if (TimetableListView.getHeaderViewsCount() > 0) {
                     TimetableListView.removeHeaderView(v2);
                 }
 
-                v2=getLayoutInflater().inflate(R.layout.header_class, null);
-                v=getLayoutInflater().inflate(R.layout.footerviewclass, null);
+                v2 = getLayoutInflater().inflate(R.layout.header_class, null);
+                v = getLayoutInflater().inflate(R.layout.footerviewclass, null);
                 TimetableListView.addHeaderView(v2);
                 TimetableListView.addFooterView(v);
 
                 getActivity().onContentChanged();
-                Category_day = (Spinner)v.findViewById(R.id.category_day);
-                Category_grade = (Spinner)v.findViewById(R.id.category_grade);
-                Category_institute = (Spinner)v.findViewById(R.id.category_institute);
-                Category_class = (Spinner)v.findViewById(R.id.category_class);
-                Addclassdet=(Button)v.findViewById(R.id.addclassdet);
-                time=(EditText)v.findViewById(R.id.time);
+                Category_day = (Spinner) v.findViewById(R.id.category_day);
+                Category_grade = (Spinner) v.findViewById(R.id.category_grade);
+                Category_institute = (Spinner) v.findViewById(R.id.category_institute);
+                Category_class = (Spinner) v.findViewById(R.id.category_class);
+                Addclassdet = (Button) v.findViewById(R.id.addclassdet);
+                time = (EditText) v.findViewById(R.id.time);
 
                 Addclassdet.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -216,8 +214,8 @@ public class Class extends Fragment {
         });
 
 
-
-
-
     }
+
+
+
 }
