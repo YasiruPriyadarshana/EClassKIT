@@ -1,6 +1,7 @@
 package com.wonder.learnwithchirath;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -40,6 +41,8 @@ public class Class extends Fragment {
     private Button Addclassdet;
     private EditText time;
 
+
+
     ListAdapterTimetable adapter;
     String tmp;
     int e1,e2,e3,e4,e5,e6,e7=0;
@@ -56,8 +59,17 @@ public class Class extends Fragment {
         timetables = new ArrayList<>();
         viewAllFiles();
 
-        //add class data
-
+//        //delete class data
+//        Thread myThred=new Thread(){
+//            public void run(){
+//                try{
+//
+//                } catch (InterruptedException e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        myThred.start();
 
         return v1;
     }
@@ -68,10 +80,12 @@ public class Class extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> keys=new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Timetable ttable = postSnapshot.getValue(Timetable.class);
 //                    make list in order
                     tmp=ttable.getDate();
+                    String mkey = postSnapshot.getKey();
                     if (tmp.equals("Monday")){
                         if (e1==1) {
                             ttable.setDate("");
@@ -109,12 +123,16 @@ public class Class extends Fragment {
                         e7=7;
                     }
                     timetables.add(ttable);
+                    keys.add(mkey);
                 }
 
 
 
 
-                adapter = new ListAdapterTimetable(getContext(),R.layout.itemclass,timetables);
+                adapter = new ListAdapterTimetable(getContext(),R.layout.itemclass,timetables,keys);
+
+
+
 
                 if (TimetableListView.getFooterViewsCount() > 0)
                 {
@@ -185,6 +203,7 @@ public class Class extends Fragment {
                         }
                     }
                 });
+
                 TimetableListView.setAdapter(adapter);
 
             }
@@ -195,6 +214,10 @@ public class Class extends Fragment {
 
             }
         });
+
+
+
+
 
     }
 }

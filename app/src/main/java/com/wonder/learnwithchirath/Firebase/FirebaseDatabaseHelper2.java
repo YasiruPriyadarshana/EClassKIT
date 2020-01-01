@@ -44,4 +44,15 @@ public class FirebaseDatabaseHelper2 {
                 });
     }
 
+    public void deleteClassDetails(String key,final DataStatus dataStatus){
+        tRefarenceStudents.child(key).setValue(null)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        dataStatus.DataIsDeleted();
+                    }
+                });
+    }
+
+
 }
