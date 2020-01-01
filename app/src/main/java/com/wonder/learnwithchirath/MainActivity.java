@@ -39,37 +39,58 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
 
+
         bt_NotesAndPP=(Button)findViewById(R.id.bt_notes);
+        bt_Home=(Button)findViewById(R.id.bt_home);
+        bt_Class=(Button)findViewById(R.id.bt_class);
+        bt_Event=(Button)findViewById(R.id.bt_event);
+        bt_Home.setActivated(true);
         bt_NotesAndPP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bt_NotesAndPP.setActivated(true);
+                bt_Home.setActivated(false);
+                bt_Class.setActivated(false);
+                bt_Event.setActivated(false);
                 FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.Fragment_place, new NotesAndPastPapers());
                 ft.commit();
             }
         });
-        bt_Home=(Button)findViewById(R.id.bt_home);
+
         bt_Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bt_NotesAndPP.setActivated(false);
+                bt_Home.setActivated(true);
+                bt_Class.setActivated(false);
+                bt_Event.setActivated(false);
                 FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.Fragment_place, new Home());
                 ft.commit();
             }
         });
-        bt_Class=(Button)findViewById(R.id.bt_class);
+
         bt_Class.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bt_NotesAndPP.setActivated(false);
+                bt_Home.setActivated(false);
+                bt_Class.setActivated(true);
+                bt_Event.setActivated(false);
                 FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.Fragment_place, new Class());
                 ft.commit();
             }
         });
-        bt_Event=(Button)findViewById(R.id.bt_event);
+
         bt_Event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bt_NotesAndPP.setActivated(false);
+                bt_Home.setActivated(false);
+                bt_Class.setActivated(false);
+                bt_Event.setActivated(true);
                 FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.Fragment_place, new Event());
                 ft.commit();
@@ -111,27 +132,44 @@ public class MainActivity extends AppCompatActivity {
         switch (touchEvent.getAction()){
             case MotionEvent.ACTION_DOWN:
                 x1 = touchEvent.getX();
-                y1 = touchEvent.getY();
+
             case MotionEvent.ACTION_UP:
                 x2 = touchEvent.getX();
-                y2 = touchEvent.getY();
+
                 if(x1>x2){
+//                    Toast.makeText(this, "x"+x1+"y"+x2, Toast.LENGTH_SHORT).show();
                     if (changer == 0) {
+                        bt_NotesAndPP.setActivated(true);
+                        bt_Home.setActivated(false);
+                        bt_Class.setActivated(false);
+                        bt_Event.setActivated(false);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new NotesAndPastPapers());
                         ft.commit();
                         changer = 1;
                     }else if (changer == 1){
+                        bt_NotesAndPP.setActivated(false);
+                        bt_Home.setActivated(false);
+                        bt_Class.setActivated(false);
+                        bt_Event.setActivated(true);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new Event());
                         ft.commit();
                         changer = 2;
                     }else if (changer == 2){
+                        bt_NotesAndPP.setActivated(false);
+                        bt_Home.setActivated(false);
+                        bt_Class.setActivated(true);
+                        bt_Event.setActivated(false);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new Class());
                         ft.commit();
                         changer = 3;
                     }else{
+                        bt_NotesAndPP.setActivated(false);
+                        bt_Home.setActivated(true);
+                        bt_Class.setActivated(false);
+                        bt_Event.setActivated(false);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new Home());
                         ft.commit();
@@ -139,21 +177,37 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if(x1<x2){
                     if (changer == 0) {
+                        bt_NotesAndPP.setActivated(false);
+                        bt_Home.setActivated(false);
+                        bt_Class.setActivated(true);
+                        bt_Event.setActivated(false);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new Class());
                         ft.commit();
                         changer = 3;
                     }else if (changer == 1){
+                        bt_NotesAndPP.setActivated(false);
+                        bt_Home.setActivated(true);
+                        bt_Class.setActivated(false);
+                        bt_Event.setActivated(false);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new Home());
                         ft.commit();
                         changer = 0;
                     }else if (changer == 2){
+                        bt_NotesAndPP.setActivated(true);
+                        bt_Home.setActivated(false);
+                        bt_Class.setActivated(false);
+                        bt_Event.setActivated(false);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new NotesAndPastPapers());
                         ft.commit();
                         changer = 1;
                     }else {
+                        bt_NotesAndPP.setActivated(false);
+                        bt_Home.setActivated(false);
+                        bt_Class.setActivated(false);
+                        bt_Event.setActivated(true);
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.Fragment_place, new Event());
                         ft.commit();

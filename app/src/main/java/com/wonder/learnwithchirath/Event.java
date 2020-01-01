@@ -79,6 +79,7 @@ public class Event extends Fragment {
 
         View v=inflater.inflate(R.layout.fragment_event, container, false);
 
+
         databaseReference = FirebaseDatabase.getInstance().getReference("event");
         storage= FirebaseStorage.getInstance().getReference();
         EventListView=(ListView)v.findViewById(R.id.recyclerviewevent);

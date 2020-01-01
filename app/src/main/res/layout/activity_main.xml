@@ -28,7 +28,7 @@
                 android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/button_bg_color_with_state"
                 android:text="H" />
 
             <Button
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/button_bg_color_with_state"
                 android:text="Notes" />
 
             <Button
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/button_bg_color_with_state"
                 android:text="Event" />
 
             <Button
@@ -52,8 +52,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/button_bg_color_with_state"
                 android:text="Class" />
+
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

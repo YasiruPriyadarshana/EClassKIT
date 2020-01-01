@@ -23,6 +23,11 @@
         android:textAlignment="center"
         android:textSize="18sp" />
 
+    <WebView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="205dp"
+         />
     <ListView
         android:id="@+id/recyclerviewhome"
         android:layout_width="match_parent"
