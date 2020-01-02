@@ -36,6 +36,10 @@ dependencies {
 
     implementation 'in.gauriinfotech:commons:1.1.3'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
