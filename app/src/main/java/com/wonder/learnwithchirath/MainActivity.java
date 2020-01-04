@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 bt_Event.setActivated(false);
                 FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.Fragment_place, new Class());
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 bt_Event.setActivated(true);
                 FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.Fragment_place, new Event());
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });

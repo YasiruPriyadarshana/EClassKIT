@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper;
 import com.wonder.learnwithchirath.Object.Student;
 
@@ -34,8 +35,9 @@ public class FragmentClass extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the  layout for this fragment
         view = inflater.inflate(R.layout.fragment_fragment_class, container, false);
+
 
 
         bt_Class=(Button)view.findViewById(R.id.bt_class);
