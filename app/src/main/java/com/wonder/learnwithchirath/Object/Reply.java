@@ -1,40 +1,40 @@
 package com.wonder.learnwithchirath.Object;
 
 public class Reply {
-    private String usercmt;
-    private String commentdesc;
-    private String uricmt;
+    private String userrep;
+    private String replydesc;
+    private String urirep;
 
     public Reply() {
     }
 
-    public Reply(String usercmt, String commentdesc, String uricmt) {
-        this.usercmt = usercmt;
-        this.commentdesc = commentdesc;
-        this.uricmt = uricmt;
+    public Reply(String userrep, String replydesc, String urirep) {
+        this.userrep = userrep;
+        this.replydesc = replydesc;
+        this.urirep = urirep;
     }
 
-    public String getUsercmt() {
-        return usercmt;
+    public String getUserrep() {
+        return userrep;
     }
 
-    public void setUsercmt(String usercmt) {
-        this.usercmt = usercmt;
+    public void setUserrep(String userrep) {
+        this.userrep = userrep;
     }
 
-    public String getCommentdesc() {
-        return commentdesc;
+    public String getReplydesc() {
+        return replydesc;
     }
 
-    public void setCommentdesc(String commentdesc) {
-        this.commentdesc = commentdesc;
+    public void setReplydesc(String replydesc) {
+        this.replydesc = replydesc;
     }
 
-    public String getUricmt() {
-        return uricmt;
+    public String getUrirep() {
+        return urirep;
     }
 
-    public void setUricmt(String uricmt) {
-        this.uricmt = uricmt;
+    public void setUrirep(String urirep) {
+        this.urirep = urirep;
     }
 }

@@ -30,15 +30,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.wonder.learnwithchirath.Adpter.ListAdapter;
 import com.wonder.learnwithchirath.Adpter.ListAdapterComments;
 import com.wonder.learnwithchirath.Object.CommentM;
-import com.wonder.learnwithchirath.Object.Eventobj;
-import com.wonder.learnwithchirath.Object.UploadPDF;
+import com.wonder.learnwithchirath.Object.Reply;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -47,7 +44,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import in.gauriinfotech.commons.Commons;
+
 
 public class Comments extends AppCompatActivity {
     private DatabaseReference databaseReference;
@@ -86,13 +83,17 @@ public class Comments extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     CommentM commentM = postSnapshot.getValue(CommentM.class);
                     commentMS.add(commentM);
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
+
                 }
 
 
-                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS);
+                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS,name1,keys,getName());
 
                 if (CommentListView.getFooterViewsCount() > 0)
                 {
@@ -151,6 +152,7 @@ public class Comments extends AppCompatActivity {
 
 
                 CommentListView.setAdapter(adapter);
+
             }
 
             @Override
@@ -183,7 +185,7 @@ public class Comments extends AppCompatActivity {
                     while (!uri.isComplete()) ;
                     Uri p = uri.getResult();
 
-                    CommentM commentobj = new CommentM("Yasiru", cmt_str, p.toString());
+                    CommentM commentobj = new CommentM(getName(), cmt_str, p.toString());
 
                     databaseReference.child(databaseReference.push().getKey()).setValue(commentobj);
                     Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
@@ -263,4 +265,6 @@ public class Comments extends AppCompatActivity {
             Toast.makeText(Comments.this, "Please select a file", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
