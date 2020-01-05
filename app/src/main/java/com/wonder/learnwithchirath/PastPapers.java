@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,6 +41,7 @@ import com.wonder.learnwithchirath.Object.UploadPDF;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import in.gauriinfotech.commons.Commons;
 
@@ -75,11 +77,14 @@ public class PastPapers extends AppCompatActivity {
         PDFListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UploadPDF uploadPDF = uploadPDFS.get(position);
+                UploadPDF uploadPDF = uploadPDFS.get(position-1);
 
-                Intent intent = new Intent();
-                intent.setData(Uri.parse(uploadPDF.getUrl()));
-                intent.setPackage("com.android.chrome");
+                Intent intent = new Intent(PastPapers.this,Comments.class);
+
+
+                intent.putExtra("image",uploadPDF.getImgurl());
+                intent.putExtra("name",uploadPDF.getName());
+                intent.putExtra("url",uploadPDF.getUrl());
                 startActivity(intent);
             }
         });
