@@ -19,10 +19,13 @@ public class ListAdapterReply extends ArrayAdapter<Reply> {
     private Context mContext;
     int mResource;
 
+
+
     public ListAdapterReply(Context context, int resource, ArrayList<Reply> objects) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
+
     }
 
 
@@ -46,8 +49,13 @@ public class ListAdapterReply extends ArrayAdapter<Reply> {
         nameC.setText(user);
         commentC.setText(comment);
 
+        if(uri!=null) {
+            Picasso.with(getContext()).load(uri).into(imgC);
+        }
+        else{
+            imgC.setVisibility(View.GONE);
+        }
 
-        Picasso.with(getContext()).load(uri).into(imgC);
 
 
         return convertView;

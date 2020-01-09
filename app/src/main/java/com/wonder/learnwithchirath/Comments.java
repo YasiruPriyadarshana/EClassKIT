@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.content.Intent;
@@ -46,7 +47,7 @@ import java.util.ArrayList;
 
 
 
-public class Comments extends AppCompatActivity {
+public class Comments extends AppCompatActivity implements ListAdapterComments.CallbackInterface {
     private DatabaseReference databaseReference;
     ListView CommentListView;
     private ArrayList<CommentM> commentMS;
@@ -61,6 +62,8 @@ public class Comments extends AppCompatActivity {
     private String cmt_str,name,uri,name1;
     private String[] array;
     private Uri imgUri;
+    private ListAdapterComments.CallbackInterface anInterface;
+    Bitmap bitmp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +74,13 @@ public class Comments extends AppCompatActivity {
         CommentListView=(ListView)findViewById(R.id.recyclerviewcomment);
         commentMS = new ArrayList<>();
 
-
+        anInterface=this;
 
         viewAllFiles();
+
+
     }
+
 
 
     private void viewAllFiles() {
@@ -93,7 +99,7 @@ public class Comments extends AppCompatActivity {
                 }
 
 
-                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS,name1,keys,getName());
+                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS,name1,keys,getName(),anInterface);
 
                 if (CommentListView.getFooterViewsCount() > 0)
                 {
@@ -146,7 +152,6 @@ public class Comments extends AppCompatActivity {
                         uplodeFile(imgUri);
                     }
                 });
-
 
 
 
@@ -239,7 +244,8 @@ public class Comments extends AppCompatActivity {
         }
     }
 
-    private void selectIMG() {
+
+    public void selectIMG() {
         Intent intent=new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -258,12 +264,34 @@ public class Comments extends AppCompatActivity {
                 Toast.makeText(Comments.this, "fucked: "+e, Toast.LENGTH_SHORT).show();
             }
 
+        }else if (requestCode==78 && resultCode == RESULT_OK && data!=null) {
+            imgUri=data.getData();
 
-
+            try {
+                Bitmap bitmp = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
+                image.setImageBitmap(bitmp);
+                Toast.makeText(this, "Image added", Toast.LENGTH_SHORT).show();
+            }catch (IOException e){
+                Toast.makeText(Comments.this, "fucked: "+e, Toast.LENGTH_SHORT).show();
+            }
 
         } else {
             Toast.makeText(Comments.this, "Please select a file", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public void onHandleSelection() {
+        Intent intent=new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 78);
+    }
+
+    @Override
+    public Uri getimage() {
+        return imgUri;
     }
 
 

@@ -1,9 +1,16 @@
 package com.wonder.learnwithchirath.Adpter;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,10 +47,12 @@ import com.wonder.learnwithchirath.Object.CommentM;
 import com.wonder.learnwithchirath.Object.Reply;
 import com.wonder.learnwithchirath.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private static final String TAG="ListAdapterComment";
+    private CallbackInterface mCallback;
     private Context mContext;
     int mResource;
     private DatabaseReference databaseReference2;
@@ -50,11 +61,18 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private String key,name1,name;
     private ArrayList<String> keys;
     private StorageReference storage;
-    private Button updateReply;
+    private Button updateReply,addImage;
     private EditText desc;
     private String rep_str;
+    private ImageView repimage;
 
-    public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects,String name1,ArrayList<String> keys,String name) {
+
+
+    public interface CallbackInterface{
+        void onHandleSelection();
+        Uri getimage();
+    }
+    public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects,String name1,ArrayList<String> keys,String name,CallbackInterface mCallback) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
@@ -63,8 +81,9 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         this.keys.addAll(keys);
         this.name1=name1;
         this.name=name;
-
+        this.mCallback=mCallback;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -86,8 +105,13 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         nameC.setText(user);
         commentC.setText(comment);
 
-
-        Picasso.with(getContext()).load(uri).into(imgC);
+        
+        if(uri!=null) {
+            Picasso.with(getContext()).load(uri).into(imgC);
+        }
+        else{
+            imgC.setVisibility(View.GONE);
+        }
         viewAllFiles(ReplyListView);
 
 
@@ -120,17 +144,35 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 ReplyListView.addFooterView(v);
                 updateReply = (Button) v.findViewById(R.id.addrep);
                 desc = (EditText) v.findViewById(R.id.rep_in);
+                addImage=(Button)v.findViewById(R.id.repaddimage);
+                repimage=(ImageView)v.findViewById(R.id.repimage_in);
+
+
+                addImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                            mCallback.onHandleSelection();
+//                            Toast.makeText(mContext, "sa:"+ReplyListView.getPositionForView(v), Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(getContext(), "please provide permission", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
                 updateReply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         rep_str=desc.getText().toString();
-                        uplodeFile(null);
+                        uplodeFile(mCallback.getimage());
                     }
                 });
 
 
                 ReplyListView.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(ReplyListView);
+
 
             }
 
@@ -193,4 +235,9 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             myListView.setLayoutParams(params);
         }
     }
+
+
+
+
+
 }
