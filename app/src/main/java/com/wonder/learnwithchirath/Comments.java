@@ -295,6 +295,11 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     }
 
     @Override
+    public void onHandleSelectionClear() {
+        adapter.clear();
+    }
+
+    @Override
     public Uri getimage() {
         return imgUri;
     }

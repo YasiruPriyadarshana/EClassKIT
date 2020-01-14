@@ -67,6 +67,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
     public interface CallbackInterface{
         void onHandleSelection();
+        void onHandleSelectionClear();
         Uri getimage();
     }
     public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects,String name1,ArrayList<String> keys,String name,CallbackInterface mCallback) {
@@ -164,6 +165,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     public void onClick(View v) {
                         String rep_str=desc.getText().toString();
                         uplodeFile(mCallback.getimage(),dr,rep_str);
+                        mCallback.onHandleSelectionClear();
                     }
                 });
 

@@ -217,5 +217,12 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
     @Override
     public void onHandleSelection2() {
         adapter.clear();
+        e1 = 0;
+        e2 = 0;
+        e3 = 0;
+        e4 = 0;
+        e5 = 0;
+        e6 = 0;
+        e7 = 0;
     }
 }
