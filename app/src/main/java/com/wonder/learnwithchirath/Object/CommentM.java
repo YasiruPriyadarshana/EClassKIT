@@ -1,6 +1,5 @@
 package com.wonder.learnwithchirath.Object;
 
-import android.widget.ListView;
 
 public class CommentM {
     private String usercmt;

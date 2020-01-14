@@ -4,7 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import android.Manifest;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,7 +38,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.wonder.learnwithchirath.Adpter.ListAdapterComments;
 import com.wonder.learnwithchirath.Object.CommentM;
-import com.wonder.learnwithchirath.Object.Reply;
+
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -68,6 +70,8 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
         name1=getIntent().getStringExtra("name");
         databaseReference = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4));
         storage= FirebaseStorage.getInstance().getReference();
@@ -119,6 +123,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                 desc = (EditText) v.findViewById(R.id.comment_in);
                 updateComment = (Button) v.findViewById(R.id.addcmt);
                 addImage=(Button)v.findViewById(R.id.addimage);
+
 
                 imagepdf=(ImageButton) v2.findViewById(R.id.pdfpaperimage);
                 na=(TextView)v2.findViewById(R.id.nameppr);

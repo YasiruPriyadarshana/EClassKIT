@@ -2,15 +2,14 @@ package com.wonder.learnwithchirath.Adpter;
 
 
 import android.Manifest;
-import android.app.Activity;
+
 import android.content.Context;
 
-import android.content.Intent;
+
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
+
 import android.net.Uri;
-import android.os.Handler;
-import android.provider.MediaStore;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
+
 import androidx.core.content.ContextCompat;
 
 
@@ -42,12 +41,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import com.wonder.learnwithchirath.Comments;
 import com.wonder.learnwithchirath.Object.CommentM;
 import com.wonder.learnwithchirath.Object.Reply;
 import com.wonder.learnwithchirath.R;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 
 public class ListAdapterComments extends ArrayAdapter<CommentM> {
@@ -62,9 +60,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private ArrayList<String> keys;
     private StorageReference storage;
     private Button updateReply,addImage;
-    private EditText desc;
-    private String rep_str;
     private ImageView repimage;
+    Uri p;
 
 
 
@@ -89,7 +86,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         String user=getItem(position).getUsercmt();
-        String comment=getItem(position).getCommentdesc();
+        final String comment=getItem(position).getCommentdesc();
         String uri=getItem(position).getUricmt();
         key=keys.get(position);
         databaseReference2 = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4)+"/"+key+"/reply");
@@ -105,7 +102,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         nameC.setText(user);
         commentC.setText(comment);
 
-        
+
         if(uri!=null) {
             Picasso.with(getContext()).load(uri).into(imgC);
         }
@@ -122,6 +119,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
     private void viewAllFiles(final ListView ReplyListView) {
         final ArrayList<Reply> replies= new ArrayList<>();
+        final DatabaseReference dr=databaseReference2;
         databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -143,7 +141,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 v=LayoutInflater.from(mContext).inflate(R.layout.footerviewreply, null);
                 ReplyListView.addFooterView(v);
                 updateReply = (Button) v.findViewById(R.id.addrep);
-                desc = (EditText) v.findViewById(R.id.rep_in);
+                final EditText desc = (EditText)v.findViewById(R.id.rep_in);
                 addImage=(Button)v.findViewById(R.id.repaddimage);
                 repimage=(ImageView)v.findViewById(R.id.repimage_in);
 
@@ -164,8 +162,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 updateReply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        rep_str=desc.getText().toString();
-                        uplodeFile(mCallback.getimage());
+                        String rep_str=desc.getText().toString();
+                        uplodeFile(mCallback.getimage(),dr,rep_str);
                     }
                 });
 
@@ -184,15 +182,15 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
     }
 
-    private void uplodeFile(final Uri imgUri) {
+    private void uplodeFile(final Uri imgUri,final DatabaseReference dr,final String rep_st) {
         //imageuploade
         if (imgUri == null) {
-            Reply replytobj = new Reply(name, rep_str,null);
+            Reply replytobj = new Reply(name, rep_st,null);
 
-            databaseReference2.child(databaseReference2.push().getKey()).setValue(replytobj);
+            dr.child(dr.push().getKey()).setValue(replytobj);
             Toast.makeText(getContext(), "Add new comment", Toast.LENGTH_SHORT).show();
             adapter.clear();
-        } else {
+        }else {
             StorageReference reference2 = storage.child("uploads5/" + System.currentTimeMillis() + ".png");
             reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -200,24 +198,26 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
 
                     while (!uri.isComplete()) ;
-                    Uri p = uri.getResult();
+                    p = uri.getResult();
 
-                    Reply replytobj = new Reply(name, rep_str, p.toString());
 
-                    databaseReference2.child(databaseReference2.push().getKey()).setValue(replytobj);
-                    Toast.makeText(getContext(), "Add new comment", Toast.LENGTH_SHORT).show();
+                    Reply replytobj = new Reply(name, rep_st, p.toString());
 
+                    dr.child(dr.push().getKey()).setValue(replytobj);
+                    Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
 
                 }
             }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    adapter.clear();
+
                 }
             });
             ;//end
 
+
         }
+
     }
 
     public static void setListViewHeightBasedOnChildren(ListView myListView) {
