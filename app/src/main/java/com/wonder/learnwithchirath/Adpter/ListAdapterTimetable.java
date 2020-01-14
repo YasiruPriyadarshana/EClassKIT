@@ -1,19 +1,13 @@
 package com.wonder.learnwithchirath.Adpter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
 import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper2;
-import com.wonder.learnwithchirath.MainActivity;
 import com.wonder.learnwithchirath.Object.Timetable;
 import com.wonder.learnwithchirath.R;
 import java.util.ArrayList;
@@ -22,19 +16,23 @@ import java.util.List;
 public class ListAdapterTimetable extends ArrayAdapter<Timetable>{
     private static final String TAG="ListAdapterTimetable";
     private Context mContext;
+    private CallbackInterface2 mCallback;
     int mResource;
-    private Button delete;
-    private String key;
     private ArrayList<String> keys;
 
+    public interface CallbackInterface2{
+        void onHandleSelection2();
+    }
 
-    public ListAdapterTimetable(Context context, int resource, ArrayList<Timetable> objects,ArrayList<String> keys) {
+    public ListAdapterTimetable(Context context, int resource, ArrayList<Timetable> objects,ArrayList<String> keys,CallbackInterface2 mCallback) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
+        this.mCallback=mCallback;
         this.keys=keys;
         keys=new ArrayList<>();
         this.keys.addAll(keys);
+
     }
 
     @Override
@@ -45,8 +43,7 @@ public class ListAdapterTimetable extends ArrayAdapter<Timetable>{
          String time=getItem(position).getTime();
          String institute=getItem(position).getInstitute();
          String gcalss=getItem(position).getGcalss();
-
-         key=keys.get(position);
+         final String key=keys.get(position);
 
 
 
@@ -69,11 +66,11 @@ public class ListAdapterTimetable extends ArrayAdapter<Timetable>{
         instituteb.setText(institute);
         gcalssb.setText(gcalss);
 
-        delete=(Button)convertView.findViewById(R.id.deleteclass);
-
+        Button delete=(Button)convertView.findViewById(R.id.deleteclass);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mCallback.onHandleSelection2();
                 new FirebaseDatabaseHelper2().deleteClassDetails(key, new FirebaseDatabaseHelper2.DataStatus() {
                     @Override
                     public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {

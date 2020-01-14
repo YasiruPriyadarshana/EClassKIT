@@ -1,7 +1,6 @@
 package com.wonder.learnwithchirath;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,11 +24,10 @@ import com.wonder.learnwithchirath.Object.Timetable;
 
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 
-public class Class extends Fragment {
+public class Class extends Fragment implements ListAdapterTimetable.CallbackInterface2{
     private DatabaseReference databaseReference;
     private ArrayList<Timetable> timetables;
     private ListView TimetableListView;
@@ -40,7 +38,7 @@ public class Class extends Fragment {
     private Spinner Category_class;
     private Button Addclassdet;
     private EditText time;
-
+    private ListAdapterTimetable.CallbackInterface2 anInterface;
 
 
     ListAdapterTimetable adapter;
@@ -60,7 +58,7 @@ public class Class extends Fragment {
         viewAllFiles();
 
         //delete class data
-
+        anInterface=this;
 
 
 
@@ -130,8 +128,7 @@ public class Class extends Fragment {
                 }
 
 
-                adapter = new ListAdapterTimetable(getContext(), R.layout.itemclass, timetables, keys);
-
+                adapter = new ListAdapterTimetable(getContext(), R.layout.itemclass, timetables, keys,anInterface);
 
                 if (TimetableListView.getFooterViewsCount() > 0) {
                     TimetableListView.removeFooterView(v);
@@ -145,7 +142,7 @@ public class Class extends Fragment {
                 TimetableListView.addHeaderView(v2);
                 TimetableListView.addFooterView(v);
 
-                getActivity().onContentChanged();
+
                 Category_day = (Spinner) v.findViewById(R.id.category_day);
                 Category_grade = (Spinner) v.findViewById(R.id.category_grade);
                 Category_institute = (Spinner) v.findViewById(R.id.category_institute);
@@ -217,5 +214,8 @@ public class Class extends Fragment {
     }
 
 
-
+    @Override
+    public void onHandleSelection2() {
+        adapter.clear();
+    }
 }
