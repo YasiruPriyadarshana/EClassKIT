@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.wonder.learnwithchirath.Object.Eventobj;
 import com.wonder.learnwithchirath.R;
@@ -49,7 +51,7 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
         String title=getItem(position).getTitle();
         String descrip=getItem(position).getDecription();
         String time=getItem(position).getTime();
-        String uri=getItem(position).getUri();
+        final String uri=getItem(position).getUri();
         final String key=keys.get(position);
 
         LayoutInflater inflater=LayoutInflater.from(mContext);
@@ -75,6 +77,8 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
             @Override
             public void onClick(View v) {
                 mCallback.onHandleSelectionE();
+                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+                photoRef.delete();
                 tRefarenceStudents.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
