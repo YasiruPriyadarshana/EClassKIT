@@ -79,13 +79,15 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                              Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_event, container, false);
-        anInterface=this;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("event");
         storage= FirebaseStorage.getInstance().getReference();
         EventListView=(ListView)v.findViewById(R.id.recyclerviewevent);
         eventobjs = new ArrayList<>();
+
+
         viewAllFiles();
+        anInterface=this;
         return v;
     }
 
@@ -218,7 +220,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                 Eventobj eventobj=new Eventobj(title_st,desc_st,time_st,p.toString());
 
                 databaseReference.child(databaseReference.push().getKey()).setValue(eventobj);
-                Toast.makeText(getContext(), "PDF File upladed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Event Details uploaded", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
                 adapter.clear();
                 //pdf uplode
@@ -229,7 +231,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                 double currentProgress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                progressDialog.setMessage("Upoaded: "+(int)currentProgress+"%");
+                progressDialog.setMessage("Uploaded: "+(int)currentProgress+"%");
 
             }
         });//end

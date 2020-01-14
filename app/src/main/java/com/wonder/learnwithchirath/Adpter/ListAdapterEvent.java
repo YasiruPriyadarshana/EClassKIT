@@ -74,10 +74,10 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mCallback.onHandleSelectionE();
                 tRefarenceStudents.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        mCallback.onHandleSelectionE();
                         Toast.makeText(mContext, "Event removed", Toast.LENGTH_SHORT).show();
                     }
                 });

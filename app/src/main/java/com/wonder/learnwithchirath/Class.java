@@ -55,22 +55,9 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
         databaseReference = FirebaseDatabase.getInstance().getReference("timetable");
         TimetableListView = (ListView) v1.findViewById(R.id.recyclerviewclass);
         timetables = new ArrayList<>();
+
         viewAllFiles();
-
-        //delete class data
         anInterface=this;
-
-
-
-
-
-
-
-
-
-
-
-
 
         return v1;
     }

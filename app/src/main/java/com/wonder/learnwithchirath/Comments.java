@@ -79,9 +79,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         commentMS = new ArrayList<>();
 
         anInterface=this;
-
         viewAllFiles();
-
 
     }
 
