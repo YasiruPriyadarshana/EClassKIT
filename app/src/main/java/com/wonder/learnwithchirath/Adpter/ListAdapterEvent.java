@@ -1,6 +1,8 @@
 package com.wonder.learnwithchirath.Adpter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,15 +78,32 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onHandleSelectionE();
-                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
-                photoRef.delete();
-                tRefarenceStudents.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(mContext, "Event removed", Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                mCallback.onHandleSelectionE();
+                                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+                                photoRef.delete();
+                                tRefarenceStudents.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(mContext, "Event removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
                     }
-                });
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+
             }
         });
 

@@ -5,15 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,12 +37,9 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wonder.learnwithchirath.Adpter.ListAdapter;
-import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper;
 import com.wonder.learnwithchirath.Object.UploadPDF;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import in.gauriinfotech.commons.Commons;
 
@@ -57,10 +55,11 @@ public class PastPapers extends AppCompatActivity {
     private byte[] data1;
     private static String name;
     private Button uplode;
-    private FirebaseDatabaseHelper databaseHelper;
     private Uri url2;
     private View v,v2;
     private ListAdapter adapter;
+    private ArrayList<String> keys;
+    private int set;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +88,43 @@ public class PastPapers extends AppCompatActivity {
             }
         });
 
-        databaseHelper=new FirebaseDatabaseHelper();
+        PDFListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final int pos=position;
+                AlertDialog.Builder adb = new AlertDialog.Builder(
+                        PastPapers.this);
+                adb.setMessage("Are you sure?");
+                adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        UploadPDF uploadP=uploadPDFS.get(pos-1);
+                        Toast.makeText(PastPapers.this, "link: "+uploadP.getImgurl(), Toast.LENGTH_SHORT).show();
+                        StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getImgurl());
+                        photoRef.delete();
+                        StorageReference pdfRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getUrl());
+                        pdfRef.delete();
+                        adapter.clear();
+                        databaseReference.child(keys.get(pos-1)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(PastPapers.this, "Long press deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                adb.setNegativeButton("No",null);
+                adb.show();
+
+
+
+                return true;
+
+
+            }
+        });
+
+
 
 
     }
@@ -160,9 +195,12 @@ public class PastPapers extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     UploadPDF uploadPDF = postSnapshot.getValue(UploadPDF.class);
                     uploadPDFS.add(uploadPDF);
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
                 }
 
 
@@ -262,4 +300,32 @@ public class PastPapers extends AppCompatActivity {
         });//end
 
     }
+
+    private int permission() {
+        set=2;
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        set=1;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        set=2;
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+
+        return set;
+    }
+
+
+
+
 }
