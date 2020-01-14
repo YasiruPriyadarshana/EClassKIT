@@ -60,7 +60,7 @@ import in.gauriinfotech.commons.Commons;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Event extends Fragment {
+public class Event extends Fragment implements ListAdapterEvent.CallbackInterfaceE{
     private DatabaseReference databaseReference;
     private StorageReference storage;
     private ArrayList<Eventobj> eventobjs;
@@ -73,12 +73,13 @@ public class Event extends Fragment {
     private String title_st,desc_st,time_st;
     private View v;
     private ListAdapterEvent adapter;
+    private ListAdapterEvent.CallbackInterfaceE anInterface;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_event, container, false);
-
+        anInterface=this;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("event");
         storage= FirebaseStorage.getInstance().getReference();
@@ -95,13 +96,16 @@ public class Event extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Eventobj uploadimg = postSnapshot.getValue(Eventobj.class);
                     eventobjs.add(uploadimg);
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
                 }
 
 
-                adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs);
+                adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs, keys,anInterface);
 
                 if (EventListView.getFooterViewsCount() > 0)
                 {
@@ -216,7 +220,7 @@ public class Event extends Fragment {
                 databaseReference.child(databaseReference.push().getKey()).setValue(eventobj);
                 Toast.makeText(getContext(), "PDF File upladed", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-
+                adapter.clear();
                 //pdf uplode
 
                 //end
@@ -226,13 +230,14 @@ public class Event extends Fragment {
             public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                 double currentProgress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
                 progressDialog.setMessage("Upoaded: "+(int)currentProgress+"%");
-            }
-        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                adapter.clear();
-            }
-        });;//end
 
+            }
+        });//end
+
+    }
+
+    @Override
+    public void onHandleSelectionE() {
+        adapter.clear();
     }
 }

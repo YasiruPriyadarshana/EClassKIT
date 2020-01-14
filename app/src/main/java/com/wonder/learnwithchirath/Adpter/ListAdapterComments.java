@@ -164,7 +164,11 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     @Override
                     public void onClick(View v) {
                         String rep_str=desc.getText().toString();
-                        uplodeFile(mCallback.getimage(),dr,rep_str);
+                        if (rep_str.isEmpty()){
+                            Toast.makeText(mContext, "Type Reply", Toast.LENGTH_SHORT).show();
+                        }else {
+                            uplodeFile(mCallback.getimage(), dr, rep_str);
+                        }
 
                     }
                 });

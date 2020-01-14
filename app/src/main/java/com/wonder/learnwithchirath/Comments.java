@@ -154,7 +154,11 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                     @Override
                     public void onClick(View v) {
                         cmt_str=desc.getText().toString();
-                        uplodeFile(imgUri);
+                        if (cmt_str.isEmpty()){
+                            Toast.makeText(Comments.this, "Type comment", Toast.LENGTH_SHORT).show();
+                        }else {
+                            uplodeFile(imgUri);
+                        }
                     }
                 });
 
