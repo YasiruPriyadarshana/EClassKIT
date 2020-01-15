@@ -111,6 +111,9 @@ public class PastPapers extends AppCompatActivity {
                                 Toast.makeText(PastPapers.this, "Long press deleted", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference("comments/");
+                        databaseReference.child(uploadP.getName().substring(0, uploadP.getName().length() - 4)).removeValue();
                     }
                 });
                 adb.setNegativeButton("No",null);

@@ -315,8 +315,10 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+                if(!uri.isEmpty()) {
+                    StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
                     photoRef.delete();
+                }
                     adapter.clear();
                     databaseReference.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
