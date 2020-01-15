@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -39,6 +40,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.wonder.learnwithchirath.Adpter.ListAdapterComments;
+import com.wonder.learnwithchirath.Adpter.ListAdapterReply;
 import com.wonder.learnwithchirath.Object.CommentM;
 
 
@@ -51,7 +53,7 @@ import java.util.ArrayList;
 
 
 
-public class Comments extends AppCompatActivity implements ListAdapterComments.CallbackInterface {
+public class Comments extends AppCompatActivity implements ListAdapterComments.CallbackInterface,ListAdapterReply.CallbackInterfaceReply {
     private DatabaseReference databaseReference;
     ListView CommentListView;
     private ArrayList<CommentM> commentMS;
@@ -67,6 +69,10 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     private String[] array;
     private Uri imgUri;
     private ListAdapterComments.CallbackInterface anInterface;
+    private ListAdapterReply.CallbackInterfaceReply interfaceReply;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +86,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         commentMS = new ArrayList<>();
 
         anInterface=this;
+        interfaceReply=this;
         viewAllFiles();
 
     }
@@ -102,7 +109,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                 }
 
 
-                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS,name1,keys,getName(),anInterface);
+                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS,name1,keys,getName(),anInterface,interfaceReply);
 
                 if (CommentListView.getFooterViewsCount() > 0)
                 {
@@ -315,17 +322,17 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(!uri.isEmpty()) {
+                if(!TextUtils.isEmpty(uri)) {
                     StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
                     photoRef.delete();
                 }
-                    adapter.clear();
-                    databaseReference.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(Comments.this, "Long press deleted", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                adapter.clear();
+                databaseReference.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(Comments.this, "Comment deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -341,5 +348,38 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     }
 
 
+    @Override
+    public void popUpReply(final String key,final String uri,final DatabaseReference dr) {
 
+        AlertDialog.Builder adb2 = new AlertDialog.Builder(this);
+        adb2.setMessage("Are you sure?");
+        adb2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(!TextUtils.isEmpty(uri)) {
+                    StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+                    photoRef.delete();
+                }
+                adapter.clear();
+                dr.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(Comments.this, "Reply deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                CommentListView.removeAllViews();
+                viewAllFiles();
+
+            }
+        });
+        adb2.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb2.show();
+//        Toast.makeText(Comments.this, "reply: "+dr+"key: "+key, Toast.LENGTH_SHORT).show();
+    }
 }
+

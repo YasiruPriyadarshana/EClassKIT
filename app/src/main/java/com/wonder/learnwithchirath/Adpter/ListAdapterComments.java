@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.Button;
@@ -54,9 +55,10 @@ import java.util.ArrayList;
 public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private static final String TAG="ListAdapterComment";
     private CallbackInterface mCallback;
+    private ListAdapterReply.CallbackInterfaceReply mCall;
     private Context mContext;
     int mResource;
-    private DatabaseReference databaseReference2,databaseReference;
+    private DatabaseReference databaseReference2;
     private ListAdapterReply adapter;
     private View v;
     private String name1,name;
@@ -75,7 +77,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         void popUp(String key,String uri);
 
     }
-    public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects,String name1,ArrayList<String> keys,String name,CallbackInterface mCallback) {
+    public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects, String name1, ArrayList<String> keys, String name, CallbackInterface mCallback, ListAdapterReply.CallbackInterfaceReply mCall) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
@@ -85,7 +87,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         this.name1=name1;
         this.name=name;
         this.mCallback=mCallback;
-        databaseReference = FirebaseDatabase.getInstance().getReference("comments/");
+        this.mCall=mCall;
     }
 
 
@@ -109,12 +111,13 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
         nameC.setText(user);
         commentC.setText(comment);
-        convertView.setOnClickListener(new View.OnClickListener() {
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 mCallback.popUp(key,uri);
-
+                return true;
             }
+
         });
 
 
@@ -127,7 +130,6 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         viewAllFiles(ReplyListView);
 
 
-
         return convertView;
     }
 
@@ -135,18 +137,20 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private void viewAllFiles(final ListView ReplyListView) {
         final ArrayList<Reply> replies= new ArrayList<>();
         final DatabaseReference dr=databaseReference2;
+
         databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Reply reply = postSnapshot.getValue(Reply.class);
                     replies.add(reply);
-
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
                 }
 
 
-                adapter = new ListAdapterReply(mContext,R.layout.itemreply,replies);
+                adapter = new ListAdapterReply(mContext,R.layout.itemreply,replies,keys,dr,mCall);
 
                 if (ReplyListView.getFooterViewsCount() > 0)
                 {
@@ -190,6 +194,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
                 ReplyListView.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(ReplyListView);
+
+
 
 
             }
@@ -255,8 +261,6 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             myListView.setLayoutParams(params);
         }
     }
-
-
 
 
 
