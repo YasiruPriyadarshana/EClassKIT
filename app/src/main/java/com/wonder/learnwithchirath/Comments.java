@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -65,7 +67,6 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     private String[] array;
     private Uri imgUri;
     private ListAdapterComments.CallbackInterface anInterface;
-    Bitmap bitmp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -305,6 +306,38 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     public Uri getimage() {
         return imgUri;
     }
+
+    @Override
+    public void popUp(final String key,final String uri) {
+
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage("Are you sure?");
+        adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+                    photoRef.delete();
+                    adapter.clear();
+                    databaseReference.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(Comments.this, "Long press deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            }
+        });
+        adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb.show();
+
+
+
+    }
+
 
 
 }

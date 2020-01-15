@@ -3,9 +3,11 @@ package com.wonder.learnwithchirath.Adpter;
 
 import android.Manifest;
 
+import android.app.AlertDialog;
 import android.content.Context;
 
 
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 
 import android.net.Uri;
@@ -17,6 +19,7 @@ import android.widget.ArrayAdapter;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -53,10 +56,10 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private CallbackInterface mCallback;
     private Context mContext;
     int mResource;
-    private DatabaseReference databaseReference2;
+    private DatabaseReference databaseReference2,databaseReference;
     private ListAdapterReply adapter;
     private View v;
-    private String key,name1,name;
+    private String name1,name;
     private ArrayList<String> keys;
     private StorageReference storage;
     private Button updateReply,addImage;
@@ -69,6 +72,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         void onHandleSelection();
         void onHandleSelectionClear();
         Uri getimage();
+        void popUp(String key,String uri);
+
     }
     public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects,String name1,ArrayList<String> keys,String name,CallbackInterface mCallback) {
         super(context, resource, objects);
@@ -80,6 +85,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         this.name1=name1;
         this.name=name;
         this.mCallback=mCallback;
+        databaseReference = FirebaseDatabase.getInstance().getReference("comments/");
     }
 
 
@@ -88,8 +94,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
         String user=getItem(position).getUsercmt();
         final String comment=getItem(position).getCommentdesc();
-        String uri=getItem(position).getUricmt();
-        key=keys.get(position);
+        final String uri=getItem(position).getUricmt();
+        final String key=keys.get(position);
         databaseReference2 = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4)+"/"+key+"/reply");
         storage= FirebaseStorage.getInstance().getReference();
 //        Toast.makeText(getContext(),"comments/"+name1.substring(0, name1.length() - 4)+"/"+key, Toast.LENGTH_SHORT).show();
@@ -100,8 +106,16 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         TextView commentC=(TextView)convertView.findViewById(R.id.cmt_comment);
         ImageView imgC=(ImageView)convertView.findViewById(R.id.cmt_image);
         ListView ReplyListView=(ListView)convertView.findViewById(R.id.recyclerviewreply);
+
         nameC.setText(user);
         commentC.setText(comment);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.popUp(key,uri);
+
+            }
+        });
 
 
         if(uri!=null) {
