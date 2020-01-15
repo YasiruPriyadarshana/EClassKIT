@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 
 import android.Manifest;
@@ -53,7 +52,7 @@ import java.util.ArrayList;
 
 
 
-public class Comments extends AppCompatActivity implements ListAdapterComments.CallbackInterface,ListAdapterReply.CallbackInterfaceReply {
+public class Comments extends AppCompatActivity implements ListAdapterComments.CallbackInterface {
     private DatabaseReference databaseReference;
     ListView CommentListView;
     private ArrayList<CommentM> commentMS;
@@ -69,7 +68,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     private String[] array;
     private Uri imgUri;
     private ListAdapterComments.CallbackInterface anInterface;
-    private ListAdapterReply.CallbackInterfaceReply interfaceReply;
+
 
 
 
@@ -86,7 +85,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         commentMS = new ArrayList<>();
 
         anInterface=this;
-        interfaceReply=this;
+
         viewAllFiles();
 
     }
@@ -109,7 +108,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                 }
 
 
-                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS,name1,keys,getName(),anInterface,interfaceReply);
+                adapter = new ListAdapterComments(getApplicationContext(),R.layout.itemcomment,commentMS,name1,keys,getName(),anInterface);
 
                 if (CommentListView.getFooterViewsCount() > 0)
                 {
@@ -326,6 +325,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                     StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
                     photoRef.delete();
                 }
+
                 adapter.clear();
                 databaseReference.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -361,14 +361,13 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                     photoRef.delete();
                 }
                 adapter.clear();
+
                 dr.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(Comments.this, "Reply deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
-                CommentListView.removeAllViews();
-                viewAllFiles();
 
             }
         });
@@ -380,6 +379,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         });
         adb2.show();
 //        Toast.makeText(Comments.this, "reply: "+dr+"key: "+key, Toast.LENGTH_SHORT).show();
+
     }
 }
 

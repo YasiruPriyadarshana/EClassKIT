@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 
 import android.net.Uri;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import com.wonder.learnwithchirath.Comments;
 import com.wonder.learnwithchirath.Object.CommentM;
 import com.wonder.learnwithchirath.Object.Reply;
 import com.wonder.learnwithchirath.R;
@@ -55,17 +57,13 @@ import java.util.ArrayList;
 public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private static final String TAG="ListAdapterComment";
     private CallbackInterface mCallback;
-    private ListAdapterReply.CallbackInterfaceReply mCall;
     private Context mContext;
     int mResource;
     private DatabaseReference databaseReference2;
-    private ListAdapterReply adapter;
-    private View v;
     private String name1,name;
     private ArrayList<String> keys;
     private StorageReference storage;
-    private Button updateReply,addImage;
-    private ImageView repimage;
+    private ListAdapterReply adapter;
     Uri p;
 
 
@@ -75,9 +73,10 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         void onHandleSelectionClear();
         Uri getimage();
         void popUp(String key,String uri);
+        void popUpReply(final String key,final String uri,final DatabaseReference dr);
 
     }
-    public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects, String name1, ArrayList<String> keys, String name, CallbackInterface mCallback, ListAdapterReply.CallbackInterfaceReply mCall) {
+    public ListAdapterComments(Context context, int resource, ArrayList<CommentM> objects, String name1, ArrayList<String> keys, String name, CallbackInterface mCallback) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
@@ -87,7 +86,6 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         this.name1=name1;
         this.name=name;
         this.mCallback=mCallback;
-        this.mCall=mCall;
     }
 
 
@@ -130,6 +128,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         viewAllFiles(ReplyListView);
 
 
+
         return convertView;
     }
 
@@ -141,7 +140,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> keys = new ArrayList<>();
+                final ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Reply reply = postSnapshot.getValue(Reply.class);
                     replies.add(reply);
@@ -150,19 +149,22 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 }
 
 
-                adapter = new ListAdapterReply(mContext,R.layout.itemreply,replies,keys,dr,mCall);
+                adapter = new ListAdapterReply(mContext,R.layout.itemreply,replies,keys,dr);
 
+
+
+
+
+                View v=LayoutInflater.from(mContext).inflate(R.layout.footerviewreply, null);
                 if (ReplyListView.getFooterViewsCount() > 0)
                 {
                     ReplyListView.removeFooterView(v);
                 }
-
-                v=LayoutInflater.from(mContext).inflate(R.layout.footerviewreply, null);
                 ReplyListView.addFooterView(v);
-                updateReply = (Button) v.findViewById(R.id.addrep);
+                Button  updateReply = (Button) v.findViewById(R.id.addrep);
                 final EditText desc = (EditText)v.findViewById(R.id.rep_in);
-                addImage=(Button)v.findViewById(R.id.repaddimage);
-                repimage=(ImageView)v.findViewById(R.id.repimage_in);
+                Button addImage=(Button)v.findViewById(R.id.repaddimage);
+                ImageView repimage=(ImageView)v.findViewById(R.id.repimage_in);
 
 
                 addImage.setOnClickListener(new View.OnClickListener() {
@@ -192,11 +194,24 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 });
 
 
+
                 ReplyListView.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(ReplyListView);
 
 
+                ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        String key=keys.get(position);
+                        Reply reply=replies.get(position);
 
+                        adapter.clear();
+                        mCallback.popUpReply(key,reply.getUrirep(),dr);
+//                        Toast.makeText(mContext, "posi:"+position, Toast.LENGTH_SHORT).show();
+
+                        return false;
+                    }
+                });
 
             }
 
@@ -214,7 +229,9 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             Reply replytobj = new Reply(name, rep_st,null);
 
             dr.child(dr.push().getKey()).setValue(replytobj);
+            adapter.clear();
             mCallback.onHandleSelectionClear();
+
             Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
         }else {
             StorageReference reference2 = storage.child("uploads5/" + System.currentTimeMillis() + ".png");
@@ -236,6 +253,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    adapter.clear();
                     mCallback.onHandleSelectionClear();
                 }
             });
@@ -261,7 +279,6 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             myListView.setLayoutParams(params);
         }
     }
-
 
 
 }

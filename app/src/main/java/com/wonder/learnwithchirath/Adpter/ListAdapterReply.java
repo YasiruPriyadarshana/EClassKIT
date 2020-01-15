@@ -21,20 +21,17 @@ public class ListAdapterReply extends ArrayAdapter<Reply> {
     int mResource;
     private ArrayList<String> keys;
     private DatabaseReference databaseReference;
-    private  CallbackInterfaceReply callbackInterfaceReply;
 
-    public interface CallbackInterfaceReply{
-        void popUpReply(String key,String uri,DatabaseReference dr);
 
-    }
 
-    public ListAdapterReply(Context context, int resource, ArrayList<Reply> objects,ArrayList<String> keys,DatabaseReference databaseReference,CallbackInterfaceReply call) {
+
+    public ListAdapterReply(Context context, int resource, ArrayList<Reply> objects,ArrayList<String> keys,DatabaseReference databaseReference) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
         this.keys=keys;
         this.databaseReference=databaseReference;
-        this.callbackInterfaceReply=call;
+
     }
 
 
@@ -65,14 +62,7 @@ public class ListAdapterReply extends ArrayAdapter<Reply> {
             imgC.setVisibility(View.GONE);
         }
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
 
-                callbackInterfaceReply.popUpReply(key,uri,databaseReference);
-                return false;
-            }
-        });
 
         return convertView;
     }
