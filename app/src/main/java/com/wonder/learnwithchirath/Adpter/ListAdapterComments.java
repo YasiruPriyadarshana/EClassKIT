@@ -205,7 +205,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                         String key=keys.get(position);
                         Reply reply=replies.get(position);
 
-                        adapter.clear();
+
                         mCallback.popUpReply(key,reply.getUrirep(),dr);
 //                        Toast.makeText(mContext, "posi:"+position, Toast.LENGTH_SHORT).show();
 
@@ -229,10 +229,10 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             Reply replytobj = new Reply(name, rep_st,null);
 
             dr.child(dr.push().getKey()).setValue(replytobj);
-            adapter.clear();
+            Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
             mCallback.onHandleSelectionClear();
 
-            Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
+
         }else {
             StorageReference reference2 = storage.child("uploads5/" + System.currentTimeMillis() + ".png");
             reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -253,7 +253,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    adapter.clear();
+
                     mCallback.onHandleSelectionClear();
                 }
             });

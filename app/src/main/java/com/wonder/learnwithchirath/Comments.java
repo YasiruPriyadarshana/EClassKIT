@@ -326,13 +326,14 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                     photoRef.delete();
                 }
 
-                adapter.clear();
+
                 databaseReference.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(Comments.this, "Comment deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
+                adapter.clear();
             }
         });
         adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -360,7 +361,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                     StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
                     photoRef.delete();
                 }
-                adapter.clear();
+
 
                 dr.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -368,7 +369,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                         Toast.makeText(Comments.this, "Reply deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
-
+                adapter.clear();
             }
         });
         adb2.setNegativeButton("No", new DialogInterface.OnClickListener() {
