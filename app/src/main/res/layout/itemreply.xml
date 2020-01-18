@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:fillViewport="true">
-
+    android:fillViewport="true"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    >
 
     <TextView
         android:id="@+id/rep_user"

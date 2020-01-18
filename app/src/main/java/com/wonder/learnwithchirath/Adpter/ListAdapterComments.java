@@ -30,12 +30,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,12 +61,13 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private CallbackInterface mCallback;
     private Context mContext;
     int mResource;
-    private DatabaseReference databaseReference2;
+
     private String name1,name;
     private ArrayList<String> keys;
     private StorageReference storage;
     private ListAdapterReply adapter;
     Uri p;
+    private ValueEventListener valueEventListener;
 
 
 
@@ -90,13 +93,13 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         String user=getItem(position).getUsercmt();
         final String comment=getItem(position).getCommentdesc();
         final String uri=getItem(position).getUricmt();
         final String key=keys.get(position);
-        databaseReference2 = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4)+"/"+key+"/reply");
+        final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4)+"/"+key+"/reply");
         storage= FirebaseStorage.getInstance().getReference();
 //        Toast.makeText(getContext(),"comments/"+name1.substring(0, name1.length() - 4)+"/"+key, Toast.LENGTH_SHORT).show();
         LayoutInflater inflater=LayoutInflater.from(mContext);
@@ -105,18 +108,11 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         TextView nameC=(TextView)convertView.findViewById(R.id.cmt_user);
         TextView commentC=(TextView)convertView.findViewById(R.id.cmt_comment);
         ImageView imgC=(ImageView)convertView.findViewById(R.id.cmt_image);
-        ListView ReplyListView=(ListView)convertView.findViewById(R.id.recyclerviewreply);
+        final ListView ReplyListView=(ListView)convertView.findViewById(R.id.recyclerviewreply);
 
         nameC.setText(user);
         commentC.setText(comment);
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mCallback.popUp(key,uri);
-                return true;
-            }
 
-        });
 
 
         if(uri!=null) {
@@ -125,7 +121,16 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         else{
             imgC.setVisibility(View.GONE);
         }
-        viewAllFiles(ReplyListView);
+        viewAllFiles(ReplyListView,databaseReference2);
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                mCallback.popUp(key,uri);
+                return true;
+            }
+
+        });
 
 
 
@@ -133,11 +138,11 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     }
 
 
-    private void viewAllFiles(final ListView ReplyListView) {
+    private void viewAllFiles(final ListView ReplyListView,final DatabaseReference databaseReference2) {
         final ArrayList<Reply> replies= new ArrayList<>();
-        final DatabaseReference dr=databaseReference2;
 
-        databaseReference2.addValueEventListener(new ValueEventListener() {
+
+         databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final ArrayList<String> keys = new ArrayList<>();
@@ -149,11 +154,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 }
 
 
-                adapter = new ListAdapterReply(mContext,R.layout.itemreply,replies,keys,dr);
-
-
-
-
+                adapter = new ListAdapterReply(mContext,R.layout.itemreply,replies,keys,databaseReference2);
 
                 View v=LayoutInflater.from(mContext).inflate(R.layout.footerviewreply, null);
                 if (ReplyListView.getFooterViewsCount() > 0)
@@ -171,6 +172,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     @Override
                     public void onClick(View v) {
                         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
                             mCallback.onHandleSelection();
 //                            Toast.makeText(mContext, "sa:"+ReplyListView.getPositionForView(v), Toast.LENGTH_SHORT).show();
 
@@ -187,7 +189,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                         if (rep_str.isEmpty()){
                             Toast.makeText(mContext, "Type Reply", Toast.LENGTH_SHORT).show();
                         }else {
-                            uplodeFile(mCallback.getimage(), dr, rep_str);
+                            uplodeFile(mCallback.getimage(), databaseReference2, rep_str);
                         }
 
                     }
@@ -198,20 +200,18 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 ReplyListView.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(ReplyListView);
 
-
                 ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         String key=keys.get(position);
                         Reply reply=replies.get(position);
+                        mCallback.popUpReply(key,reply.getUrirep(),databaseReference2);
 
-
-                        mCallback.popUpReply(key,reply.getUrirep(),dr);
-//                        Toast.makeText(mContext, "posi:"+position, Toast.LENGTH_SHORT).show();
 
                         return false;
                     }
                 });
+
 
             }
 
@@ -219,6 +219,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
 
     }
@@ -278,6 +279,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             params.height = totalHeight + (myListView.getDividerHeight() * (adapter.getCount() - 1));
             myListView.setLayoutParams(params);
         }
+
     }
 
 
