@@ -23,7 +23,7 @@ public class ListAdapterTimetable extends ArrayAdapter<Timetable>{
     private ArrayList<String> keys;
 
     public interface CallbackInterface2{
-        void onHandleSelection2();
+        void onHandleSelection2(int position);
     }
 
     public ListAdapterTimetable(Context context, int resource, ArrayList<Timetable> objects,ArrayList<String> keys,CallbackInterface2 mCallback) {
@@ -38,7 +38,7 @@ public class ListAdapterTimetable extends ArrayAdapter<Timetable>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
          String date=getItem(position).getDate();
          String grade=getItem(position).getGrade();
@@ -79,7 +79,6 @@ public class ListAdapterTimetable extends ArrayAdapter<Timetable>{
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
-                                mCallback.onHandleSelection2();
                                 new FirebaseDatabaseHelper2().deleteClassDetails(key, new FirebaseDatabaseHelper2.DataStatus() {
                                     @Override
                                     public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
@@ -98,7 +97,7 @@ public class ListAdapterTimetable extends ArrayAdapter<Timetable>{
 
                                     @Override
                                     public void DataIsDeleted() {
-
+                                        mCallback.onHandleSelection2(position);
                                     }
                                 });
                                 break;

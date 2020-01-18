@@ -65,7 +65,7 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
     private void viewAllFiles() {
 
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> keys = new ArrayList<>();
@@ -141,7 +141,7 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getContext(), "class record has been inserted", Toast.LENGTH_SHORT).show();
-                        Timetable timetable = new Timetable();
+                        final Timetable timetable = new Timetable();
                         timetable.setDate(Category_day.getSelectedItem().toString());
                         timetable.setGrade(Category_grade.getSelectedItem().toString());
                         timetable.setTime(time.getText().toString());
@@ -161,6 +161,8 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
 
                                 @Override
                                 public void DataIsInserted() {
+                                    adapter.add(timetable);
+                                    adapter.notifyDataSetChanged();
                                     Toast.makeText(getContext(), "class record has been inserted", Toast.LENGTH_SHORT).show();
                                 }
 
@@ -174,14 +176,7 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
 
                                 }
                             });
-                            adapter.clear();
-                            e1 = 0;
-                            e2 = 0;
-                            e3 = 0;
-                            e4 = 0;
-                            e5 = 0;
-                            e6 = 0;
-                            e7 = 0;
+
                         }
                     }
                 });
@@ -202,14 +197,10 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
 
 
     @Override
-    public void onHandleSelection2() {
-        adapter.clear();
-        e1 = 0;
-        e2 = 0;
-        e3 = 0;
-        e4 = 0;
-        e5 = 0;
-        e6 = 0;
-        e7 = 0;
+    public void onHandleSelection2(int position) {
+        Timetable tt=timetables.get(position);
+        adapter.remove(tt);
+        adapter.notifyDataSetChanged();
+
     }
 }
