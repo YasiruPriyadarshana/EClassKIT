@@ -61,13 +61,13 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     private View v,v2;
     private StorageReference storage;
     private Button updateComment,addImage;
-    private ImageView image;
+    private ImageView image,imageView;
     private ImageButton imagepdf;
     private EditText desc;
     private TextView na;
     private String cmt_str,name,uri,name1;
     private String[] array;
-    private Uri imgUri;
+    private Uri imgUri,imgUriR;
     private ListAdapterComments.CallbackInterface anInterface;
     private ValueEventListener valueEventListener;
 
@@ -281,15 +281,10 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
             }
 
         }else if (requestCode==78 && resultCode == RESULT_OK && data!=null) {
-            imgUri=data.getData();
-
-            try {
-                Bitmap bitmp = MediaStore.Images.Media.getBitmap(getContentResolver(),imgUri);
-                image.setImageBitmap(bitmp);
+            imgUriR=data.getData();
+            Picasso.with(getApplicationContext()).load(imgUriR).into(imageView);
                 Toast.makeText(this, "Image added", Toast.LENGTH_SHORT).show();
-            }catch (IOException e){
-                Toast.makeText(Comments.this, "fucked: "+e, Toast.LENGTH_SHORT).show();
-            }
+
 
         } else {
             Toast.makeText(Comments.this, "Please select a file", Toast.LENGTH_SHORT).show();
@@ -298,11 +293,12 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
 
     @Override
-    public void onHandleSelection() {
+    public void onHandleSelection(ImageView imageView) {
         Intent intent=new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 78);
+        this.imageView=imageView;
     }
 
     @Override
@@ -312,7 +308,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
     @Override
     public Uri getimage() {
-        return imgUri;
+        return imgUriR;
     }
 
     @Override

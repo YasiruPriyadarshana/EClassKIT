@@ -3,16 +3,13 @@ package com.wonder.learnwithchirath.Adpter;
 
 import android.Manifest;
 
-import android.app.AlertDialog;
 import android.content.Context;
 
 
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 
 import android.net.Uri;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +18,6 @@ import android.widget.ArrayAdapter;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -30,14 +26,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +42,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import com.wonder.learnwithchirath.Comments;
 import com.wonder.learnwithchirath.Object.CommentM;
 import com.wonder.learnwithchirath.Object.Reply;
 import com.wonder.learnwithchirath.R;
@@ -72,7 +65,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
 
     public interface CallbackInterface{
-        void onHandleSelection();
+        void onHandleSelection(ImageView imageView);
         void onHandleSelectionClear();
         Uri getimage();
         void popUp(String key,String uri);
@@ -89,6 +82,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         this.name1=name1;
         this.name=name;
         this.mCallback=mCallback;
+
     }
 
 
@@ -165,7 +159,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 Button  updateReply = (Button) v.findViewById(R.id.addrep);
                 final EditText desc = (EditText)v.findViewById(R.id.rep_in);
                 Button addImage=(Button)v.findViewById(R.id.repaddimage);
-                ImageView repimage=(ImageView)v.findViewById(R.id.repimage_in);
+                final ImageView repimage=(ImageView)v.findViewById(R.id.repimage_in);
+
 
 
                 addImage.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +168,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     public void onClick(View v) {
                         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
-                            mCallback.onHandleSelection();
+                            mCallback.onHandleSelection(repimage);
+
 //                            Toast.makeText(mContext, "sa:"+ReplyListView.getPositionForView(v), Toast.LENGTH_SHORT).show();
 
                         } else {
@@ -194,7 +190,6 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
                     }
                 });
-
 
 
                 ReplyListView.setAdapter(adapter);
@@ -225,6 +220,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     }
 
     private void uplodeFile(final Uri imgUri,final DatabaseReference dr,final String rep_st) {
+
         //imageuploade
         if (imgUri == null) {
             Reply replytobj = new Reply(name, rep_st,null);
