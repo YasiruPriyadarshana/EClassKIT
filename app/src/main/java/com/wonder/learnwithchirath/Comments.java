@@ -70,7 +70,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     private Uri imgUri,imgUriR;
     private ListAdapterComments.CallbackInterface anInterface;
     private ValueEventListener valueEventListener;
-
+    int i=0;
 
 
     @Override
@@ -99,6 +99,9 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
          valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    adapter.clear();
+                }
                 ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     CommentM commentM = postSnapshot.getValue(CommentM.class);
@@ -173,6 +176,8 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
                 CommentListView.setAdapter(adapter);
 
+
+                i=1;
 
             }
 
