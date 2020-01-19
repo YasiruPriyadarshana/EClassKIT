@@ -225,7 +225,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         if (imgUri == null) {
             Reply replytobj = new Reply(name, rep_st,null);
 
-            dr.child(dr.push().getKey()).setValue(replytobj);
+            dr.child("2"+dr.push().getKey()).setValue(replytobj);
             Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
             mCallback.onHandleSelectionClear();
 
@@ -243,7 +243,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
                     Reply replytobj = new Reply(name, rep_st, p.toString());
 
-                    dr.child(dr.push().getKey()).setValue(replytobj);
+                    dr.child("2"+dr.push().getKey()).setValue(replytobj);
                     Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
 
                 }

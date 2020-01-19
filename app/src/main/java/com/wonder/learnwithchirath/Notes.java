@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -21,6 +23,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +37,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wonder.learnwithchirath.Adpter.ListAdapter;
-import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper;
 import com.wonder.learnwithchirath.Object.UploadPDF;
 
 import java.io.ByteArrayOutputStream;
@@ -53,8 +56,11 @@ public class Notes extends AppCompatActivity {
     private byte[] data1;
     private static String name;
     private Button uplode;
-    private FirebaseDatabaseHelper databaseHelper;
     private Uri url2;
+    private View v,v2;
+    private ListAdapter adapter;
+    private ArrayList<String> keys;
+    private int set;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,23 +76,59 @@ public class Notes extends AppCompatActivity {
         PDFListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UploadPDF uploadPDF = uploadPDFS.get(position);
+                UploadPDF uploadPDF = uploadPDFS.get(position-1);
 
-                Intent intent = new Intent();
-                intent.setData(Uri.parse(uploadPDF.getUrl()));
-                intent.setPackage("com.android.chrome");
+                Intent intent = new Intent(Notes.this,Comments.class);
+
+
+                intent.putExtra("image",uploadPDF.getImgurl());
+                intent.putExtra("name",uploadPDF.getName());
+                intent.putExtra("url",uploadPDF.getUrl());
                 startActivity(intent);
             }
         });
 
-        databaseHelper=new FirebaseDatabaseHelper();
+        PDFListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final int pos=position;
+                AlertDialog.Builder adb = new AlertDialog.Builder(
+                        Notes.this);
+                adb.setMessage("Are you sure?");
+                adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        UploadPDF uploadP=uploadPDFS.get(pos-1);
+                        Toast.makeText(Notes.this, "link: "+uploadP.getImgurl(), Toast.LENGTH_SHORT).show();
+                        StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getImgurl());
+                        photoRef.delete();
+                        StorageReference pdfRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getUrl());
+                        pdfRef.delete();
+                        adapter.clear();
+                        databaseReference.child(keys.get(pos-1)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(Notes.this, "Long press deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
+                        DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference("comments/");
+                        databaseReference.child(uploadP.getName().substring(0, uploadP.getName().length() - 4)).removeValue();
+                    }
+                });
+                adb.setNegativeButton("No",null);
+                adb.show();
+
+                return true;
+            }
+        });
 
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode==9 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+        if (requestCode==9 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
             selectPDF();
         }else {
             Toast.makeText(this, "please provide permission", Toast.LENGTH_SHORT).show();
@@ -150,16 +192,30 @@ public class Notes extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     UploadPDF uploadPDF = postSnapshot.getValue(UploadPDF.class);
                     uploadPDFS.add(uploadPDF);
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
                 }
 
 
-                ListAdapter adapter = new ListAdapter(getApplicationContext(),R.layout.item,uploadPDFS);
+                adapter = new ListAdapter(getApplicationContext(),R.layout.item,uploadPDFS);
 
-                View v=getLayoutInflater().inflate(R.layout.footerview, null);
+                if (PDFListView.getFooterViewsCount() > 0)
+                {
+                    PDFListView.removeFooterView(v);
+                }if (PDFListView.getHeaderViewsCount() > 0)
+                {
+                    PDFListView.removeHeaderView(v2);
+                }
+
+                v2=getLayoutInflater().inflate(R.layout.header_notes, null);
+                v=getLayoutInflater().inflate(R.layout.footerview, null);
+                PDFListView.addHeaderView(v2);
                 PDFListView.addFooterView(v);
+
                 selectFile=(ImageButton)v.findViewById(R.id.pdfImgBtn);
                 nameUpfile=(TextView)v.findViewById(R.id.nameofUpfile);
                 uplode=(Button)v.findViewById(R.id.update_btn);
@@ -178,6 +234,7 @@ public class Notes extends AppCompatActivity {
                     public void onClick(View v) {
                         if (pdfUri!=null) {
                             uplodeFile(pdfUri);
+
                         }else
                             Toast.makeText(Notes.this, "select a File", Toast.LENGTH_SHORT).show();
                     }
@@ -199,7 +256,7 @@ public class Notes extends AppCompatActivity {
         progressDialog.show();
 
         //imageuploade
-        StorageReference reference2 =storage.child("uploads1/"+System.currentTimeMillis()+".png");
+        StorageReference reference2 =storage.child("uploads/"+System.currentTimeMillis()+".png");
         reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -209,7 +266,7 @@ public class Notes extends AppCompatActivity {
 
                 Uri p=pdfUri;
                 //pdf uplode
-                StorageReference reference =storage.child("uploads1/"+name);
+                StorageReference reference =storage.child("uploads/"+name);
                 reference.putFile(p).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -229,10 +286,40 @@ public class Notes extends AppCompatActivity {
                         double currentProgress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
                         progressDialog.setMessage("Upoaded: "+(int)currentProgress+"%");
                     }
+                }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        adapter.clear();
+                    }
                 });
                 //end
             }
         });//end
 
     }
+
+    private int permission() {
+        set=2;
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        set=1;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        set=2;
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+
+        return set;
+    }
+
 }
