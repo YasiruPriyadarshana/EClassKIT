@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.wonder.learnwithchirath.Adpter.ListAdapterTimetable;
 import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper2;
@@ -36,7 +37,7 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
     private Spinner Category_grade;
     private Spinner Category_institute;
     private Spinner Category_class;
-    private Button Addclassdet;
+    private Button Addclassdet,sort;
     private EditText time;
     private ListAdapterTimetable.CallbackInterface2 anInterface;
 
@@ -59,13 +60,17 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
         viewAllFiles();
         anInterface=this;
 
+
+
+
         return v1;
     }
 
     private void viewAllFiles() {
 
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> keys = new ArrayList<>();
@@ -130,6 +135,9 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
                 TimetableListView.addFooterView(v);
 
 
+
+
+
                 Category_day = (Spinner) v.findViewById(R.id.category_day);
                 Category_grade = (Spinner) v.findViewById(R.id.category_grade);
                 Category_institute = (Spinner) v.findViewById(R.id.category_institute);
@@ -141,12 +149,13 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getContext(), "class record has been inserted", Toast.LENGTH_SHORT).show();
-                        final Timetable timetable = new Timetable();
+                        Timetable timetable = new Timetable();
                         timetable.setDate(Category_day.getSelectedItem().toString());
                         timetable.setGrade(Category_grade.getSelectedItem().toString());
                         timetable.setTime(time.getText().toString());
                         timetable.setInstitute(Category_institute.getSelectedItem().toString());
                         timetable.setGcalss(Category_class.getSelectedItem().toString());
+
 
                         if (time.getText().toString().isEmpty()) {
                             Toast.makeText(getContext(), "Enter time", Toast.LENGTH_SHORT).show();
@@ -161,8 +170,7 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
 
                                 @Override
                                 public void DataIsInserted() {
-                                    adapter.add(timetable);
-                                    adapter.notifyDataSetChanged();
+
                                     Toast.makeText(getContext(), "class record has been inserted", Toast.LENGTH_SHORT).show();
                                 }
 
@@ -176,7 +184,14 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
 
                                 }
                             });
-
+                            adapter.clear();
+                            e1 = 0;
+                            e2 = 0;
+                            e3 = 0;
+                            e4 = 0;
+                            e5 = 0;
+                            e6 = 0;
+                            e7 = 0;
                         }
                     }
                 });
@@ -197,10 +212,15 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
 
 
     @Override
-    public void onHandleSelection2(int position) {
-        Timetable tt=timetables.get(position);
-        adapter.remove(tt);
-        adapter.notifyDataSetChanged();
+    public void onHandleSelection2() {
+        adapter.clear();
+        e1 = 0;
+        e2 = 0;
+        e3 = 0;
+        e4 = 0;
+        e5 = 0;
+        e6 = 0;
+        e7 = 0;
 
     }
 }

@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context=".Class">
 
-
     <ListView
         android:id="@+id/recyclerviewclass"
         android:layout_width="match_parent"

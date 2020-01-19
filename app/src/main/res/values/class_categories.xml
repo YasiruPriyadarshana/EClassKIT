@@ -7,7 +7,7 @@
     <string-array name="grade_categories">
         <item>Grade 9 (English Medium)</item>
         <item>Grade 10(English Medium)</item>
-        <item>Grade 11(English Medium</item>
+        <item>Grade 11(English Medium)</item>
     </string-array>
     <string-array name="institute_categories">
         <item>OSIS Maharagama</item>
