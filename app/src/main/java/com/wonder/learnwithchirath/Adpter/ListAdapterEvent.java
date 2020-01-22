@@ -3,6 +3,7 @@ package com.wonder.learnwithchirath.Adpter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ import com.squareup.picasso.Picasso;
 import com.wonder.learnwithchirath.Object.Eventobj;
 import com.wonder.learnwithchirath.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
     private static final String TAG="ListAdapterEvent";
@@ -48,11 +51,11 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position,View convertView, ViewGroup parent) {
 
         String title=getItem(position).getTitle();
         String descrip=getItem(position).getDecription();
-        String time=getItem(position).getTime();
+        final String time=getItem(position).getTime();
         final String uri=getItem(position).getUri();
         final String key=keys.get(position);
 
@@ -61,14 +64,61 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
 
         TextView titlee=(TextView)convertView.findViewById(R.id.title_event);
         TextView descripe=(TextView)convertView.findViewById(R.id.descrip_event);
-        TextView timee=(TextView)convertView.findViewById(R.id.time_event);
         ImageView imageV=(ImageView)convertView.findViewById(R.id.image_event);
 
 
+        final TextView day=(TextView)convertView.findViewById(R.id.days);
+        final TextView hour=(TextView)convertView.findViewById(R.id.hours);
+        final TextView minute=(TextView)convertView.findViewById(R.id.minutes);
+        final TextView second=(TextView)convertView.findViewById(R.id.seconds);
+        final TextView event=(TextView)convertView.findViewById(R.id.event);
 
         titlee.setText(title);
         descripe.setText(descrip);
-        timee.setText(time);
+        final Handler handler = new Handler();
+        final View convertV=convertView;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this,1000);
+                try {
+                    SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    Date futureDate = dateFormat.parse(time);
+                    Date currentDate = new Date();
+
+                    if (!currentDate.after(futureDate)){
+                        long diff =futureDate.getTime() - currentDate.getTime();
+
+                        long days = diff / (24*60*60*1000);
+                        diff -= days*(24*60*60*1000);
+                        long hours = diff / (60*60*1000);
+                        diff -= hours*(60*60*1000);
+                        long minutes = diff / (60*1000);
+                        diff -= minutes*(60*1000);
+                        long seconds = diff/1000;
+
+                        day.setText(""+ String.format("%02d", days));
+                        hour.setText(""+ String.format("%02d", hours));
+                        minute.setText(""+ String.format("%02d", minutes));
+                        second.setText(""+ String.format("%02d", seconds));
+                    }else {
+                        event.setText("The Event Started!");
+                        convertV.findViewById(R.id.LL1).setVisibility(View.GONE);
+                        convertV.findViewById(R.id.LL2).setVisibility(View.GONE);
+                        convertV.findViewById(R.id.LL3).setVisibility(View.GONE);
+                        convertV.findViewById(R.id.LL4).setVisibility(View.GONE);
+                    }
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+        };
+        handler.postDelayed(runnable, 1*1000);
+
+//        timee.setText(time);
 
 
         Picasso.with(getContext()).load(uri).into(imageV);
@@ -109,4 +159,9 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
 
         return convertView;
     }
+
+    private void countDownStart() {
+    }
+
+
 }

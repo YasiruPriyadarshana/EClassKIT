@@ -1,7 +1,9 @@
 package com.wonder.learnwithchirath;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 
@@ -39,6 +43,8 @@ import com.wonder.learnwithchirath.Adpter.ListAdapterEvent;
 import com.wonder.learnwithchirath.Object.Eventobj;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import in.gauriinfotech.commons.Commons;
 
 import static android.app.Activity.RESULT_OK;
@@ -58,6 +64,9 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
     private View v;
     private ListAdapterEvent adapter;
     private ListAdapterEvent.CallbackInterfaceE anInterface;
+    private int day,month,year,hour,minute;
+    private int dayFinal,monthFinal,yearFinal,hourFinal,minuteFinal;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,7 +113,45 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                 selectimage = (ImageButton) v.findViewById(R.id.evnt_imgbtn);
                 event = (TextView) v.findViewById(R.id.title_in);
                 desc = (TextView) v.findViewById(R.id.desc_in);
-                time = (TextView) v.findViewById(R.id.time_in);
+
+                time = (Button) v.findViewById(R.id.date);
+
+
+
+                time.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Calendar c=Calendar.getInstance();
+                        year = c.get(Calendar.YEAR);
+                        month = c.get(Calendar.MONTH);
+                        day = c.get(Calendar.DAY_OF_MONTH);
+
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                yearFinal=year;
+                                monthFinal=month+1;
+                                dayFinal=dayOfMonth;
+
+                                Calendar c=Calendar.getInstance();
+
+                                TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        hourFinal=hourOfDay;
+                                        minuteFinal=minute;
+
+                                        time.setText(""+yearFinal+"-"+monthFinal+"-"+dayFinal+" "+hourFinal+":"+minuteFinal);
+                                    }
+                                }, hour, minute, false);
+                                timePickerDialog.show();
+                            }
+                        }, year, month, day);
+                        datePickerDialog.show();
+                    }
+                });
+
+
                 updateEvent = (Button) v.findViewById(R.id.add_event);
                 selectimage.setOnClickListener(new View.OnClickListener() {
                     @Override

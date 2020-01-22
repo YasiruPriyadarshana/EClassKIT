@@ -1,6 +1,8 @@
 package com.wonder.learnwithchirath;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -8,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,10 +29,11 @@ import com.wonder.learnwithchirath.Object.Timetable;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
-public class Class extends Fragment implements ListAdapterTimetable.CallbackInterface2{
+public class Class extends Fragment implements ListAdapterTimetable.CallbackInterface2 {
     private DatabaseReference databaseReference;
     private ArrayList<Timetable> timetables;
     private ListView TimetableListView;
@@ -37,13 +42,13 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
     private Spinner Category_grade;
     private Spinner Category_institute;
     private Spinner Category_class;
-    private Button Addclassdet,sort;
-    private EditText time;
+    private Button Addclassdet,sort,time;
     private ListAdapterTimetable.CallbackInterface2 anInterface;
-
+    private int hour,minute,hour2,minute2;
+    private int hourFinal,minuteFinal,hourFinal2,minuteFinal2;
 
     ListAdapterTimetable adapter;
-    String tmp;
+    String tmp,ampm,ampm2;;
     int e1,e2,e3,e4,e5,e6,e7=0;
     ArrayList<Timetable> t1,t2,t3,t4,t5,t6,t7;
 
@@ -143,7 +148,51 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
                 Category_institute = (Spinner) v.findViewById(R.id.category_institute);
                 Category_class = (Spinner) v.findViewById(R.id.category_class);
                 Addclassdet = (Button) v.findViewById(R.id.addclassdet);
-                time = (EditText) v.findViewById(R.id.time);
+
+                time = (Button) v.findViewById(R.id.time);
+
+
+
+                time.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Calendar c=Calendar.getInstance();
+                        TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                hourFinal=hourOfDay;
+                                ampm="AM";
+                                if (hourOfDay>12){
+                                    hourFinal=hourOfDay-12;
+                                    ampm="PM";
+                                }
+                                minuteFinal=minute;
+
+                                Calendar c=Calendar.getInstance();
+                                TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        hourFinal2=hourOfDay;
+                                        ampm2="AM";
+                                        if (hourOfDay>12){
+                                            hourFinal2=hourOfDay-12;
+                                            ampm2="PM";
+                                        }
+                                        minuteFinal2=minute;
+
+                                        time.setText(""+hourFinal+"."+minuteFinal+" "+ampm+" - "+hourFinal2+"."+minuteFinal2+" "+ampm2);
+                                    }
+                                }, hour, minute, false);
+                                timePickerDialog.show();
+
+                            }
+                        }, hour, minute, false);
+                        timePickerDialog.show();
+                    }
+                });
+
+
 
                 Addclassdet.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -223,4 +272,6 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
         e7 = 0;
 
     }
+
+
 }
