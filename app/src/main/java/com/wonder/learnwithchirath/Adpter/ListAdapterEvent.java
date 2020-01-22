@@ -28,6 +28,7 @@ import com.wonder.learnwithchirath.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
@@ -102,7 +103,17 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
                         minute.setText(""+ String.format("%02d", minutes));
                         second.setText(""+ String.format("%02d", seconds));
                     }else {
-                        event.setText("The Event Started!");
+                        Date temp = futureDate;
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(temp);
+                        c.add(Calendar.DATE, 1);
+                        temp = c.getTime();
+
+                        if (!currentDate.after(temp)){
+                            event.setText("The Event Started!");
+                        }else {
+                            event.setText("The Event Ended!");
+                        }
                         convertV.findViewById(R.id.LL1).setVisibility(View.GONE);
                         convertV.findViewById(R.id.LL2).setVisibility(View.GONE);
                         convertV.findViewById(R.id.LL3).setVisibility(View.GONE);

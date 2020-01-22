@@ -44,6 +44,7 @@ import com.wonder.learnwithchirath.Object.Eventobj;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import in.gauriinfotech.commons.Commons;
 
@@ -98,7 +99,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                     String mkey = postSnapshot.getKey();
                     keys.add(mkey);
                 }
-
+                Collections.reverse(eventobjs);
 
                 adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs, keys,anInterface);
 
