@@ -197,7 +197,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         //imageuploade
         if (imgUri == null) {
             CommentM commentobj = new CommentM(getName(), cmt_str,null);
-            databaseReference.child("2"+databaseReference.push().getKey()).setValue(commentobj);
+            databaseReference.child("1"+databaseReference.push().getKey()).setValue(commentobj);
             Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
             adapter.clear();
         } else {
@@ -212,7 +212,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
                     CommentM commentobj = new CommentM(getName(), cmt_str, p.toString());
 
-                    databaseReference.child("2"+databaseReference.push().getKey()).setValue(commentobj);
+                    databaseReference.child("1"+databaseReference.push().getKey()).setValue(commentobj);
                     Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
 
 

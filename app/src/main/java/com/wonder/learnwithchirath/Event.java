@@ -99,7 +99,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                     String mkey = postSnapshot.getKey();
                     keys.add(mkey);
                 }
-                Collections.reverse(eventobjs);
+//                Collections.reverse(eventobjs);
 
                 adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs, keys,anInterface);
 
