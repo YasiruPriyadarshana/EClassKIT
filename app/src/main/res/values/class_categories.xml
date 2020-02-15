@@ -30,4 +30,8 @@
         <item>Saturday</item>
         <item>Sunday</item>
     </string-array>
+    <string-array name="quest_type">
+        <item>checkbox</item>
+        <item>radiobutton</item>
+    </string-array>
 </resources>

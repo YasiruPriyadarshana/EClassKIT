@@ -31,14 +31,15 @@
         android:layout_height="wrap_content"
         app:videoId="78l-iSI--Es"
         app:autoPlay="false"
-        app:showFullScreenButton="false" />
-    <ListView
-        android:id="@+id/recyclerviewhome"
+        app:showFullScreenButton="false" >
+
+    </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
+
+    <ImageButton
+        android:id="@+id/quiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_margin="10dp"
+        android:src="@drawable/leranwithchirathlogo" />
 
 </LinearLayout>
