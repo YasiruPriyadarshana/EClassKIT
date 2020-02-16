@@ -31,6 +31,7 @@ public class FragmentQuestion extends Fragment {
         this.quizobj = quizobj;
         count=i;
         Common.answer.add(count,0);
+        Common.completelist.add(count,0);
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -57,6 +58,7 @@ public class quizMain extends AppCompatActivity {
     private Context context;
     private List<FragmentQuestion> fragmentlist=new ArrayList<>();
     private Button next;
+    private ImageButton flag;
     private int position;
     private String[] array;
     private String name;
@@ -70,6 +72,7 @@ public class quizMain extends AppCompatActivity {
 
         mTabLayout=findViewById(R.id.quiztablayout);
         mPager=findViewById(R.id.quizviewpager);
+        flag=(ImageButton)findViewById(R.id.flag_imgbtn);
         next=findViewById(R.id.addnew_quest);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +121,13 @@ public class quizMain extends AppCompatActivity {
 
             }
         });
-
+        flag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int po=mPager.getCurrentItem()+1;
+                Common.completelist.set(po,1);
+            }
+        });
         context=this;
 
         viewAllFiles();
