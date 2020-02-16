@@ -49,8 +49,7 @@ public class ListAdapterQuizList extends RecyclerView.Adapter<ListAdapterQuizLis
                         while (i<=viewHolder.getPosition()){
                             if (Common.answer.get(i) > 0) {
                                 viewHolder.ques1.setBackgroundColor(Color.parseColor("#E91BD37C"));
-                            }
-                            if (Common.completelist.get(i)>0){
+                            }else  if (Common.completelist.get(i)>0){
                                 viewHolder.ques1.setBackgroundColor(Color.parseColor("#D50000"));
                             }
                             j=i;

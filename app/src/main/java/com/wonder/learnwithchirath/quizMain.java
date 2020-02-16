@@ -124,7 +124,7 @@ public class quizMain extends AppCompatActivity {
         flag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int po=mPager.getCurrentItem()+1;
+                int po=mPager.getCurrentItem();
                 Common.completelist.set(po,1);
             }
         });

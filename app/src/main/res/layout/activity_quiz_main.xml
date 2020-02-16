@@ -11,8 +11,7 @@
         android:id="@+id/flag_imgbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent/"
-        app:srcCompat="@mipmap/flag" />
+        app:srcCompat="@mipmap/web" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerquizlist"
