@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,10 +29,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.wonder.learnwithchirath.Adpter.ListAdapterQuiz;
 import com.wonder.learnwithchirath.Adpter.ListAdapterQuizList;
+import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper3;
+import com.wonder.learnwithchirath.Object.Answer;
 import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.Quizobj;
+import com.wonder.learnwithchirath.Object.Timetable;
 
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -48,6 +58,8 @@ public class quizMain extends AppCompatActivity {
     private List<FragmentQuestion> fragmentlist=new ArrayList<>();
     private Button next;
     private int position;
+    private String[] array;
+    private String name;
 
 
     @Override
@@ -63,9 +75,43 @@ public class quizMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 position=mPager.getCurrentItem()+1;
-                if (position==adapterQuiz.getCount()){
-                    Intent intent=new Intent(quizMain.this,MainActivity.class);
-                    startActivity(intent);
+                if (position==adapterQuiz.getCount()) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(
+                            quizMain.this);
+                    adb.setMessage("Do you want to complete?");
+                    adb.setPositiveButton("Submit All", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+//                            Toast.makeText(quizMain.this, "a:"+Common.answer+""+getName(), Toast.LENGTH_SHORT).show();
+                            Answer answer=new Answer(Common.answer,getName());
+                            new FirebaseDatabaseHelper3().addAnswerDetails(answer, new FirebaseDatabaseHelper3.DataStatus() {
+                                @Override
+                                public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
+
+                                }
+
+                                @Override
+                                public void DataIsInserted() {
+                                    Toast.makeText(quizMain.this, "Quiz Answer Data Inserted", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void DataIsUpdated() {
+
+                                }
+
+                                @Override
+                                public void DataIsDeleted() {
+
+                                }
+                            });
+                            Intent intent = new Intent(quizMain.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+
+                    });
+                    adb.setNegativeButton("Cancel", null);
+                    adb.show();
                 }
 
                 mPager.setCurrentItem(position);
@@ -141,5 +187,30 @@ public class quizMain extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public String getName(){
+        try {
+            FileInputStream fileInputStream = openFileInput("apprequirement.txt");
+            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer =new StringBuffer();
+
+
+            String lines;
+            while ((lines = bufferedReader.readLine()) != null){
+                stringBuffer.append(lines + "\n");
+            }
+            String str =stringBuffer.toString();
+            array = str.split(",");
+
+            name=array[0];
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return name;
     }
 }

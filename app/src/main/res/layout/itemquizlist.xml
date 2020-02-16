@@ -9,5 +9,6 @@
         android:layout_width="18dp"
         android:layout_height="26dp"
         android:layout_margin="10dp"
-        android:text="0" />
+        android:text="0"
+        android:background="#D2D4D5"/>
 </LinearLayout>
