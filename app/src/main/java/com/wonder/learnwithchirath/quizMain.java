@@ -63,14 +63,16 @@ public class quizMain extends AppCompatActivity {
     private ImageButton flag;
     private int position,v1;
     private String[] array;
-    private String name;
+    private String name,keyname;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_main);
-        databaseReference = FirebaseDatabase.getInstance().getReference("quiz");
+        Intent intent=getIntent();
+        keyname=intent.getStringExtra("key");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+keyname+"/quiz");
 
         mTabLayout=findViewById(R.id.quiztablayout);
         mPager=findViewById(R.id.quizviewpager);
@@ -89,7 +91,7 @@ public class quizMain extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
 //                            Toast.makeText(quizMain.this, "a:"+Common.answer+""+getName(), Toast.LENGTH_SHORT).show();
                             Answer answer=new Answer(Common.answer,getName());
-                            new FirebaseDatabaseHelper3().addAnswerDetails(answer, new FirebaseDatabaseHelper3.DataStatus() {
+                            new FirebaseDatabaseHelper3(keyname).addAnswerDetails(answer, new FirebaseDatabaseHelper3.DataStatus() {
                                 @Override
                                 public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
 
@@ -199,10 +201,12 @@ public class quizMain extends AppCompatActivity {
 
         if (id == R.id.add_quest) {
             Intent intent=new Intent(this,addQuestions.class);
+            intent.putExtra("key",keyname);
             startActivity(intent);
             return true;
         }if (id == R.id.review_quest) {
             Intent intent=new Intent(this,ReviewQuiz.class);
+            intent.putExtra("key",keyname);
             startActivity(intent);
             return true;
         }

@@ -27,9 +27,9 @@ public class FirebaseDatabaseHelper3 {
         void DataIsDeleted();
     }
 
-    public FirebaseDatabaseHelper3() {
+    public FirebaseDatabaseHelper3(String name) {
         tDatabase = FirebaseDatabase.getInstance();
-        tRefarenceStudents= tDatabase.getReference("Answer_Student");
+        tRefarenceStudents= tDatabase.getReference("quizHome/"+name+"/Answer_Student");
     }
 
 

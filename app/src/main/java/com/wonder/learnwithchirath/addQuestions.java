@@ -42,7 +42,7 @@ public class addQuestions extends AppCompatActivity {
     private Uri imgUri;
     private Button addquest;
     private EditText quest,ans1,ans2,ans3,ans4,ans5;
-    private String quest_st,ans1_st,ans2_st,ans3_st,ans4_st,ans5_st,type;
+    private String quest_st,ans1_st,ans2_st,ans3_st,ans4_st,ans5_st,type,keyname;
     private CheckBox a1,a2,a3,a4,a5;
     private Spinner questCategory_spinner;
     private DatabaseReference databaseReference;
@@ -51,8 +51,9 @@ public class addQuestions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_questions);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("quiz");
+        Intent intent=getIntent();
+        keyname=intent.getStringExtra("key");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+keyname+"/quiz");
         storage= FirebaseStorage.getInstance().getReference();
 
         questCategory_spinner = (Spinner)findViewById(R.id.categoryquest_spin);

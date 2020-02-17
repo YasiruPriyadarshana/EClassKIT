@@ -1,6 +1,7 @@
 package com.wonder.learnwithchirath;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -34,7 +35,9 @@ public class ReviewQuiz extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_quiz);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Answer_Student");
+        Intent intent=getIntent();
+        String keyname=intent.getStringExtra("key");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+keyname+"/Answer_Student");
         ReviewListView=(ListView)findViewById(R.id.recyclerviewreview);
         answers=new ArrayList<>();
         reviews=new ArrayList<>();
