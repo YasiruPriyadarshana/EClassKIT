@@ -14,11 +14,11 @@ public class Answer {
     public Answer() {
     }
 
-    public ArrayList<Integer> getCompletelist() {
+    public ArrayList<Integer> getAnswer() {
         return answer;
     }
 
-    public void setCompletelist(ArrayList<Integer> answer) {
+    public void setAnswer(ArrayList<Integer> answer) {
         this.answer = answer;
     }
 

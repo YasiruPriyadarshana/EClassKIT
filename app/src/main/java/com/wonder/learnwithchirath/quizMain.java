@@ -59,7 +59,7 @@ public class quizMain extends AppCompatActivity {
     private List<FragmentQuestion> fragmentlist=new ArrayList<>();
     private Button next;
     private ImageButton flag;
-    private int position;
+    private int position,v1;
     private String[] array;
     private String name;
 
@@ -121,11 +121,18 @@ public class quizMain extends AppCompatActivity {
 
             }
         });
+
         flag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int po=mPager.getCurrentItem();
-                Common.completelist.set(po,1);
+                int po = mPager.getCurrentItem();
+                if (v1==0) {
+                    Common.completelist.set(po, 1);
+                    v1++;
+                }else {
+                    Common.completelist.set(po,0);
+                    v1--;
+                }
             }
         });
         context=this;
@@ -191,7 +198,8 @@ public class quizMain extends AppCompatActivity {
             startActivity(intent);
             return true;
         }if (id == R.id.review_quest) {
-
+            Intent intent=new Intent(this,ReviewQuiz.class);
+            startActivity(intent);
             return true;
         }
 
@@ -221,5 +229,22 @@ public class quizMain extends AppCompatActivity {
             e.printStackTrace();
         }
         return name;
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(
+                quizMain.this);
+        adb.setMessage("Do you want to Quit?");
+        adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(quizMain.this, MainActivity.class);
+                quizMain.this.finish();
+                Common.answer.clear();
+                startActivity(intent);
+            }
+        });
+        adb.setNegativeButton("No", null);
+        adb.show();
     }
 }

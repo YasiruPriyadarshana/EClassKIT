@@ -44,11 +44,11 @@ public class FragmentQuestion extends Fragment {
         final CheckBox ans3=(CheckBox)v.findViewById(R.id.ans_cb3);
         final CheckBox ans4=(CheckBox)v.findViewById(R.id.ans_cb4);
         final CheckBox ans5=(CheckBox)v.findViewById(R.id.ans_cb5);
-        RadioButton rb1=(RadioButton)v.findViewById(R.id.ans_rb1);
-        RadioButton rb2=(RadioButton)v.findViewById(R.id.ans_rb2);
-        RadioButton rb3=(RadioButton)v.findViewById(R.id.ans_rb3);
-        RadioButton rb4=(RadioButton)v.findViewById(R.id.ans_rb4);
-        RadioButton rb5=(RadioButton)v.findViewById(R.id.ans_rb5);
+        final  RadioButton rb1=(RadioButton)v.findViewById(R.id.ans_rb1);
+        final  RadioButton rb2=(RadioButton)v.findViewById(R.id.ans_rb2);
+        final  RadioButton rb3=(RadioButton)v.findViewById(R.id.ans_rb3);
+        final  RadioButton rb4=(RadioButton)v.findViewById(R.id.ans_rb4);
+        final  RadioButton rb5=(RadioButton)v.findViewById(R.id.ans_rb5);
 
 
         ImageView imgC=(ImageView)v.findViewById(R.id.frag_questimg);
@@ -110,6 +110,12 @@ public class FragmentQuestion extends Fragment {
                         a--;
                         Common.answer.set(count,a);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(ans1.isChecked()){
+                        b+=2;
+                        Common.completelist.set(count,b);
+                    } else{
+                        b-=2;
+                        Common.completelist.set(count,b);
                     }
                 }
             });
@@ -124,6 +130,12 @@ public class FragmentQuestion extends Fragment {
                         a--;
                         Common.answer.set(count,a);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(ans2.isChecked()){
+                        b+=2;
+                        Common.completelist.set(count,b);
+                    } else{
+                        b-=2;
+                        Common.completelist.set(count,b);
                     }
                 }
             });
@@ -138,6 +150,12 @@ public class FragmentQuestion extends Fragment {
                         a--;
                         Common.answer.set(count,a);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(ans3.isChecked()){
+                        b+=2;
+                        Common.completelist.set(count,b);
+                    } else{
+                        b-=2;
+                        Common.completelist.set(count,b);
                     }
                 }
             });
@@ -152,6 +170,12 @@ public class FragmentQuestion extends Fragment {
                         a--;
                         Common.answer.set(count,a);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(ans4.isChecked()){
+                        b+=2;
+                        Common.completelist.set(count,b);
+                    } else{
+                        b-=2;
+                        Common.completelist.set(count,b);
                     }
                 }
             });
@@ -166,6 +190,12 @@ public class FragmentQuestion extends Fragment {
                         a--;
                         Common.answer.set(count,a);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(ans5.isChecked()){
+                        b+=2;
+                        Common.completelist.set(count,b);
+                    } else{
+                        b-=2;
+                        Common.completelist.set(count,b);
                     }
                 }
             });
@@ -179,6 +209,8 @@ public class FragmentQuestion extends Fragment {
                     }else if (String.valueOf(quizobj.getAns1().charAt(0)).equals("1")){
                         Common.answer.set(count,0);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(rb1.isChecked()){
+                        Common.completelist.set(count,2);
                     }
                 }
             });
@@ -191,6 +223,8 @@ public class FragmentQuestion extends Fragment {
                     }else if (String.valueOf(quizobj.getAns2().charAt(0)).equals("1")) {
                         Common.answer.set(count,0);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(rb2.isChecked()){
+                        Common.completelist.set(count,2);
                     }
                 }
             });
@@ -203,6 +237,8 @@ public class FragmentQuestion extends Fragment {
                     }else if (String.valueOf(quizobj.getAns3().charAt(0)).equals("1")){
                         Common.answer.set(count,0);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(rb3.isChecked()){
+                        Common.completelist.set(count,2);
                     }
                 }
             });
@@ -215,6 +251,8 @@ public class FragmentQuestion extends Fragment {
                     }else if (String.valueOf(quizobj.getAns4().charAt(0)).equals("1")){
                         Common.answer.set(count,0);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(rb4.isChecked()){
+                        Common.completelist.set(count,2);
                     }
                 }
             });
@@ -227,6 +265,8 @@ public class FragmentQuestion extends Fragment {
                     }else if (String.valueOf(quizobj.getAns5().charAt(0)).equals("1")){
                         Common.answer.set(count,0);
                         Toast.makeText(getContext(), "ans:"+Common.answer, Toast.LENGTH_SHORT).show();
+                    }if(rb5.isChecked()){
+                        Common.completelist.set(count,2);
                     }
                 }
             });
