@@ -2,6 +2,7 @@ package com.wonder.learnwithchirath;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -109,6 +111,7 @@ public class quizMain extends AppCompatActivity {
                                 }
                             });
                             Intent intent = new Intent(quizMain.this, MainActivity.class);
+                            Common.answer.clear();
                             startActivity(intent);
                         }
 
@@ -155,10 +158,11 @@ public class quizMain extends AppCompatActivity {
 
                 adapter = new ListAdapterQuizList(uploadQuizS);
 
-                LinearLayoutManager layoutManager= new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager layoutManager= new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
+
                 QuizListView = (RecyclerView) findViewById(R.id.recyclerquizlist);
                 QuizListView.setLayoutManager(layoutManager);
-
+                QuizListView.setLayoutManager(new GridLayoutManager(quizMain.this,10));
                 QuizListView.setAdapter(adapter);
 
                 getFragmentList();
