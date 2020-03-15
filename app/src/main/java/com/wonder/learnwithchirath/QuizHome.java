@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -81,6 +84,7 @@ public class QuizHome extends AppCompatActivity {
                 Button updatequiz = (Button) v.findViewById(R.id.addnewquiz_home);
                 final EditText quiz_name=(EditText)v.findViewById(R.id.addquiz_name);
                 final EditText quiz_time=(EditText)v.findViewById(R.id.ttl_quiz_time);
+
                 updatequiz.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

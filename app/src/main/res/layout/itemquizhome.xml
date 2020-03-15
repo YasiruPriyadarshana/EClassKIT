@@ -10,6 +10,13 @@
     app:cardUseCompatPadding="true">
 
 
+    <Button
+        android:id="@+id/myresult_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="E" />
+
     <TextView
         android:id="@+id/quest_home_name"
         android:layout_width="wrap_content"
@@ -28,6 +35,5 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
         android:text="30 min" />
-
 
 </androidx.cardview.widget.CardView>

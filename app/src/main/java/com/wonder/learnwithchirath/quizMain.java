@@ -13,15 +13,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,13 +44,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
+
 
 public class quizMain extends AppCompatActivity {
     private DatabaseReference databaseReference;
@@ -100,7 +92,13 @@ public class quizMain extends AppCompatActivity {
                 int minutes = (int) ((millis / (1000*60)) % 60);
 //                int hours   = (int) ((millis / (1000*60*60)) % 24);
                 String text = String.format("%02d : %02d",minutes,seconds);
-                timeleft.setText(text);
+                if (minutes==0){
+                    timeleft.setText(text);
+                    timeleft.setTextColor(Color.parseColor("#FF0000"));
+                }else {
+                    timeleft.setText(text);
+                }
+
             }
 
             @Override
