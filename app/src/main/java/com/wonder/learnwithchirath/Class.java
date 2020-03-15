@@ -6,6 +6,9 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +46,12 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
     private Spinner Category_institute;
     private Spinner Category_class;
     private Button Addclassdet,sort,time;
+    private EditText search;
     private ListAdapterTimetable.CallbackInterface2 anInterface;
     private int hour,minute,hour2,minute2;
     private int hourFinal,minuteFinal,hourFinal2,minuteFinal2;
 
-    ListAdapterTimetable adapter;
+    private ListAdapterTimetable adapter;
     String tmp,ampm,ampm2;;
     int e1,e2,e3,e4,e5,e6,e7=0;
     ArrayList<Timetable> t1,t2,t3,t4,t5,t6,t7;
@@ -134,13 +138,11 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
                     TimetableListView.removeHeaderView(v2);
                 }
 
-                v2 = getLayoutInflater().inflate(R.layout.header_class, null);
+
                 v = getLayoutInflater().inflate(R.layout.footerviewclass, null);
+                v2 = getLayoutInflater().inflate(R.layout.header_class, null);
                 TimetableListView.addHeaderView(v2);
                 TimetableListView.addFooterView(v);
-
-
-
 
 
                 Category_day = (Spinner) v.findViewById(R.id.category_day);
@@ -233,7 +235,8 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
 
                                 }
                             });
-                            adapter.clear();
+                            timetables.clear();
+                            adapter.notifyDataSetChanged();
                             e1 = 0;
                             e2 = 0;
                             e3 = 0;
@@ -242,6 +245,26 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
                             e6 = 0;
                             e7 = 0;
                         }
+
+
+
+                    }
+                });
+                search=(EditText)v2.findViewById(R.id.search_box);
+                search.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        adapter.getFilter().filter(s);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
                     }
                 });
 
@@ -256,13 +279,13 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
             }
         });
 
-
     }
 
 
     @Override
     public void onHandleSelection2() {
-        adapter.clear();
+        timetables.clear();
+        adapter.notifyDataSetChanged();
         e1 = 0;
         e2 = 0;
         e3 = 0;
@@ -272,6 +295,9 @@ public class Class extends Fragment implements ListAdapterTimetable.CallbackInte
         e7 = 0;
 
     }
+
+
+
 
 
 }
