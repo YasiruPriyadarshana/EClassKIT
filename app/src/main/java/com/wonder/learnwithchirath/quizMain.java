@@ -14,12 +14,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -44,7 +48,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -63,7 +71,7 @@ public class quizMain extends AppCompatActivity {
     private ImageButton flag;
     private int position,v1;
     private String[] array;
-    private String name,keyname;
+    private String name,keyname,time;
 
 
     @Override
@@ -72,7 +80,36 @@ public class quizMain extends AppCompatActivity {
         setContentView(R.layout.activity_quiz_main);
         Intent intent=getIntent();
         keyname=intent.getStringExtra("key");
+        time=intent.getStringExtra("time");
         databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+keyname+"/quiz");
+
+        final TextView timeleft=(TextView)findViewById(R.id.time_left);
+
+        int hoursToGo = 0;
+        int minutesToGo = Integer.valueOf(time);
+        int secondsToGo = 0;
+
+
+        int millisToGo = secondsToGo*1000+minutesToGo*1000*60+hoursToGo*1000*60*60;
+
+        new CountDownTimer(millisToGo,1000) {
+
+            @Override
+            public void onTick(long millis) {
+                int seconds = (int) (millis / 1000) % 60 ;
+                int minutes = (int) ((millis / (1000*60)) % 60);
+//                int hours   = (int) ((millis / (1000*60*60)) % 24);
+                String text = String.format("%02d : %02d",minutes,seconds);
+                timeleft.setText(text);
+            }
+
+            @Override
+            public void onFinish() {
+                timeleft.setText("Kabooom");
+                submit();
+            }
+        }.start();
+
 
         mTabLayout=findViewById(R.id.quiztablayout);
         mPager=findViewById(R.id.quizviewpager);
@@ -90,31 +127,7 @@ public class quizMain extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 //                            Toast.makeText(quizMain.this, "a:"+Common.answer+""+getName(), Toast.LENGTH_SHORT).show();
-                            Answer answer=new Answer(Common.answer,getName());
-                            new FirebaseDatabaseHelper3(keyname).addAnswerDetails(answer, new FirebaseDatabaseHelper3.DataStatus() {
-                                @Override
-                                public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
-
-                                }
-
-                                @Override
-                                public void DataIsInserted() {
-                                    Toast.makeText(quizMain.this, "Quiz Answer Data Inserted", Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void DataIsUpdated() {
-
-                                }
-
-                                @Override
-                                public void DataIsDeleted() {
-
-                                }
-                            });
-                            Intent intent = new Intent(quizMain.this, MainActivity.class);
-                            Common.answer.clear();
-                            startActivity(intent);
+                            submit();
                         }
 
                     });
@@ -254,5 +267,33 @@ public class quizMain extends AppCompatActivity {
         });
         adb.setNegativeButton("No", null);
         adb.show();
+    }
+
+    private void submit(){
+        Answer answer=new Answer(Common.answer,getName());
+        new FirebaseDatabaseHelper3(keyname).addAnswerDetails(answer, new FirebaseDatabaseHelper3.DataStatus() {
+            @Override
+            public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
+
+            }
+
+            @Override
+            public void DataIsInserted() {
+                Toast.makeText(quizMain.this, "Quiz Answer Data Inserted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+        Intent intent = new Intent(quizMain.this, MainActivity.class);
+        Common.answer.clear();
+        startActivity(intent);
     }
 }

@@ -28,12 +28,14 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         String name=getItem(position).getName();
+        String time=getItem(position).getTime();
         LayoutInflater inflater=LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
         TextView namef=(TextView)convertView.findViewById(R.id.quest_home_name);
-
+        TextView timef=(TextView)convertView.findViewById(R.id.time_lbl);
         namef.setText(name);
+        timef.setText(time+" Min");
 
 
         return convertView;
