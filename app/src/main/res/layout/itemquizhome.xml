@@ -10,11 +10,16 @@
     app:cardUseCompatPadding="true">
 
 
-    <Button
+    <ImageButton
         android:id="@+id/myresult_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:src="@drawable/ic_more_horiz"
         android:text="E" />
 
     <TextView

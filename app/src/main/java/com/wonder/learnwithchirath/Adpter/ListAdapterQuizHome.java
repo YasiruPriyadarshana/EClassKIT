@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -44,7 +45,7 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
         namef.setText(name);
         timef.setText(time+" Min");
 
-        final Button result=(Button)convertView.findViewById(R.id.myresult_btn);
+        final ImageButton result=(ImageButton) convertView.findViewById(R.id.myresult_btn);
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
