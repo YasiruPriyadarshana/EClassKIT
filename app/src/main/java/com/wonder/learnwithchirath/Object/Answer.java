@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 public class Answer {
     private ArrayList<Integer> answer;
+    private String result;
     private String name;
 
-    public Answer(ArrayList<Integer> answer, String name) {
+    public Answer(ArrayList<Integer> answer, String result, String name) {
         this.answer = answer;
+        this.result = result;
         this.name = name;
     }
 
@@ -28,5 +30,13 @@ public class Answer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

@@ -14,14 +14,13 @@ import java.util.List;
 public class FirebaseDatabaseHelper3 {
     private FirebaseDatabase tDatabase;
     private DatabaseReference tRefarenceStudents;
-
-    private List<Timetable> timetables= new ArrayList<>();
+    private List<Answer> answers= new ArrayList<>();
     Uri url2;
 
 
 
     public interface  DataStatus{
-        void DataIsLoaded(List<Timetable> timetables, List<String> keys);
+        void DataIsLoaded(List<Answer> answers, List<String> keys);
         void DataIsInserted();
         void DataIsUpdated();
         void DataIsDeleted();

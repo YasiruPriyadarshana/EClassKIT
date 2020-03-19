@@ -46,6 +46,8 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
         timef.setText(time+" Min");
 
         final ImageButton result=(ImageButton) convertView.findViewById(R.id.myresult_btn);
+        result.setFocusable(false);
+        result.setFocusableInTouchMode(false);
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

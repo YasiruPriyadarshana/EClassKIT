@@ -36,7 +36,7 @@ import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper3;
 import com.wonder.learnwithchirath.Object.Answer;
 import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.Quizobj;
-import com.wonder.learnwithchirath.Object.Timetable;
+
 
 
 import java.io.BufferedReader;
@@ -268,10 +268,10 @@ public class quizMain extends AppCompatActivity {
     }
 
     private void submit(){
-        Answer answer=new Answer(Common.answer,getName());
+        Answer answer=new Answer(Common.answer,getResult(),getName());
         new FirebaseDatabaseHelper3(keyname).addAnswerDetails(answer, new FirebaseDatabaseHelper3.DataStatus() {
             @Override
-            public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
+            public void DataIsLoaded(List<Answer> timetables, List<String> keys) {
 
             }
 
@@ -293,5 +293,17 @@ public class quizMain extends AppCompatActivity {
         Intent intent = new Intent(quizMain.this, MainActivity.class);
         Common.answer.clear();
         startActivity(intent);
+    }
+
+    private String getResult(){
+        String result_tmp=null;
+        int temp=0;
+        for (int val:Common.answer){
+            if (val>0){
+                temp++;
+            }
+        }
+        result_tmp=String.valueOf(temp);
+        return result_tmp;
     }
 }

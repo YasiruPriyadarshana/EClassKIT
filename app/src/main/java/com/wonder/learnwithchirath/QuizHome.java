@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -99,6 +100,7 @@ public class QuizHome extends AppCompatActivity {
                 });
 
                 QuizHometListView.setAdapter(adapter);
+
 
             }
 
