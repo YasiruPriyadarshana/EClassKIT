@@ -3,17 +3,24 @@ package com.wonder.learnwithchirath;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,7 +31,9 @@ public class FragmentEmail extends Fragment {
     private Button bt_Email;
     private EditText Email;
     private String name;
-    View view;
+    private View view;
+    private FirebaseAuth mAuth;
+    private boolean send;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,9 +65,18 @@ public class FragmentEmail extends Fragment {
             @Override
             public void onClick(View view) {
                 wirteFile();
-                FragmentTransaction ft=requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragmentplace, new FragmentClass(), null);
-                ft.commit();
+                String email = Email.getText().toString().trim();
+
+                String emailPattern = "[a-zA-Z0-9._-]+@[g]+[m]+[a]+[i]+[l]+\\.+[a-z]+";
+                if (email.matches(emailPattern)) {
+                    if (checkEmail()) {
+                        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.fragmentplace, new FragmentClass(), null);
+                        ft.commit();
+                    }
+                }else {
+                    Toast.makeText(getContext(), "Not Valid Email Address", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -83,5 +101,23 @@ public class FragmentEmail extends Fragment {
             e.printStackTrace();
         }
     }
+    private boolean checkEmail(){
 
+        ////
+
+        //       methna firebse user login eka hadapan
+
+        ///
+
+        send=false;
+        FirebaseUser user=mAuth.getCurrentUser();
+
+        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                send=true;
+            }
+        });
+        return send;
+    }
 }

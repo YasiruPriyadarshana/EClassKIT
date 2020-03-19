@@ -57,10 +57,15 @@ public class FragmentName extends Fragment {
         bt_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int length=Name.getText().length();
+                if (length>3){
                 wirteFile();
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fragmentplace, new FragmentNumber(), null);
                 ft.commit();
+                }else {
+                    Toast.makeText(getContext(), "Name too short", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

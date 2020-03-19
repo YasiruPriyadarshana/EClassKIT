@@ -56,10 +56,15 @@ public class FragmentNumber extends Fragment {
         bt_Number.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wirteFile();
-                FragmentTransaction ft= requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragmentplace, new FragmentEmail());
-                ft.commit();
+                int length=Number.getText().length();
+                if (length==10) {
+                    wirteFile();
+                    FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.fragmentplace, new FragmentEmail());
+                    ft.commit();
+                }else {
+                    Toast.makeText(getContext(), "Enter valid Phone number", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
