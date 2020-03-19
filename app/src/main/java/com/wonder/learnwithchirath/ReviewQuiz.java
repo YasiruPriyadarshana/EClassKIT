@@ -70,7 +70,7 @@ public class ReviewQuiz extends AppCompatActivity {
                 int temp=0;
                 for (int j=0;j<answers.size();j++){
                     if (j!=0) {
-                        for (int k=0; k<5;k++) {
+                        for (int k=0; k<answers.get(j).getAnswer().size();k++) {
                             temp=sumAnswer.get(k);
                             if (answers.get(j).getAnswer().get(k) > 0) {
                                 sumAnswer.set(k,++temp);
@@ -79,7 +79,7 @@ public class ReviewQuiz extends AppCompatActivity {
                         }
                     }
                     if (j==0){
-                        for (int k=0; k<5;k++) {
+                        for (int k=0; k<answers.get(j).getAnswer().size();k++) {
                             temp=answers.get(0).getAnswer().get(k);
                             sumAnswer.add(temp);
                         }
