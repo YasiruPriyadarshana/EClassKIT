@@ -3,15 +3,14 @@ package com.wonder.learnwithchirath.Object;
 public class Result {
     private String name;
     private String marks;
-    private String img;
 
     public Result() {
     }
 
-    public Result(String name, String marks, String img) {
+    public Result(String name, String marks) {
         this.name = name;
         this.marks = marks;
-        this.img = img;
+
     }
 
     public String getName() {
@@ -30,11 +29,5 @@ public class Result {
         this.marks = marks;
     }
 
-    public String getImg() {
-        return img;
-    }
 
-    public void setImg(String img) {
-        this.img = img;
-    }
 }

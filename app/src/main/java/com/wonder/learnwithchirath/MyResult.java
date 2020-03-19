@@ -2,11 +2,13 @@ package com.wonder.learnwithchirath;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,9 +44,10 @@ public class MyResult extends AppCompatActivity {
         setContentView(R.layout.activity_my_result);
 
         String key=getIntent().getStringExtra("key");
-        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+key+"/Answer_Student");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+key+"/Answer_Student/");
         name=(TextView)findViewById(R.id.myname);
         marks=(TextView)findViewById(R.id.mymarks);
+        results=new ArrayList<>();
         readFile();
         viewName();
         viewResult();
@@ -101,17 +104,22 @@ public class MyResult extends AppCompatActivity {
     }
 
     private void viewResult(){
-        results=new ArrayList<>();
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Answer answerM = postSnapshot.getValue(Answer.class);
-                    Result result=new Result("asas","asas","1");
+                    Result result = new Result(answerM.getName(), answerM.getResult());
                     results.add(result);
+
                 }
+
+
+                adapter=new RecyclerAdapterMyResult(results,getApplicationContext());
+                LinearLayoutManager layoutManager= new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
                 ResultListView=(RecyclerView) findViewById(R.id.recyclerviewrank);
-                adapter=new RecyclerAdapterMyResult(results);
+                ResultListView.setLayoutManager(layoutManager);
                 ResultListView.setAdapter(adapter);
             }
 
