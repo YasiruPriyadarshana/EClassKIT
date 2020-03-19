@@ -4,6 +4,7 @@ package com.wonder.learnwithchirath;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,15 +60,35 @@ public class ReviewQuiz extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int i=1;
-                double correct=0;
+                ArrayList<Integer> sumAnswer=new ArrayList<>();
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Answer answer = postSnapshot.getValue(Answer.class);
                     answers.add(answer);
-                    if (answer.getAnswer().get(i)>0){
-                        correct++;
+                }
+
+                int temp=0;
+                for (int j=0;j<answers.size();j++){
+                    if (j!=0) {
+                        for (int k=0; k<5;k++) {
+                            temp=sumAnswer.get(k);
+                            if (answers.get(j).getAnswer().get(k) > 0) {
+                                sumAnswer.set(k,++temp);
+                            }
+                            temp=0;
+                        }
                     }
-                    Review review=new Review(i,(correct/3.0)*100.0);
+                    if (j==0){
+                        for (int k=0; k<5;k++) {
+                            temp=answers.get(0).getAnswer().get(k);
+                            sumAnswer.add(temp);
+                        }
+                    }
+                }
+                Toast.makeText(ReviewQuiz.this, "a: "+sumAnswer, Toast.LENGTH_SHORT).show();
+
+                for (int l=0;l<sumAnswer.size();l++){
+                    Review review=new Review(i,((sumAnswer.get(l)*1.0)/(answers.size()*1.0))*100.0);
                     i++;
                     reviews.add(review);
                 }

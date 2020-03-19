@@ -32,7 +32,7 @@ public class ListAdapterReview extends ArrayAdapter<Answer> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         String name_st=getItem(position).getName();
-        ArrayList<Integer> result_st=getItem(position).getAnswer();
+        String result_st=getItem(position).getResult();
         int marks=0;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
@@ -41,11 +41,8 @@ public class ListAdapterReview extends ArrayAdapter<Answer> {
         TextView result = (TextView) convertView.findViewById(R.id.marks_st);
 
         names.setText(name_st);
-        for (int i=0;i<result_st.size();i++){
-            if (result_st.get(i)>0)
-            marks++;
-        }
-        result.setText(String.valueOf(marks));
+
+        result.setText(result_st);
 
         return convertView;
     }
