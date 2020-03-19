@@ -24,12 +24,14 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
     private static final String TAG="ListAdapterQuizHome";
     private Context mContext;
     int mResource;
+    private ArrayList<String> keys;
 
 
-    public ListAdapterQuizHome(Context context, int resource, ArrayList<QuizHm> objects) {
+    public ListAdapterQuizHome(Context context, int resource, ArrayList<QuizHm> objects,ArrayList<String> keys) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
+        this.keys=keys;
     }
 
     @Override
@@ -37,6 +39,7 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
 
         String name=getItem(position).getName();
         String time=getItem(position).getTime();
+        final String key=keys.get(position);
         LayoutInflater inflater=LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
@@ -59,6 +62,7 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         Intent intent=new Intent(getContext(), MyResult.class);
+                        intent.putExtra("key",key);
                         mContext.startActivity(intent);
                         return false;
                     }

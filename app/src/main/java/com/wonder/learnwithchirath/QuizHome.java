@@ -72,7 +72,7 @@ public class QuizHome extends AppCompatActivity {
                     times.add(quizHm.getTime());
                 }
 
-                adapter = new ListAdapterQuizHome(QuizHome.this, R.layout.itemquizhome, quizHms);
+                adapter = new ListAdapterQuizHome(QuizHome.this, R.layout.itemquizhome, quizHms,keys);
 
                 if (QuizHometListView.getFooterViewsCount() > 0)
                 {
