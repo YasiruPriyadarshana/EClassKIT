@@ -109,15 +109,15 @@ public class FragmentEmail extends Fragment {
 
         ///
 
-        send=false;
-        FirebaseUser user=mAuth.getCurrentUser();
-
-        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                send=true;
-            }
-        });
+        send=true;
+//        FirebaseUser user=mAuth.getCurrentUser();
+//
+//        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                send=true;
+//            }
+//        });
         return send;
     }
 }

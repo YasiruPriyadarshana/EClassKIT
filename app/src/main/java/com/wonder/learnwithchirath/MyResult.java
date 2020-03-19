@@ -2,6 +2,7 @@ package com.wonder.learnwithchirath;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,7 +13,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wonder.learnwithchirath.Adpter.RecyclerAdapterMyResult;
+import com.wonder.learnwithchirath.Adpter.RecyclerAdapterReview;
 import com.wonder.learnwithchirath.Object.Answer;
+import com.wonder.learnwithchirath.Object.Result;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -29,6 +33,9 @@ public class MyResult extends AppCompatActivity {
     private Answer answer;
     private String[] array;
     private String Name;
+    private ArrayList<Result> results;
+    private RecyclerAdapterMyResult adapter;
+    private RecyclerView ResultListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +47,7 @@ public class MyResult extends AppCompatActivity {
         marks=(TextView)findViewById(R.id.mymarks);
         readFile();
         viewName();
+        viewResult();
     }
 
     private void viewName() {
@@ -90,5 +98,27 @@ public class MyResult extends AppCompatActivity {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void viewResult(){
+        results=new ArrayList<>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Answer answerM = postSnapshot.getValue(Answer.class);
+                    Result result=new Result("asas","asas","1");
+                    results.add(result);
+                }
+                ResultListView=(RecyclerView) findViewById(R.id.recyclerviewrank);
+                adapter=new RecyclerAdapterMyResult(results);
+                ResultListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
