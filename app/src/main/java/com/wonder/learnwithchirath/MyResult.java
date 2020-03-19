@@ -52,8 +52,13 @@ public class MyResult extends AppCompatActivity {
                         Myanswer = answer;
                     }
                 }
-                name.setText(Myanswer.getName());
-                marks.setText(Myanswer.getResult());
+                if (Myanswer!= null) {
+                    name.setText(Myanswer.getName());
+                    marks.setText(Myanswer.getResult());
+                }else {
+                    name.setText(Name);
+                    marks.setText("Please attempt to the quiz");
+                }
             }
 
             @Override
