@@ -50,7 +50,7 @@ public class BackgroundService extends Service {
         handler = new Handler();
             runnable = new Runnable() {
                 public void run() {
-                    Toast.makeText(context, "Service is still running", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, "Service is still running", Toast.LENGTH_LONG).show();
 
                     if (evL!=v){
                     notifime();
@@ -59,11 +59,11 @@ public class BackgroundService extends Service {
                     v = evL;
 
 
-                    handler.postDelayed(runnable, 1000);
+                    handler.postDelayed(runnable, 10000);
                 }
             };
 
-            handler.postDelayed(runnable, 1500);
+            handler.postDelayed(runnable, 15000);
 
 
 
