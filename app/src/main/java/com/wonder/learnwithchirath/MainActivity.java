@@ -2,9 +2,6 @@ package com.wonder.learnwithchirath;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
@@ -81,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_Settings) {
+            Intent intent=new Intent(this,Settings.class);
+            startActivity(intent);
             return true;
         }if (id == R.id.action_aboutUs) {
             Intent intent=new Intent(this,AboutUs.class);
@@ -101,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(backPressedTime +2000 > System.currentTimeMillis()){
             moveTaskToBack(true);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+//            android.os.Process.killProcess(android.os.Process.myPid());
+//            System.exit(1);
             return;
         } else {
             Toast.makeText(getBaseContext(),"Press again to exit",Toast.LENGTH_SHORT).show();
