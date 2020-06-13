@@ -34,7 +34,7 @@ public class Home extends Fragment {
         timeTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),video.class);
+                Intent intent=new Intent(getActivity(), Class.class);
                 startActivity(intent);
             }
         });

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".video"/>
+        <activity android:name=".TeachersRegistration"></activity>
+        <activity android:name=".TeacherLogin" />
+        <activity android:name=".Class" />
         <activity android:name=".StudentAccount" />
         <activity android:name=".MyResult" />
         <activity android:name=".QuizHome" />

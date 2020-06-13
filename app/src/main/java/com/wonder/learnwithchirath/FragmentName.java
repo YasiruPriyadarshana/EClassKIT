@@ -41,7 +41,7 @@ public class FragmentName extends Fragment {
         bt_Name=(Button) view.findViewById(R.id.bt_name);
         change_btn=(Button) view.findViewById(R.id.user_change_btn);
         Name=(EditText) view.findViewById(R.id.in_name);
-        userType=(TextView) view.findViewById(R.id.status_txt);
+
         bt_Name.setEnabled(false);
         Name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,12 +63,8 @@ public class FragmentName extends Fragment {
         change_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user=userType.getText().toString();
-                if (TextUtils.equals(user,"Student")){
-                    userType.setText("Teacher");
-                }else {
-                    userType.setText("Student");
-                }
+                Intent intent=new Intent(getActivity(),TeacherLogin.class);
+                getActivity().startActivity(intent);
             }
         });
         bt_Name.setOnClickListener(new View.OnClickListener() {
@@ -99,16 +95,12 @@ public class FragmentName extends Fragment {
 
         String textToSave = Name.getText().toString();
         String space = ",";
-        String usr,num="123";
-        String user=userType.getText().toString();
-        if(TextUtils.equals(user,"Teacher")){
-           usr="teacher";
-        }else {
-            usr="student";
-        };
+        String num="123";
+
+
         try {
             FileOutputStream fileOutputStream = requireActivity().openFileOutput("apprequirement.txt", Context.MODE_APPEND);
-            fileOutputStream.write((usr + space + textToSave + space + num + space).getBytes());
+            fileOutputStream.write((textToSave + space + num + space).getBytes());
             fileOutputStream.close();
 
             Toast.makeText(getActivity(), "text Saved", Toast.LENGTH_SHORT).show();

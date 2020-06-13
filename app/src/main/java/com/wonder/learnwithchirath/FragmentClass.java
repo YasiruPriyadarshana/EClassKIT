@@ -41,13 +41,10 @@ public class FragmentClass extends Fragment {
 
         wirteFile();
         readFileAndFirebase();
-        if (selector==1){
-//            Intent intent = new Intent(getActivity(), .class);
-//            getActivity().startActivity(intent);
-        }else {
+
             Intent intent = new Intent(getActivity(), StudentAccount.class);
             getActivity().startActivity(intent);
-        }
+
 /*
         bt_Class=(Button)view.findViewById(R.id.bt_class);
         classCategory_spinner = (Spinner)view.findViewById(R.id.category_spin);
@@ -102,14 +99,12 @@ public class FragmentClass extends Fragment {
             String[] array = str.split(",");
 
             Student student=new Student();
-            student.setEmail(array[3]);
-            student.setName(array[1]);
-            student.setGrade(array[4]);
-            student.setMobile_number(array[2]);
+            student.setEmail(array[2]);
+            student.setName(array[0]);
+            student.setGrade(array[3]);
+            student.setMobile_number(array[1]);
 
-            if (TextUtils.equals(array[0],"teacher")){
-                selector=1;
-            }
+
 
             new FirebaseDatabaseHelper().addstudent(student, new FirebaseDatabaseHelper.DataStatus() {
                 @Override

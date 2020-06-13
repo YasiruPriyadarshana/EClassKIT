@@ -7,9 +7,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class video extends AppCompatActivity implements ListAdapterTimetable.CallbackInterface2{
+public class Class extends AppCompatActivity implements ListAdapterTimetable.CallbackInterface2{
 
     private DatabaseReference databaseReference;
     private ArrayList<Timetable> timetables;
@@ -54,7 +52,7 @@ public class video extends AppCompatActivity implements ListAdapterTimetable.Cal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video);
+        setContentView(R.layout.activity_class);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("timetable");
         TimetableListView = (ListView) findViewById(R.id.recyclerviewclass);
@@ -128,7 +126,7 @@ public class video extends AppCompatActivity implements ListAdapterTimetable.Cal
                 }
 
 
-                adapter = new ListAdapterTimetable(video.this, R.layout.itemclass, timetables, keys,anInterface);
+                adapter = new ListAdapterTimetable(Class.this, R.layout.itemclass, timetables, keys,anInterface);
 
                 if (TimetableListView.getFooterViewsCount() > 0) {
                     TimetableListView.removeFooterView(v);
@@ -159,7 +157,7 @@ public class video extends AppCompatActivity implements ListAdapterTimetable.Cal
                     public void onClick(View v) {
 
                         Calendar c=Calendar.getInstance();
-                        TimePickerDialog timePickerDialog=new TimePickerDialog(video.this, new TimePickerDialog.OnTimeSetListener() {
+                        TimePickerDialog timePickerDialog=new TimePickerDialog(Class.this, new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 hourFinal=hourOfDay;
@@ -171,7 +169,7 @@ public class video extends AppCompatActivity implements ListAdapterTimetable.Cal
                                 minuteFinal=minute;
 
                                 Calendar c=Calendar.getInstance();
-                                TimePickerDialog timePickerDialog=new TimePickerDialog(video.this, new TimePickerDialog.OnTimeSetListener() {
+                                TimePickerDialog timePickerDialog=new TimePickerDialog(Class.this, new TimePickerDialog.OnTimeSetListener() {
                                     @Override
                                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                         hourFinal2=hourOfDay;
@@ -198,7 +196,7 @@ public class video extends AppCompatActivity implements ListAdapterTimetable.Cal
                 Addclassdet.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(video.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Class.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
                         Timetable timetable = new Timetable();
                         timetable.setDate(Category_day.getSelectedItem().toString());
                         timetable.setGrade(Category_grade.getSelectedItem().toString());
@@ -208,7 +206,7 @@ public class video extends AppCompatActivity implements ListAdapterTimetable.Cal
 
 
                         if (time.getText().toString().isEmpty()) {
-                            Toast.makeText(video.this, "Enter time", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Class.this, "Enter time", Toast.LENGTH_SHORT).show();
                         } else {
 
 
@@ -221,7 +219,7 @@ public class video extends AppCompatActivity implements ListAdapterTimetable.Cal
                                 @Override
                                 public void DataIsInserted() {
 
-                                    Toast.makeText(video.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Class.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
