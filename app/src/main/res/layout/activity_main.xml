@@ -32,6 +32,12 @@
                 android:icon="@drawable/home" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/cls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lectures" />
+
+            <com.google.android.material.tabs.TabItem
                 android:id="@+id/note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,12 +48,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Event" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/cls"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Class" />
 
         </com.google.android.material.tabs.TabLayout>
 

@@ -42,4 +42,10 @@
         android:layout_margin="10dp"
         android:src="@drawable/leranwithchirathlogo" />
 
+    <ImageButton
+        android:id="@+id/classTimetb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/leranwithchirathlogo" />
+
 </LinearLayout>

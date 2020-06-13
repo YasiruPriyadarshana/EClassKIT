@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 
 public class Home extends Fragment {
     private ImageButton quiz;
+    private ImageButton timeTable;
+
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -20,6 +22,8 @@ public class Home extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         quiz=view.findViewById(R.id.quiz);
+        timeTable=view.findViewById(R.id.classTimetb);
+
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -27,6 +31,14 @@ public class Home extends Fragment {
                 startActivity(intent);
             }
         });
+        timeTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),video.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }

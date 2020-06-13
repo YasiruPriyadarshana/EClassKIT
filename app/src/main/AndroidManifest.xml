@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StudentAccount"/>
+        <activity android:name=".video"/>
+        <activity android:name=".StudentAccount" />
         <activity android:name=".MyResult" />
         <activity android:name=".QuizHome" />
         <activity android:name=".ReviewQuiz" />
@@ -23,7 +24,6 @@
         <activity android:name=".AboutUs" />
         <activity android:name=".GetInfo" />
         <activity android:name=".Settings" />
-
         <activity
             android:name=".Starting"
             android:theme="@style/SplashTheme">
@@ -33,15 +33,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <service android:name=".Services.BackgroundService" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
