@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class FragmentClass extends Fragment {
     private Button bt_Class;
     private Spinner classCategory_spinner;
     private View view;
+    private int selector;
 
 
     @Override
@@ -37,8 +39,16 @@ public class FragmentClass extends Fragment {
         // Inflate the  layout for this fragment
         view = inflater.inflate(R.layout.fragment_fragment_class, container, false);
 
-
-
+        wirteFile();
+        readFileAndFirebase();
+        if (selector==1){
+//            Intent intent = new Intent(getActivity(), .class);
+//            getActivity().startActivity(intent);
+        }else {
+            Intent intent = new Intent(getActivity(), StudentAccount.class);
+            getActivity().startActivity(intent);
+        }
+/*
         bt_Class=(Button)view.findViewById(R.id.bt_class);
         classCategory_spinner = (Spinner)view.findViewById(R.id.category_spin);
 
@@ -51,13 +61,14 @@ public class FragmentClass extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-
+*/
         return view;
     }
 
     private void wirteFile() {
 
-        String textToSave = classCategory_spinner.getSelectedItem().toString();
+        String textToSave = "11";
+                //classCategory_spinner.getSelectedItem().toString();
         String space = ",";
         try {
             FileOutputStream fileOutputStream = requireActivity().openFileOutput("apprequirement.txt", Context.MODE_APPEND);
@@ -91,10 +102,14 @@ public class FragmentClass extends Fragment {
             String[] array = str.split(",");
 
             Student student=new Student();
-            student.setEmail(array[2]);
-            student.setName(array[0]);
-            student.setGrade(array[3]);
-            student.setMobile_number(array[1]);
+            student.setEmail(array[3]);
+            student.setName(array[1]);
+            student.setGrade(array[4]);
+            student.setMobile_number(array[2]);
+
+            if (TextUtils.equals(array[0],"teacher")){
+                selector=1;
+            }
 
             new FirebaseDatabaseHelper().addstudent(student, new FirebaseDatabaseHelper.DataStatus() {
                 @Override

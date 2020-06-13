@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wonder.learnwithchirath">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/leranwithchirathlogo"
@@ -12,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyResult"></activity>
+        <activity android:name=".StudentAccount"/>
+        <activity android:name=".MyResult" />
         <activity android:name=".QuizHome" />
         <activity android:name=".ReviewQuiz" />
         <activity android:name=".addQuestions" />
@@ -24,8 +22,8 @@
         <activity android:name=".PastPapers" />
         <activity android:name=".AboutUs" />
         <activity android:name=".GetInfo" />
-        <activity android:name=".Settings"/>
-        <service android:name=".Services.BackgroundService"/>
+        <activity android:name=".Settings" />
+
         <activity
             android:name=".Starting"
             android:theme="@style/SplashTheme">
@@ -35,10 +33,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+        <service android:name=".Services.BackgroundService" />
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

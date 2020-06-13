@@ -39,10 +39,10 @@ public class User extends AppCompatActivity {
             String str =stringBuffer.toString();
             array = str.split(",");
 
-            Name.setText(array[0]);
-            Number.setText(array[1]);
-            Email.setText(array[2]);
-            Class.setText(array[3]);
+            Name.setText(array[1]);
+            Number.setText(array[2]);
+            Email.setText(array[3]);
+            Class.setText(array[4]);
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){

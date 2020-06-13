@@ -1,6 +1,7 @@
 package com.wonder.learnwithchirath;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class FragmentEmail extends Fragment {
         view = inflater.inflate(R.layout.fragment_fragment_email, container, false);
 
 
+
         bt_Email=(Button)view.findViewById(R.id.bt_email);
         bt_Email.setEnabled(false);
         Email=(EditText) view.findViewById(R.id.in_email);
@@ -70,9 +72,11 @@ public class FragmentEmail extends Fragment {
                 String emailPattern = "[a-zA-Z0-9._-]+@[g]+[m]+[a]+[i]+[l]+\\.+[a-z]+";
                 if (email.matches(emailPattern)) {
                     if (checkEmail()) {
-                        FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.fragmentplace, new FragmentClass(), null);
-                        ft.commit();
+
+                            FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.fragmentplace, new FragmentClass(), null);
+                            ft.commit();
+
                     }
                 }else {
                     Toast.makeText(getContext(), "Not Valid Email Address", Toast.LENGTH_SHORT).show();
