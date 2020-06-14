@@ -49,6 +49,7 @@ import com.wonder.learnwithchirath.Adpter.ListAdapter;
 import com.wonder.learnwithchirath.Adpter.ListAdpterVideo;
 import com.wonder.learnwithchirath.Object.UploadPDF;
 import com.wonder.learnwithchirath.Object.UploadVideo;
+import com.wonder.learnwithchirath.video.VideoPlayer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -92,22 +93,19 @@ public class VideoHome extends Fragment  {
 
         uploadVideos = new ArrayList<>();
         viewAllFiles();
-/*
-        PDFListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        VideoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UploadPDF uploadPDF = uploadPDFS.get(position-1);
+                UploadVideo uploadVideo = uploadVideos.get(position);
 
-                Intent intent = new Intent(Notes.this,Comments.class);
-
-
-                intent.putExtra("image",uploadPDF.getImgurl());
-                intent.putExtra("name",uploadPDF.getName());
-                intent.putExtra("url",uploadPDF.getUrl());
+                Intent intent = new Intent(getActivity(), VideoPlayer.class);
+                intent.putExtra("name",uploadVideo.getvName());
+                intent.putExtra("url",uploadVideo.getVideourl());
                 startActivity(intent);
             }
         });
-
+/*
         PDFListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

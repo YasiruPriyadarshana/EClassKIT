@@ -37,13 +37,13 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
         LayoutInflater inflater=LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-//        TextView namef=(TextView)convertView.findViewById(R.id.nameoffile);
-//        ImageView imageV=(ImageView)convertView.findViewById(R.id.pdfView);
+        TextView nameVideo=(TextView)convertView.findViewById(R.id.video_title_txt);
+        ImageView imageVideo=(ImageView)convertView.findViewById(R.id.video_thumb);
 
-//        namef.setText(name);
+        nameVideo.setText(name);
 
 
-//        Picasso.with(getContext()).load(vurl).into(imageV);
+        Picasso.with(getContext()).load(vurl).into(imageVideo);
 
         return convertView;
     }
