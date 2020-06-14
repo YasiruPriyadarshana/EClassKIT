@@ -23,7 +23,7 @@ public class AboutUs extends AppCompatActivity {
         Web.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://learnwithchirath.com/";
+                String url = "";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
@@ -32,7 +32,7 @@ public class AboutUs extends AppCompatActivity {
         Facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://www.facebook.com/Learn-With-Chirath-1491937081069328/";
+                String url = "";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
@@ -41,7 +41,7 @@ public class AboutUs extends AppCompatActivity {
         Twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://twitter.com/CUyanahewa";
+                String url = "";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
@@ -50,7 +50,7 @@ public class AboutUs extends AppCompatActivity {
         Youtube.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://www.youtube.com/channel/UC7LKhag1nrx6IKcrxQ2gIog";
+                String url = "";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);

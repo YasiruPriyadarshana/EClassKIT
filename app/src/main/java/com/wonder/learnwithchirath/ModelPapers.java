@@ -38,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wonder.learnwithchirath.Adpter.ListAdapter;
 import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.UploadPDF;
 
 import java.io.ByteArrayOutputStream;
@@ -66,7 +67,7 @@ public class ModelPapers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_model_papers);
-        databaseReference = FirebaseDatabase.getInstance().getReference("modelpapers");
+        databaseReference = FirebaseDatabase.getInstance().getReference("modelpapers/"+ Common.uid);
         storage= FirebaseStorage.getInstance().getReference();
 
         PDFListView=(ListView)findViewById(R.id.recyclerviewm);

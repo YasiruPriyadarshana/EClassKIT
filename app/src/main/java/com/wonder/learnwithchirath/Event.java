@@ -40,6 +40,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wonder.learnwithchirath.Adpter.ListAdapterEvent;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.Eventobj;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
 
         View v=inflater.inflate(R.layout.fragment_event, container, false);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("event");
+        databaseReference = FirebaseDatabase.getInstance().getReference("event/"+ Common.uid);
         storage= FirebaseStorage.getInstance().getReference();
         EventListView=(ListView)v.findViewById(R.id.recyclerviewevent);
         eventobjs = new ArrayList<>();

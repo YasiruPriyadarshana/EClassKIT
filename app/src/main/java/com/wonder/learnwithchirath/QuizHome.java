@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wonder.learnwithchirath.Adpter.ListAdapterQuizHome;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.QuizHm;
 import com.wonder.learnwithchirath.R;
 
@@ -41,7 +42,7 @@ public class QuizHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_home);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+ Common.uid);
         QuizHometListView=(ListView)findViewById(R.id.recyclerviewquizhome);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.Timetable;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class FirebaseDatabaseHelper2 {
 
     public FirebaseDatabaseHelper2() {
         tDatabase = FirebaseDatabase.getInstance();
-        tRefarenceStudents= tDatabase.getReference("timetable");
+        tRefarenceStudents= tDatabase.getReference("timetable/"+ Common.uid);
     }
 
 

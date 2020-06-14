@@ -42,6 +42,7 @@ import com.squareup.picasso.Picasso;
 import com.wonder.learnwithchirath.Adpter.ListAdapterComments;
 
 import com.wonder.learnwithchirath.Object.CommentM;
+import com.wonder.learnwithchirath.Object.Common;
 
 
 import java.io.BufferedReader;
@@ -80,7 +81,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
         name1=getIntent().getStringExtra("name");
-        databaseReference = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4));
+        databaseReference = FirebaseDatabase.getInstance().getReference("comments/"+ Common.uid+"/" +name1.substring(0, name1.length() - 4));
         storage= FirebaseStorage.getInstance().getReference();
         CommentListView=(ListView)findViewById(R.id.recyclerviewcomment);
         commentMS = new ArrayList<>();

@@ -37,6 +37,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wonder.learnwithchirath.Adpter.ListAdapter;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.UploadPDF;
 
 import java.io.ByteArrayOutputStream;
@@ -65,7 +66,7 @@ public class Notes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
-        databaseReference = FirebaseDatabase.getInstance().getReference("notes");
+        databaseReference = FirebaseDatabase.getInstance().getReference("notes/"+ Common.uid);
         storage= FirebaseStorage.getInstance().getReference();
 
         PDFListView=(ListView)findViewById(R.id.recyclerviewn);

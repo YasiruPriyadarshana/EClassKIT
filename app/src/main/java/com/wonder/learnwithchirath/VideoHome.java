@@ -35,6 +35,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +49,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.wonder.learnwithchirath.Adpter.ListAdapter;
 import com.wonder.learnwithchirath.Adpter.ListAdpterVideo;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.UploadPDF;
 import com.wonder.learnwithchirath.Object.UploadVideo;
 import com.wonder.learnwithchirath.video.VideoPlayer;
@@ -79,6 +82,7 @@ public class VideoHome extends Fragment  {
     private ListAdpterVideo adapter;
     private ArrayList<String> keys;
     private int set;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,7 +90,9 @@ public class VideoHome extends Fragment  {
         // Inflate the layout for this fragment
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Videos");
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Videos/"+ Common.uid);
         storage= FirebaseStorage.getInstance().getReference();
 
         VideoListView=(ListView)v1.findViewById(R.id.recyclerviewvideo);

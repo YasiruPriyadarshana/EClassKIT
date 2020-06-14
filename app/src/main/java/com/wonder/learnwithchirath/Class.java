@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wonder.learnwithchirath.Adpter.ListAdapterTimetable;
 import com.wonder.learnwithchirath.Firebase.FirebaseDatabaseHelper2;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.Timetable;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("timetable");
+        databaseReference = FirebaseDatabase.getInstance().getReference("timetable/"+ Common.uid);
         TimetableListView = (ListView) findViewById(R.id.recyclerviewclass);
         timetables = new ArrayList<>();
 

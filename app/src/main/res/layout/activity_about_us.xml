@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="30dp"
-        android:background="@drawable/button_states"
-        app:srcCompat="@mipmap/chirath" />
+        android:background="@drawable/button_states" />
 
     <TextView
         android:id="@+id/textView"
@@ -21,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
-        android:text="Chirath Uyanahewa"
+        android:text="Teacher Name"
         android:textColor="#342E6D"
         android:textSize="24sp"
         android:textStyle="bold" />

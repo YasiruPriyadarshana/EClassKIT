@@ -19,7 +19,7 @@
         android:id="@+id/question_img_btn"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        app:srcCompat="@mipmap/chirath" />
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

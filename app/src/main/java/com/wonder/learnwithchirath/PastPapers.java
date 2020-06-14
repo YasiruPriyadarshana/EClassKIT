@@ -37,6 +37,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.wonder.learnwithchirath.Adpter.ListAdapter;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.Object.UploadPDF;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,7 +66,7 @@ public class PastPapers extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_papers);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("pastpapers");
+        databaseReference = FirebaseDatabase.getInstance().getReference("pastpapers/"+ Common.uid);
         storage= FirebaseStorage.getInstance().getReference();
 
         PDFListView=(ListView)findViewById(R.id.recyclerview);

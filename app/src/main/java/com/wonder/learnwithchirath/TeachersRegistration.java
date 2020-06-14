@@ -16,13 +16,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.wonder.learnwithchirath.Object.Teachers;
 
 public class TeachersRegistration extends AppCompatActivity {
 
     private EditText email_txt, password_txt;
     private Button regBtn,toLogin;
     private ProgressBar progressBar;
-
+    private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
     @Override
@@ -31,6 +37,8 @@ public class TeachersRegistration extends AppCompatActivity {
         setContentView(R.layout.activity_teachers_registration);
 
         mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers");
+
         email_txt = findViewById(R.id.email);
         password_txt = findViewById(R.id.password);
         regBtn = findViewById(R.id.register);
@@ -77,6 +85,9 @@ public class TeachersRegistration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Teachers teachers = new Teachers(email,password);
+                            databaseReference.child(databaseReference.push().getKey()).setValue(teachers);
+
                             Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
 
