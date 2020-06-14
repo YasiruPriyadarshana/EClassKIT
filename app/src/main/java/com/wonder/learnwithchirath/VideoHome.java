@@ -234,7 +234,7 @@ public class VideoHome extends Fragment  {
                 }
 
 
-                adapter = new ListAdpterVideo(getActivity(),R.layout.item,uploadVideos);
+                adapter = new ListAdpterVideo(getActivity(),R.layout.itemvideo,uploadVideos);
 
                 if (VideoListView.getFooterViewsCount() > 0)
                 {
