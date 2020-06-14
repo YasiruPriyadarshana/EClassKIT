@@ -1,0 +1,42 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/footerviewvideo"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="5dp">
+
+
+    <TextView
+        android:id="@+id/nameofVfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="235dp"
+        android:layout_marginTop="30dp"
+        android:text="select a your Video"
+        android:textAlignment="center"
+        android:textColor="#9C27B0" />
+
+    <ImageButton
+        android:id="@+id/vidImgBtn"
+        android:layout_width="135dp"
+        android:layout_height="130dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:src="@mipmap/uploadepdf"
+        tools:src="@mipmap/uploadepdf"
+        tools:srcCompat="@mipmap/uploadepdf" />
+
+    <Button
+        android:id="@+id/vUpdate_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="235dp"
+        android:layout_marginTop="60dp"
+        android:text="uplode" />
+
+</androidx.cardview.widget.CardView>
