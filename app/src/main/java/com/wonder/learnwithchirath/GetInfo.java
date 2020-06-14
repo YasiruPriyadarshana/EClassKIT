@@ -28,7 +28,7 @@ public class GetInfo extends AppCompatActivity {
             fr.add(R.id.fragmentplace, new FragmentName());
             fr.commit();
         }else {
-            Intent intent=new Intent(GetInfo.this,MainActivity.class);
+            Intent intent=new Intent(GetInfo.this,StudentAccount.class);
             startActivity(intent);
         }
     }

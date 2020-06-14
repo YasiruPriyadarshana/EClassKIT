@@ -8,7 +8,7 @@
         tools:context=".StudentAccount">
 
         <EditText
-        android:id="@+id/editText"
+        android:id="@+id/enroll_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -17,6 +17,12 @@
             android:inputType="textPersonName"
             android:textAlignment="center"
             android:textColorHint="#217870" />
+
+    <Button
+        android:id="@+id/enroll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enroll" />
 
     <TextView
         android:id="@+id/textView15"
