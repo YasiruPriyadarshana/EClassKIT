@@ -31,7 +31,7 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         String name=getItem(position).getvName();
-        String vurl=getItem(position).getVideourl();
+        String vurl=getItem(position).getThumbnailUrl();
 
 
         LayoutInflater inflater=LayoutInflater.from(mContext);

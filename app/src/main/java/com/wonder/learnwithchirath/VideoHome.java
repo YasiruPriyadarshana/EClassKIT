@@ -276,7 +276,7 @@ public class VideoHome extends Fragment  {
 
     }
 
-    private void uplodeFile(final Uri pdfUri) {
+    private void uplodeFile(final Uri vidUri) {
         final ProgressDialog progressDialog=new ProgressDialog(getActivity());
         progressDialog.setTitle("Uploading File");
         progressDialog.show();
@@ -290,7 +290,7 @@ public class VideoHome extends Fragment  {
                 while (!uri.isComplete());
                 url2=uri.getResult();
 
-                Uri p=pdfUri;
+                Uri p=vidUri;
                 //video uplode
                 StorageReference reference =storage.child("videos/"+name);
                 reference.putFile(p).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -300,7 +300,7 @@ public class VideoHome extends Fragment  {
                         while (!uri.isComplete());
                         Uri url=uri.getResult();
 
-                        UploadVideo uploadVideo=new UploadVideo(url.toString(),name);
+                        UploadVideo uploadVideo=new UploadVideo(url.toString(),name,url2.toString());
 
                         databaseReference.child(databaseReference.push().getKey()).setValue(uploadVideo);
                         Toast.makeText(getActivity(), "Video File uploaded", Toast.LENGTH_SHORT).show();
