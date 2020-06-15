@@ -41,6 +41,7 @@ public class StudentAccount extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String uid=dataSnapshot.child(key).getValue().toString();
                         Common.uid=uid;
+                        Common.limit=1;
 
                         Intent intent= new Intent(StudentAccount.this,MainActivity.class);
                         startActivity(intent);

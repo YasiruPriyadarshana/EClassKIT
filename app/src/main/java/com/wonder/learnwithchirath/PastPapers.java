@@ -221,8 +221,9 @@ public class PastPapers extends AppCompatActivity {
                 v2=getLayoutInflater().inflate(R.layout.header_pastpapers, null);
                 v=getLayoutInflater().inflate(R.layout.footerview, null);
                 PDFListView.addHeaderView(v2);
-                PDFListView.addFooterView(v);
-
+                if (Common.limit != 1) {
+                    PDFListView.addFooterView(v);
+                }
                 selectFile=(ImageButton)v.findViewById(R.id.pdfImgBtn);
                 nameUpfile=(TextView)v.findViewById(R.id.nameofUpfile);
                 uplode=(Button)v.findViewById(R.id.update_btn);

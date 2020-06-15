@@ -109,8 +109,9 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                     EventListView.removeFooterView(v);
                 }
                 v = getLayoutInflater().inflate(R.layout.footerviewevent, null);
-                EventListView.addFooterView(v);
-
+                if (Common.limit != 1) {
+                    EventListView.addFooterView(v);
+                }
 
                 selectimage = (ImageButton) v.findViewById(R.id.evnt_imgbtn);
                 event = (TextView) v.findViewById(R.id.title_in);

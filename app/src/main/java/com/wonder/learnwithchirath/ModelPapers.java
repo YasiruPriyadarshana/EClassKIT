@@ -216,7 +216,9 @@ public class ModelPapers extends AppCompatActivity {
                 v2=getLayoutInflater().inflate(R.layout.header_notes, null);
                 v=getLayoutInflater().inflate(R.layout.footerview, null);
                 PDFListView.addHeaderView(v2);
-                PDFListView.addFooterView(v);
+                if (Common.limit != 1) {
+                    PDFListView.addFooterView(v);
+                }
 
                 selectFile=(ImageButton)v.findViewById(R.id.pdfImgBtn);
                 nameUpfile=(TextView)v.findViewById(R.id.nameofUpfile);

@@ -246,7 +246,9 @@ public class VideoHome extends Fragment  {
                 }
 
                 v=getLayoutInflater().inflate(R.layout.footerviewvideo, null);
-                VideoListView.addFooterView(v);
+                if (Common.limit != 1) {
+                    VideoListView.addFooterView(v);
+                }
 
                 selectFile=(ImageButton)v.findViewById(R.id.vidImgBtn);
                 nameUpfile=(TextView)v.findViewById(R.id.nameofVfile);

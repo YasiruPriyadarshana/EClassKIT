@@ -140,8 +140,9 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
                 v = getLayoutInflater().inflate(R.layout.footerviewclass, null);
                 v2 = getLayoutInflater().inflate(R.layout.header_class, null);
                 TimetableListView.addHeaderView(v2);
-                TimetableListView.addFooterView(v);
-
+                if (Common.limit != 1) {
+                    TimetableListView.addFooterView(v);
+                }
 
                 Category_day = (Spinner) v.findViewById(R.id.category_day);
                 Category_grade = (Spinner) v.findViewById(R.id.category_grade);

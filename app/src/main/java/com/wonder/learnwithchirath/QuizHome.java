@@ -80,8 +80,9 @@ public class QuizHome extends AppCompatActivity {
                     QuizHometListView.removeFooterView(v);
                 }
                 v = getLayoutInflater().inflate(R.layout.footerviewquiz, null);
-                QuizHometListView.addFooterView(v);
-
+                if (Common.limit != 1) {
+                    QuizHometListView.addFooterView(v);
+                }
 
                 Button updatequiz = (Button) v.findViewById(R.id.addnewquiz_home);
                 final EditText quiz_name=(EditText)v.findViewById(R.id.addquiz_name);

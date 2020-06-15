@@ -203,7 +203,9 @@ public class quizMain extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_quiz, menu);
+        if (Common.limit != 1) {
+            getMenuInflater().inflate(R.menu.menu_quiz, menu);
+        }
         return true;
     }
     @Override
