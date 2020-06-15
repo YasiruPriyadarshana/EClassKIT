@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
         android:background="#3F51B5">
 
         <ImageView
@@ -26,6 +26,14 @@
             android:scaleType="center"
             app:srcCompat="@drawable/ic_swap_horiz_black_24dp" />
 
+        <ProgressBar
+            android:id="@+id/videoProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:progressTint="#E2F6F4" />
+
         <TextView
             android:id="@+id/currentTime"
             android:layout_width="wrap_content"
@@ -35,14 +43,6 @@
             android:text="0.00"
             android:textAlignment="center"
             android:textColor="#FFFFFF" />
-
-        <ProgressBar
-            android:id="@+id/videoProgress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:progressTint="#E2F6F4" />
 
         <TextView
             android:id="@+id/durationTime"
@@ -56,15 +56,19 @@
 
     </LinearLayout>
 
+    <ListView
+        android:id="@+id/video_comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp" />
+
     <ProgressBar
         android:id="@+id/bufferProgress"
-        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:indeterminate="true"
         android:indeterminateBehavior="repeat"
         android:indeterminateOnly="false" />
 
-</RelativeLayout>
+</LinearLayout>

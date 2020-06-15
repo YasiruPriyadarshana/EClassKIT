@@ -1,22 +1,60 @@
 package com.wonder.learnwithchirath.video;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.wonder.learnwithchirath.Adpter.ListAdapterComments;
+import com.wonder.learnwithchirath.Comments;
+import com.wonder.learnwithchirath.Object.CommentM;
+import com.wonder.learnwithchirath.Object.Common;
 import com.wonder.learnwithchirath.R;
 
-public class VideoPlayer extends AppCompatActivity {
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment.CallbackInterface{
     private VideoView videoView;
     private ImageView playBtn;
     private TextView currentTime;
@@ -24,11 +62,26 @@ public class VideoPlayer extends AppCompatActivity {
     private ProgressBar currentProgress;
     private ProgressBar bufferBar;
     private boolean isPlaying;
-
+    private DatabaseReference databaseReference;
     private Uri videoUri;
 
     private int current=0;
     private int duration=0;
+
+    private ValueEventListener valueEventListener;
+    private AdpterVideoComment adapter;
+    private ListView CommentListView;
+    private ArrayList<CommentM> commentMS;
+    private String cmt_str,uri,uname,name;
+    private String[] array;
+    private View v;
+    private Button updateComment,addImage;
+    private ImageView image,imageView;
+    private ImageButton imagepdf;
+    private EditText desc;
+    private AdpterVideoComment.CallbackInterface anInterface;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +89,12 @@ public class VideoPlayer extends AppCompatActivity {
 
         Intent intent=getIntent();
         String url=intent.getStringExtra("url");
-        String name=intent.getStringExtra("name");
+        uname=intent.getStringExtra("name");
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("VideoComments/"+ Common.uid+"/" +uname.substring(0, uname.length() - 4));
+        commentMS= new ArrayList<>();
+        CommentListView=(ListView)findViewById(R.id.video_comment_list);
+        anInterface=this;
 
         videoView=(VideoView)findViewById(R.id.videoView);
         playBtn=(ImageView)findViewById(R.id.play_btn);
@@ -50,6 +108,8 @@ public class VideoPlayer extends AppCompatActivity {
 
         videoView.setVideoURI(videoUri);
         videoView.requestFocus();
+
+
 
         videoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
             @Override
@@ -102,7 +162,7 @@ public class VideoPlayer extends AppCompatActivity {
             }
         });
 
-
+        viewVideoComments();
     }
 
 
@@ -147,4 +207,200 @@ public class VideoPlayer extends AppCompatActivity {
             }
         }
     }
+
+    private void viewVideoComments(){
+
+        valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> keys = new ArrayList<>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    CommentM commentM = postSnapshot.getValue(CommentM.class);
+                    commentMS.add(commentM);
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
+
+                }
+
+
+                adapter = new AdpterVideoComment(getApplicationContext(),R.layout.itemcomment,commentMS,uname,keys,getName(),anInterface);
+
+                if (CommentListView.getFooterViewsCount() > 0)
+                {
+                    CommentListView.removeFooterView(v);
+                }
+
+                v=getLayoutInflater().inflate(R.layout.footerviewcomment, null);
+
+                CommentListView.addFooterView(v);
+
+
+                desc = (EditText) v.findViewById(R.id.comment_in);
+                updateComment = (Button) v.findViewById(R.id.addcmt);
+
+
+
+
+
+
+                updateComment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cmt_str=desc.getText().toString();
+                        if (cmt_str.isEmpty()){
+                            Toast.makeText(VideoPlayer.this, "Type comment", Toast.LENGTH_SHORT).show();
+                        }else {
+                            uplodeFile();
+                        }
+                    }
+                });
+
+
+
+
+                CommentListView.setAdapter(adapter);
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+
+    private void uplodeFile() {
+
+        CommentM commentobj = new CommentM(getName(), cmt_str,null);
+        databaseReference.child("2"+databaseReference.push().getKey()).setValue(commentobj);
+        Toast.makeText(VideoPlayer.this, "Add new comment", Toast.LENGTH_SHORT).show();
+        adapter.clear();
+
+    }
+
+
+
+    public String getName(){
+        try {
+            FileInputStream fileInputStream = openFileInput("apprequirement.txt");
+            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer =new StringBuffer();
+
+
+            String lines;
+            while ((lines = bufferedReader.readLine()) != null){
+                stringBuffer.append(lines + "\n");
+            }
+            String str =stringBuffer.toString();
+            array = str.split(",");
+
+            name=array[0];
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return name;
+    }
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onHandleSelectionClear() {
+        adapter.clear();
+    }
+
+
+
+    @Override
+    public void popUp(final String key,final String uri) {
+        databaseReference.removeEventListener(valueEventListener);
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage("Are you sure?");
+        adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(!TextUtils.isEmpty(uri)) {
+                    StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+                    photoRef.delete();
+                }
+
+
+                databaseReference.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(VideoPlayer.this, "Comment deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                recreate();
+            }
+        });
+        adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb.show();
+
+
+
+    }
+
+
+    @Override
+    public void popUpReply(final String key,final String uri,final DatabaseReference dr) {
+        databaseReference.removeEventListener(valueEventListener);
+        AlertDialog.Builder adb2 = new AlertDialog.Builder(this);
+        adb2.setMessage("Are you sure?");
+        adb2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(!TextUtils.isEmpty(uri)) {
+                    StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+                    photoRef.delete();
+                }
+
+
+                dr.child(key).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(VideoPlayer.this, "Reply deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                recreate();
+            }
+        });
+        adb2.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb2.show();
+//        Toast.makeText(Comments.this, "reply: "+dr+"key: "+key, Toast.LENGTH_SHORT).show();
+
+    }
+
+
 }
