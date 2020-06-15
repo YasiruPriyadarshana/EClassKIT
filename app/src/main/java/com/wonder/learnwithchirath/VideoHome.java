@@ -65,7 +65,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class VideoHome extends Fragment  {
 
-    private View v1;
     private ListView VideoListView;
     private DatabaseReference databaseReference;
     private StorageReference storage;
@@ -78,7 +77,7 @@ public class VideoHome extends Fragment  {
     private static String name;
     private Button uplode;
     private Uri url2;
-    private View v,v2;
+    private View v,v1;
     private ListAdpterVideo adapter;
     private ArrayList<String> keys;
     private int set;

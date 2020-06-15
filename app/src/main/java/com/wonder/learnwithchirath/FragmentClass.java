@@ -33,6 +33,7 @@ public class FragmentClass extends Fragment {
     private int selector;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -113,9 +114,9 @@ public class FragmentClass extends Fragment {
                 }
 
                 @Override
-                public void DataIsInserted() {
+                public void DataIsInserted(String key) {
+                    wirteFile(key);
                     Toast.makeText(getContext(), "The student record has been inserted", Toast.LENGTH_SHORT).show();
-
                 }
 
                 @Override
@@ -145,4 +146,24 @@ public class FragmentClass extends Fragment {
             e.printStackTrace();
         }
     }
+
+    private void wirteFile(String textToSave) {
+        String space = ",";
+        try {
+            FileOutputStream fileOutputStream = requireActivity().openFileOutput("student.txt", Context.MODE_APPEND);
+            fileOutputStream.write((textToSave + space).getBytes());
+            fileOutputStream.close();
+
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
