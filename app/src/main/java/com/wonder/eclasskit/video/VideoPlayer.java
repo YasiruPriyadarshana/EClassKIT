@@ -12,11 +12,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -64,7 +66,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private String cmt_str,uri,uname,name;
     private String[] array;
     private View v;
-    private Button updateComment,addImage;
+    private Button updateComment,fullscreen;
     private ImageView image,imageView;
     private ImageButton imagepdf;
     private EditText desc;
@@ -91,6 +93,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         durationtime=(TextView)findViewById(R.id.durationTime);
         currentProgress=(ProgressBar)findViewById(R.id.videoProgress);
         bufferBar=(ProgressBar)findViewById(R.id.bufferProgress);
+        fullscreen=(Button)findViewById(R.id.fullScreen_btn);
         currentProgress.setMax(100);
 
         videoUri=Uri.parse(url);
@@ -148,6 +151,16 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                     isPlaying=true;
 //                    playBtn.setImageResource(R.drawable.ic_play);
                 }
+
+            }
+        });
+
+        fullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPlaying=false;
+                Intent intent1 =new Intent(VideoPlayer.this,FullScreenVideo.class);
+                startActivity(intent1);
             }
         });
 

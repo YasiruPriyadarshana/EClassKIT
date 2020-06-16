@@ -9,7 +9,10 @@
         android:roundIcon="@drawable/eclasskitlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddNewCourse"></activity>
+        <activity android:name=".video.FullScreenVideo"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".AddNewCourse" />
         <activity android:name=".video.VideoPlayer" />
         <activity android:name=".TeachersRegistration" />
         <activity android:name=".TeacherLogin" />
@@ -44,8 +47,8 @@
 
         <service android:name=".Services.BackgroundService" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
