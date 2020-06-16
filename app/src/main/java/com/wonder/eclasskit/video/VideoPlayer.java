@@ -226,6 +226,8 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
                 desc = (EditText) v.findViewById(R.id.comment_in);
                 updateComment = (Button) v.findViewById(R.id.addcmt);
+                Button im = (Button) v.findViewById(R.id.addimage);
+                im.setVisibility(View.GONE);
 
 
 

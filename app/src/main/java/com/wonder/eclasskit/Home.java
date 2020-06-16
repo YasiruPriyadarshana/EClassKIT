@@ -108,7 +108,7 @@ public class Home extends Fragment {
             String str = stringBuffer.toString();
             String[] array = str.split(",");
             tKey=array[0];
-            Toast.makeText(getActivity(), "s: "+tKey, Toast.LENGTH_SHORT).show();
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -8,10 +8,19 @@
     tools:context=".MainActivity">
 
 
-    <VideoView
-        android:id="@+id/videoView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,13 +69,15 @@
         android:id="@+id/video_comment_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp" />
 
     <ProgressBar
         android:id="@+id/bufferProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
         android:indeterminate="true"
         android:indeterminateBehavior="repeat"
         android:indeterminateOnly="false" />
