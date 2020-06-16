@@ -20,13 +20,13 @@ import com.wonder.eclasskit.R;
 import java.util.ArrayList;
 
 public class ListAdapterAddClass extends ArrayAdapter<AddCourse> {
-    private static final String TAG="ListAdapterQuizHome";
+    private static final String TAG="ListAdapteraddclass";
     private Context mContext;
     int mResource;
     private ArrayList<String> keys;
 
 
-    public ListAdapterAddClass(Context context, int resource, ArrayList<AddCourse> objects, ArrayList<String> keys) {
+    public ListAdapterAddClass(Context context, int resource, ArrayList<AddCourse> objects) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
@@ -38,7 +38,6 @@ public class ListAdapterAddClass extends ArrayAdapter<AddCourse> {
 
         String subname=getItem(position).getSubjectname();
         String subyear=getItem(position).getClass_yr();
-        final String key=keys.get(position);
         LayoutInflater inflater=LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 

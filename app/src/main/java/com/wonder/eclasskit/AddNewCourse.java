@@ -62,11 +62,11 @@ public class AddNewCourse extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     AddCourse addCourse = postSnapshot.getValue(AddCourse.class);
                     addCourses.add(addCourse);
-                    String mkey = postSnapshot.getKey();
+
 
                 }
 
-                adapter = new ListAdapterAddClass(AddNewCourse.this, R.layout.itemaddnewclass, addCourses,null);
+                adapter = new ListAdapterAddClass(AddNewCourse.this, R.layout.itemaddnewclass, addCourses);
 
                 if (QuizHometListView.getFooterViewsCount() > 0)
                 {
@@ -77,8 +77,8 @@ public class AddNewCourse extends AppCompatActivity {
 
 
                 Button updatequiz = (Button) v.findViewById(R.id.addnewcourse);
-                final EditText name=(EditText)v.findViewById(R.id.sub_name);
-                final EditText year=(EditText)v.findViewById(R.id.class_year);
+                EditText name=(EditText)v.findViewById(R.id.sub_name);
+                EditText year=(EditText)v.findViewById(R.id.class_year);
 
                 updatequiz.setOnClickListener(new View.OnClickListener() {
                     @Override
