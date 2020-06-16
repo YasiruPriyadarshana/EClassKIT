@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardviewvideo"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
+    android:layout_height="245dp"
     android:layout_margin="5dp"
     app:cardCornerRadius="8dp"
     app:cardUseCompatPadding="true">
@@ -14,7 +14,9 @@
         android:id="@+id/video_thumb"
         android:layout_width="match_parent"
         android:layout_height="180dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="5dp"
         app:srcCompat="@drawable/flag_background" />
 
     <TextView
