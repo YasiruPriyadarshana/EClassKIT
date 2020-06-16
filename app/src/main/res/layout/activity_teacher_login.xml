@@ -4,37 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/eclasskitbackground"
+    android:gravity="center|center_horizontal"
     android:orientation="vertical"
     tools:context=".TeacherLogin">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Account login"/>
+        android:layout_marginTop="100dp"
+        android:text="Account login"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Email"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/login"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Login" />
+        android:background="@drawable/button_background"
+        android:text="Login"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     <Button
         android:id="@+id/toRegister_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         android:background="#FFFFFF"
-        android:text="If You Dont Have eClassKit Account" />
+        android:text="If You Dont Have eClassKit Account CLICK HERE" />
 
 </LinearLayout>
