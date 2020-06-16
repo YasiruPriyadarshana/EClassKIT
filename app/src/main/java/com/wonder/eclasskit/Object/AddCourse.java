@@ -1,13 +1,13 @@
 package com.wonder.eclasskit.Object;
 
-public class TeacherCourse {
+public class AddCourse {
     private String subjectname;
     private String class_yr;
 
-    public TeacherCourse() {
+    public AddCourse() {
     }
 
-    public TeacherCourse(String subjectname, String class_yr) {
+    public AddCourse(String subjectname, String class_yr) {
         this.subjectname = subjectname;
         this.class_yr = class_yr;
     }
