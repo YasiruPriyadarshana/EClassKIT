@@ -9,26 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.wonder.eclasskit.video.VideoPlayer"></activity>
-        <activity android:name="com.wonder.eclasskit.TeachersRegistration" />
-        <activity android:name="com.wonder.eclasskit.TeacherLogin" />
-        <activity android:name="com.wonder.eclasskit.Class" />
-        <activity android:name="com.wonder.eclasskit.StudentAccount" />
-        <activity android:name="com.wonder.eclasskit.MyResult" />
-        <activity android:name="com.wonder.eclasskit.QuizHome" />
-        <activity android:name="com.wonder.eclasskit.ReviewQuiz" />
-        <activity android:name="com.wonder.eclasskit.addQuestions" />
-        <activity android:name="com.wonder.eclasskit.quizMain" />
-        <activity android:name="com.wonder.eclasskit.Comments" />
-        <activity android:name="com.wonder.eclasskit.User" />
-        <activity android:name="com.wonder.eclasskit.Notes" />
-        <activity android:name="com.wonder.eclasskit.ModelPapers" />
-        <activity android:name="com.wonder.eclasskit.PastPapers" />
-        <activity android:name="com.wonder.eclasskit.AboutUs" />
-        <activity android:name="com.wonder.eclasskit.GetInfo" />
-        <activity android:name="com.wonder.eclasskit.Settings" />
+        <activity android:name=".AddNewCourse"></activity>
+        <activity android:name=".video.VideoPlayer" />
+        <activity android:name=".TeachersRegistration" />
+        <activity android:name=".TeacherLogin" />
+        <activity android:name=".Class" />
+        <activity android:name=".StudentAccount" />
+        <activity android:name=".MyResult" />
+        <activity android:name=".QuizHome" />
+        <activity android:name=".ReviewQuiz" />
+        <activity android:name=".addQuestions" />
+        <activity android:name=".quizMain" />
+        <activity android:name=".Comments" />
+        <activity android:name=".User" />
+        <activity android:name=".Notes" />
+        <activity android:name=".ModelPapers" />
+        <activity android:name=".PastPapers" />
+        <activity android:name=".AboutUs" />
+        <activity android:name=".GetInfo" />
+        <activity android:name=".Settings" />
         <activity
-            android:name="com.wonder.eclasskit.Starting"
+            android:name=".Starting"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,14 +38,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.wonder.eclasskit.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service android:name="com.wonder.eclasskit.Services.BackgroundService" />
+        <service android:name=".Services.BackgroundService" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

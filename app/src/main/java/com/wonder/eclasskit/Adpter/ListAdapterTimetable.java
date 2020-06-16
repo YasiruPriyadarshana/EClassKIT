@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.wonder.eclasskit.Firebase.FirebaseDatabaseHelper2;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Timetable;
 import com.wonder.eclasskit.R;
 import java.util.ArrayList;
@@ -88,6 +89,9 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
 
 
         Button delete=(Button)convertView.findViewById(R.id.deleteclass);
+        if (Common.limit == 1){
+            delete.setVisibility(View.GONE);
+        }
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override

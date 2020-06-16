@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.PageController;
 
 public class MainActivity extends AppCompatActivity {
@@ -66,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (Common.limit == 1) {
+        MenuItem item = menu.findItem(R.id.action_addclass);
+        item.setVisible(false);   //hide it
+        }
         return true;
     }
 
@@ -81,12 +87,16 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(this,Settings.class);
             startActivity(intent);
             return true;
-        }if (id == R.id.action_aboutUs) {
+        }else if (id == R.id.action_aboutUs) {
             Intent intent=new Intent(this,AboutUs.class);
             startActivity(intent);
             return true;
-        }if (id == R.id.action_user) {
+        }else if (id == R.id.action_user) {
             Intent intent=new Intent(this,User.class);
+            startActivity(intent);
+            return true;
+        }else if(id == R.id.action_addclass) {
+            Intent intent=new Intent(this,AddNewCourse.class);
             startActivity(intent);
             return true;
         }

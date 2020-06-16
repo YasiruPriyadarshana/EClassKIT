@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_aboutUs"
         android:orderInCategory="100"
-        android:title="About Us"
+        android:title="Teacher"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_Settings"
@@ -15,4 +15,8 @@
     <item
         android:id="@+id/action_user"
         android:title="User" />
+
+    <item
+        android:id="@+id/action_addclass"
+        android:title="Add New Courses" />
 </menu>

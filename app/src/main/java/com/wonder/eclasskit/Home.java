@@ -43,7 +43,8 @@ public class Home extends Fragment {
         if (TextUtils.isEmpty(Common.uid)) {
             user = FirebaseAuth.getInstance().getCurrentUser();
             Common.uid = user.getUid();
-        }else{
+        }
+        if (Common.limit == 1){
             redeem.setVisibility(View.GONE);
             copy.setVisibility(View.GONE);
         }

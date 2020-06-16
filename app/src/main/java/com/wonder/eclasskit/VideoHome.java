@@ -43,7 +43,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.wonder.eclasskit.Adpter.ListAdpterVideo;
+import com.wonder.eclasskit.video.ListAdpterVideo;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.UploadVideo;
 import com.wonder.eclasskit.video.VideoPlayer;

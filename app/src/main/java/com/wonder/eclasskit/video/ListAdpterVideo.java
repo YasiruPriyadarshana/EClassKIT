@@ -1,4 +1,4 @@
-package com.wonder.eclasskit.Adpter;
+package com.wonder.eclasskit.video;
 
 import android.content.Context;
 import android.view.LayoutInflater;

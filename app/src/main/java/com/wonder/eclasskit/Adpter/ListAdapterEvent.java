@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Eventobj;
 import com.wonder.eclasskit.R;
 
@@ -135,6 +136,9 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
 
 
         Button delete=(Button)convertView.findViewById(R.id.delete_event);
+        if (Common.limit == 1){
+            delete.setVisibility(View.GONE);
+        }
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

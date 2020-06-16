@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Teachers;
 
 public class TeachersRegistration extends AppCompatActivity {
@@ -35,6 +36,7 @@ public class TeachersRegistration extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Teachers");
+
 
         email_txt = findViewById(R.id.email);
         password_txt = findViewById(R.id.password);
@@ -82,7 +84,7 @@ public class TeachersRegistration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Teachers teachers = new Teachers(email,password);
+                            Teachers teachers = new Teachers("name",email);
                             databaseReference.child(databaseReference.push().getKey()).setValue(teachers);
 
                             Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();

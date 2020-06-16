@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class TeacherLogin extends AppCompatActivity {
     private EditText email_txt, password_txt;
@@ -22,6 +23,7 @@ public class TeacherLogin extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +31,17 @@ public class TeacherLogin extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_login);
 
         mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
 
         email_txt = findViewById(R.id.email);
         password_txt = findViewById(R.id.password);
         loginBtn = findViewById(R.id.login);
         toRegister= findViewById(R.id.toRegister_btn);
+
+        if (firebaseUser != null){
+            Intent intent = new Intent(TeacherLogin.this, MainActivity.class);
+            startActivity(intent);
+        }
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
