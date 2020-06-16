@@ -22,14 +22,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.wonder.eclasskit.Object.Common;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 public class Home extends Fragment {
     private ImageButton quiz;
     private ImageButton timeTable;
-    private FirebaseUser user;
     private Button copy;
     private EditText redeem;
     private DatabaseReference databaseReference;
+    private String tKey;
 
     View view;
     @Override
@@ -41,8 +47,8 @@ public class Home extends Fragment {
         redeem=(EditText)view.findViewById(R.id.redeem_code_txt);
 
         if (TextUtils.isEmpty(Common.uid)) {
-            user = FirebaseAuth.getInstance().getCurrentUser();
-            Common.uid = user.getUid();
+            readFile();
+            Common.uid = tKey;
         }
         if (Common.limit == 1){
             redeem.setVisibility(View.GONE);
@@ -86,4 +92,29 @@ public class Home extends Fragment {
         return view;
     }
 
+    public void readFile() {
+        try {
+            FileInputStream fileInputStream = requireActivity().openFileInput("teachercourse.txt");
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer = new StringBuffer();
+
+
+            String lines;
+            while ((lines = bufferedReader.readLine()) != null) {
+                stringBuffer.append(lines + "\n");
+            }
+            String str = stringBuffer.toString();
+            String[] array = str.split(",");
+            tKey=array[0];
+            Toast.makeText(getActivity(), "s: "+tKey, Toast.LENGTH_SHORT).show();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

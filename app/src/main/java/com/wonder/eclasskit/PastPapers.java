@@ -264,7 +264,7 @@ public class PastPapers extends AppCompatActivity {
         progressDialog.show();
 
         //imageuploade
-        StorageReference reference2 =storage.child("uploads/"+System.currentTimeMillis()+".png");
+        StorageReference reference2 =storage.child("PDF/"+System.currentTimeMillis()+".png");
         reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -274,7 +274,7 @@ public class PastPapers extends AppCompatActivity {
 
                 Uri p=pdfUri;
                 //pdf uplode
-                StorageReference reference =storage.child("uploads/"+name);
+                StorageReference reference =storage.child("PDF/"+name);
                 reference.putFile(p).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

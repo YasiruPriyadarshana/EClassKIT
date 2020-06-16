@@ -231,7 +231,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
 
         }else {
-            StorageReference reference2 = storage.child("uploads5/" + System.currentTimeMillis() + ".png");
+            StorageReference reference2 = storage.child("ReplyIMG/" + System.currentTimeMillis() + ".png");
             reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

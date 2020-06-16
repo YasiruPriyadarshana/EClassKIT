@@ -202,7 +202,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
             Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
             adapter.clear();
         } else {
-            StorageReference reference2 = storage.child("uploads4/" + System.currentTimeMillis() + ".png");
+            StorageReference reference2 = storage.child("CmtIMG/" + System.currentTimeMillis() + ".png");
             reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

@@ -21,8 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Adpter.ListAdapterAddClass;
 import com.wonder.eclasskit.Object.AddCourse;
+import com.wonder.eclasskit.Object.Common;
 
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class AddNewCourse extends AppCompatActivity {
@@ -32,18 +38,23 @@ public class AddNewCourse extends AppCompatActivity {
     private ListAdapterAddClass adapter;
     private ArrayList<AddCourse> addCourses;
     private View v;
+    private String tKey;
+    private ArrayList<String> keys;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_course);
+        readFile();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers1");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+tKey+"/newcourse");
         QuizHometListView=(ListView)findViewById(R.id.add_newclass_listview);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String key = keys.get(position);
+                Common.uid=key;
                 Intent intent=new Intent(AddNewCourse.this,MainActivity.class);
                 startActivity(intent);
             }
@@ -58,12 +69,12 @@ public class AddNewCourse extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                keys=new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     AddCourse addCourse = postSnapshot.getValue(AddCourse.class);
                     addCourses.add(addCourse);
-
-
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
                 }
 
                 adapter = new ListAdapterAddClass(AddNewCourse.this, R.layout.itemaddnewclass, addCourses);
@@ -114,5 +125,32 @@ public class AddNewCourse extends AppCompatActivity {
                 adapter.clear();
             }
         });
+    }
+
+
+    public void readFile() {
+        try {
+            FileInputStream fileInputStream = openFileInput("teachercourse.txt");
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer = new StringBuffer();
+
+
+            String lines;
+            while ((lines = bufferedReader.readLine()) != null) {
+                stringBuffer.append(lines + "\n");
+            }
+            String str = stringBuffer.toString();
+            String[] array = str.split(",");
+            tKey=array[0];
+            Toast.makeText(this, "s: "+tKey, Toast.LENGTH_SHORT).show();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

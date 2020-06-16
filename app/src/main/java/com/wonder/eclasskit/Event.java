@@ -241,7 +241,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
         progressDialog.show();
 
         //imageuploade
-        StorageReference reference2 =storage.child("uploads3/"+System.currentTimeMillis()+".png");
+        StorageReference reference2 =storage.child("Event/"+System.currentTimeMillis()+".png");
         reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

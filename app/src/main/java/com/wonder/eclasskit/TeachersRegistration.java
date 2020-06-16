@@ -3,6 +3,7 @@ package com.wonder.eclasskit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Teachers;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class TeachersRegistration extends AppCompatActivity {
 
@@ -85,7 +90,10 @@ public class TeachersRegistration extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Teachers teachers = new Teachers("name",email);
-                            databaseReference.child(databaseReference.push().getKey()).setValue(teachers);
+                            String tkey=databaseReference.push().getKey();
+                            wirteFile(tkey);
+                            databaseReference.child(tkey).setValue(teachers);
+
 
                             Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
@@ -99,6 +107,21 @@ public class TeachersRegistration extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void wirteFile(String textToSave) {
+        String space = ",";
+        try {
+            FileOutputStream fileOutputStream = openFileOutput("teachercourse.txt", Context.MODE_APPEND);
+            fileOutputStream.write((textToSave + space).getBytes());
+            fileOutputStream.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
