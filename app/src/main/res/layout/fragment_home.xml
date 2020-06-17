@@ -51,17 +51,19 @@
 
     <ImageButton
         android:id="@+id/quiz"
-        android:layout_width="90dp"
-        android:layout_height="80dp"
+        android:layout_width="110dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
+        android:background="#FFFFFF"
         android:src="@mipmap/quiz_foreground" />
 
     <ImageButton
         android:id="@+id/classTimetb"
-        android:layout_width="90dp"
-        android:layout_height="80dp"
+        android:layout_width="110dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
+        android:background="#FFFFFF"
         android:src="@mipmap/time_table_foreground" />
 
 </LinearLayout>
