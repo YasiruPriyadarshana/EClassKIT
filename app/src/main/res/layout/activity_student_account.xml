@@ -16,13 +16,16 @@
         android:hint="Enter Enrollment Key"
             android:inputType="textPersonName"
             android:textAlignment="center"
-            android:textColorHint="#217870" />
+            android:textColorHint="#000000" />
 
     <Button
         android:id="@+id/enroll_btn"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Enroll" />
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_background"
+        android:text="Enroll"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     <TextView
         android:id="@+id/textView15"
