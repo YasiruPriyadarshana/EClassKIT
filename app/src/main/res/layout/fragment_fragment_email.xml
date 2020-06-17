@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/eclasskitbackground"
+    android:orientation="vertical"
     tools:context=".FragmentEmail">
 
     <EditText
         android:id="@+id/in_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="75dp"
-        android:layout_marginTop="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="340dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress" />
 
     <Button
         android:id="@+id/bt_email"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="75dp"
-        android:layout_marginTop="200dp"
-        android:text="Next" />
-</FrameLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_background"
+        android:text="Next"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+</LinearLayout>
