@@ -2,21 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayoutVideo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
 
-    <VideoView
-        android:id="@+id/videoView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#3F51B5">
+        android:background="#F5C63535">
 
         <ImageView
             android:id="@+id/play_btn"
@@ -25,14 +35,6 @@
             android:layout_weight="2"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_swap_horiz_black_24dp" />
-
-        <ProgressBar
-            android:id="@+id/videoProgress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:progressTint="#E2F6F4" />
 
         <TextView
             android:id="@+id/currentTime"
@@ -44,6 +46,14 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF" />
 
+        <ProgressBar
+            android:id="@+id/videoProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:progressTint="#E2F6F4" />
+
         <TextView
             android:id="@+id/durationTime"
             android:layout_width="wrap_content"
@@ -54,19 +64,27 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF" />
 
+        <Button
+            android:id="@+id/fullScreen_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="f" />
+
     </LinearLayout>
 
     <ListView
         android:id="@+id/video_comment_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp" />
 
     <ProgressBar
         android:id="@+id/bufferProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
         android:indeterminate="true"
         android:indeterminateBehavior="repeat"
         android:indeterminateOnly="false" />

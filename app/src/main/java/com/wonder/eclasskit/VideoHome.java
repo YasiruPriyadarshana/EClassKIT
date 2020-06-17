@@ -49,6 +49,7 @@ import com.wonder.eclasskit.Object.UploadVideo;
 import com.wonder.eclasskit.video.VideoPlayer;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import in.gauriinfotech.commons.Commons;
@@ -186,19 +187,14 @@ public class VideoHome extends Fragment  {
 
 
 
-
-
-
-
-
-
-
-            selectFile.setDrawingCacheEnabled(true);
-            selectFile.buildDrawingCache();
-            Bitmap bitmap = selectFile.getDrawingCache();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+
+            bitmap1.compress(Bitmap.CompressFormat.PNG, 100, baos);
             data1 = baos.toByteArray();
+
+
+
+
         } else {
             Toast.makeText(getActivity(), "Please Select A Video", Toast.LENGTH_SHORT).show();
         }
