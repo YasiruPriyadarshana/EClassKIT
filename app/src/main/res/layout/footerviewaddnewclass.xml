@@ -3,19 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:id="@+id/title11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="5dp"
-        android:text="Add New Courses" />
+        android:layout_marginTop="40dp"
+        android:text="Add New Courses"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/sub_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         android:ems="10"
         android:hint="Subject Name"
         android:inputType="textPersonName" />
@@ -25,6 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:ems="10"
         android:hint="Class Year ( ex - 2021 A/L)"
         android:inputType="text"
@@ -43,5 +51,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="5dp"
-        android:text="Add Course" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_background"
+        android:text="Add Course"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 </LinearLayout>

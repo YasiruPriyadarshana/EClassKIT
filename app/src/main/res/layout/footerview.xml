@@ -6,9 +6,9 @@
     android:id="@+id/footerview"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    app:cardUseCompatPadding="true"
+    android:layout_margin="5dp"
     app:cardCornerRadius="8dp"
-    android:layout_margin="5dp">
+    app:cardUseCompatPadding="true">
 
 
     <TextView
@@ -20,7 +20,8 @@
         android:layout_marginTop="30dp"
         android:text="select a file"
         android:textAlignment="center"
-        android:textColor="#9C27B0" />
+        android:textColor="#9C27B0"
+        android:textSize="18sp" />
 
     <ImageButton
         android:id="@+id/pdfImgBtn"
@@ -39,6 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="235dp"
         android:layout_marginTop="60dp"
-        android:text="uplode" />
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button_background"
+        android:text="uplode"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
 </androidx.cardview.widget.CardView>

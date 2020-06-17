@@ -12,19 +12,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/addimage"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="0.1"
-            android:text="I" />
+            android:background="@drawable/button_background"
+            android:text="I"
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
         <EditText
             android:id="@+id/comment_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_weight="0.9"
             android:ems="10"
             android:hint="comment"
@@ -32,10 +38,14 @@
 
         <Button
             android:id="@+id/addcmt"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="0.1"
-            android:text="A" />
+            android:background="@drawable/button_background"
+            android:text="A"
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     </LinearLayout>
 </LinearLayout>

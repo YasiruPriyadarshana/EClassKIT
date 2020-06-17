@@ -10,7 +10,11 @@
         android:id="@+id/quest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="hello fragmnet" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="hello fragmnet"
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/frag_questimg"
@@ -21,30 +25,40 @@
         android:id="@+id/ans_cb1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox" />
-
-    <CheckBox
-        android:id="@+id/ans_cb2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="CheckBox" />
 
     <CheckBox
         android:id="@+id/ans_cb3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="CheckBox" />
+
+    <CheckBox
+        android:id="@+id/ans_cb2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="CheckBox" />
 
     <CheckBox
         android:id="@+id/ans_cb4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="CheckBox" />
 
     <CheckBox
         android:id="@+id/ans_cb5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="CheckBox" />
 
     <RadioGroup
@@ -55,30 +69,40 @@
             android:id="@+id/ans_rb1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/ans_rb2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/ans_rb3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/ans_rb4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="RadioButton" />
 
         <RadioButton
             android:id="@+id/ans_rb5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="RadioButton" />
     </RadioGroup>
 

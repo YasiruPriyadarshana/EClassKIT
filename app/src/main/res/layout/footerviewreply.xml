@@ -14,10 +14,13 @@
 
         <Button
             android:id="@+id/repaddimage"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_weight="0.1"
-            android:text="I" />
+            android:background="@drawable/button_background"
+            android:text="I"
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
         <EditText
             android:id="@+id/rep_in"
@@ -25,14 +28,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:ems="10"
-            android:hint="reply"
+            android:hint="Reply"
             android:inputType="text" />
 
         <Button
             android:id="@+id/addrep"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
             android:layout_weight="0.1"
-            android:text="A" />
+            android:background="@drawable/button_background"
+            android:text="A"
+            android:textColor="@color/common_google_signin_btn_text_dark_default" />
     </LinearLayout>
 </LinearLayout>

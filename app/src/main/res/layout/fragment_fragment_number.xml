@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/eclasskitbackground"
     tools:context=".FragmentNumber">
 
     <EditText
@@ -17,9 +18,11 @@
 
     <Button
         android:id="@+id/bt_number"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="75dp"
-        android:layout_marginTop="200dp"
-        android:text="Next" />
+        android:layout_marginTop="180dp"
+        android:background="@drawable/button_background"
+        android:text="Next"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 </FrameLayout>

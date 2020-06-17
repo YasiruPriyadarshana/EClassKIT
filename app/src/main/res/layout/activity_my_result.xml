@@ -16,6 +16,7 @@
             android:id="@+id/imageView3"
             android:layout_width="174dp"
             android:layout_height="127dp"
+            android:layout_marginTop="20dp"
             app:srcCompat="@mipmap/flag_round" />
 
         <LinearLayout
@@ -48,6 +49,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerviewrank"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
 
 </LinearLayout>
