@@ -13,20 +13,27 @@
         android:id="@+id/redeem_code_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="M@2020" />
 
     <Button
         android:id="@+id/copy_redeem"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="copy code" />
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/button_background"
+        android:gravity="center"
+        android:text="copy code"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:text="@string/science_journey"
         android:textAlignment="center"
         android:textSize="18sp" />
@@ -35,18 +42,20 @@
         android:id="@+id/youtube_player_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:videoId="QUk3MNo1Exs"
+        android:layout_gravity="center"
         app:autoPlay="false"
-        app:showFullScreenButton="false" >
+        app:showFullScreenButton="false"
+        app:videoId="QUk3MNo1Exs">
 
     </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
 
     <ImageButton
         android:id="@+id/quiz"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:src="@drawable/leranwithchirathlogo" />
+        android:src="@mipmap/quiz_foreground" />
 
     <ImageButton
         android:id="@+id/classTimetb"
