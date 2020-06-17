@@ -16,11 +16,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginLeft="235dp"
+        android:layout_marginLeft="250dp"
         android:layout_marginTop="30dp"
         android:text="select a file"
         android:textAlignment="center"
-        android:textColor="#9C27B0" />
+        android:textColor="#610D0D" />
 
     <ImageButton
         android:id="@+id/pdfImgBtn"
@@ -35,10 +35,12 @@
 
     <Button
         android:id="@+id/update_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="235dp"
         android:layout_marginTop="60dp"
-        android:text="uplode" />
+        android:background="@drawable/button_background"
+        android:text="uplode"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
 </androidx.cardview.widget.CardView>
