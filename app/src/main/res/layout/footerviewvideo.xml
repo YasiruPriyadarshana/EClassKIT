@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:background="@android:color/transparent"
         android:src="@mipmap/uploadepdf" />
 
@@ -23,18 +22,15 @@
         android:layout_height="wrap_content"
 
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:text="select a your Video"
         android:textAlignment="center"
-        android:textColor="#9C27B0"
-        android:textSize="18sp" />
+        android:textColor="#610D0D" />
 
     <Button
         android:id="@+id/vUpdate_btn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:background="@drawable/button_background"
         android:text="uplode"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
