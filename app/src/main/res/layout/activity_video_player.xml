@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:scaleType="center"
-            app:srcCompat="@drawable/ic_swap_horiz_black_24dp" />
+            app:srcCompat="@drawable/ic_playvideo" />
 
         <TextView
             android:id="@+id/currentTime"
@@ -66,9 +66,11 @@
 
         <Button
             android:id="@+id/fullScreen_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="f" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ic_fullscreenvideo" />
 
     </LinearLayout>
 
