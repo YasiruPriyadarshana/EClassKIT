@@ -53,6 +53,7 @@ public class TeachersRegistration extends AppCompatActivity {
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                regBtn.setEnabled(false);
                 registerNewUser();
             }
         });
@@ -102,8 +103,9 @@ public class TeachersRegistration extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "Registration failed! Please try again later", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Registration failed !!!", Toast.LENGTH_LONG).show();
                             progressBar.setVisibility(View.GONE);
+                            regBtn.setEnabled(true);
                         }
                     }
                 });

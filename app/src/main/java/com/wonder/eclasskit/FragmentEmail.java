@@ -60,18 +60,18 @@ public class FragmentEmail extends Fragment {
         bt_Email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wirteFile();
+
                 String email = Email.getText().toString().trim();
 
                 String emailPattern = "[a-zA-Z0-9._-]+@[g]+[m]+[a]+[i]+[l]+\\.+[a-z]+";
                 if (email.matches(emailPattern)) {
-                    if (checkEmail()) {
 
-                            FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.fragmentplace, new FragmentClass(), null);
-                            ft.commit();
+                    bt_Email.setEnabled(false);
+                    wirteFile();
+                    FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.fragmentplace, new FragmentClass(), null);
+                    ft.commit();
 
-                    }
                 }else {
                     Toast.makeText(getContext(), "Not Valid Email Address", Toast.LENGTH_SHORT).show();
                 }
@@ -90,7 +90,7 @@ public class FragmentEmail extends Fragment {
             fileOutputStream.write((textToSave + space).getBytes());
             fileOutputStream.close();
 
-            Toast.makeText(getActivity(), "text Saved", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "text Saved", Toast.LENGTH_SHORT).show();
 
 
         } catch (FileNotFoundException e) {
@@ -99,23 +99,6 @@ public class FragmentEmail extends Fragment {
             e.printStackTrace();
         }
     }
-    private boolean checkEmail(){
 
-        ////
 
-        //       methna firebse user login eka hadapan
-
-        ///
-
-        send=true;
-//        FirebaseUser user=mAuth.getCurrentUser();
-//
-//        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                send=true;
-//            }
-//        });
-        return send;
-    }
 }
