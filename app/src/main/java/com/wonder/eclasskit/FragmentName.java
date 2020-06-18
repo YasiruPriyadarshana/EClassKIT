@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,6 +32,8 @@ public class FragmentName extends Fragment {
     private TextView userType;
     View view;
     private String name;
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container,
@@ -36,6 +41,12 @@ public class FragmentName extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_fragment_name, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser != null){
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+        }
 
         bt_Name=(Button) view.findViewById(R.id.bt_name);
         change_btn=(Button) view.findViewById(R.id.user_change_btn);
@@ -69,6 +80,7 @@ public class FragmentName extends Fragment {
         bt_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bt_Name.setEnabled(false);
                 int length=Name.getText().length();
                 if (length>3){
                 wirteFile();
@@ -76,11 +88,8 @@ public class FragmentName extends Fragment {
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fragmentplace, new FragmentEmail());
                 ft.commit();
-/*
-                FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragmentplace, new FragmentNumber(), null);
-                ft.commit();
-                */
+
+
                 }else {
                     Toast.makeText(getContext(), "Name too short", Toast.LENGTH_SHORT).show();
                 }
@@ -102,7 +111,7 @@ public class FragmentName extends Fragment {
             fileOutputStream.write((textToSave + space + num + space).getBytes());
             fileOutputStream.close();
 
-            Toast.makeText(getActivity(), "text Saved", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "text Saved", Toast.LENGTH_SHORT).show();
 
 
         } catch (FileNotFoundException e) {

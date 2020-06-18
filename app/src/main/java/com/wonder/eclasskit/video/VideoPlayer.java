@@ -135,7 +135,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
         videoView.start();
         isPlaying=true;
-//        playBtn.setImageResource(R.drawable.ic_play);
+        playBtn.setImageResource(R.drawable.ic_playvideo);
 
         new videoProgress().execute();
 
@@ -145,11 +145,11 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                 if (isPlaying){
                     videoView.pause();
                     isPlaying=false;
-//                    playBtn.setImageResource(R.drawable.ic_pause);
+                    playBtn.setImageResource(R.drawable.ic_pausevideo);
                 }else {
                     videoView.start();
                     isPlaying=true;
-//                    playBtn.setImageResource(R.drawable.ic_play);
+                    playBtn.setImageResource(R.drawable.ic_playvideo);
                 }
 
             }

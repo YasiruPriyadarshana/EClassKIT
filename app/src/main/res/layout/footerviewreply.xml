@@ -14,31 +14,26 @@
 
         <Button
             android:id="@+id/repaddimage"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
             android:layout_weight="0.1"
-            android:background="@drawable/button_background"
-            android:text="I"
-            android:textColor="@color/common_google_signin_btn_text_dark_default" />
+            android:background="@drawable/comment_img_icon" />
 
         <EditText
             android:id="@+id/rep_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
+            android:layout_weight="1"
             android:ems="10"
-            android:hint="Reply"
+            android:hint="reply"
             android:inputType="text" />
 
         <Button
             android:id="@+id/addrep"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_weight="0.1"
-            android:background="@drawable/button_background"
-            android:text="A"
-            android:textColor="@color/common_google_signin_btn_text_dark_default" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/send_cmt_icon" />
     </LinearLayout>
 </LinearLayout>

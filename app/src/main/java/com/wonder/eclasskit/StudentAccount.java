@@ -38,7 +38,7 @@ public class StudentAccount extends AppCompatActivity {
     private ListAdapterMyCourses adapter;
     private ListView CourseListView;
     private  String stKey;
-    private String uid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +48,30 @@ public class StudentAccount extends AppCompatActivity {
         readFile();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/");
-        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+stKey+"/courses");
+
         enroll=(Button)findViewById(R.id.enroll_btn);
         enrollkey=(EditText)findViewById(R.id.enroll_txt);
 
         courses=new ArrayList<>();
         CourseListView = (ListView)findViewById(R.id.listView_Courses);
 
+        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+stKey+"/courses");
         enroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                enroll.setEnabled(false);
                 String key=enrollkey.getText().toString();
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        uid=dataSnapshot.child(key).getValue().toString();
-                        addCourses(uid);
+
+                        addCourses(dataSnapshot.child(key).getValue().toString());
+                        enroll.setEnabled(true);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        enroll.setEnabled(true);
                     }
                 });
             }
@@ -120,6 +123,7 @@ public class StudentAccount extends AppCompatActivity {
                 Toast.makeText(StudentAccount.this, "Enrollment success", Toast.LENGTH_SHORT).show();
             }
         });
+        adapter.clear();
     }
 
     public void readFile() {
@@ -138,7 +142,6 @@ public class StudentAccount extends AppCompatActivity {
             String str = stringBuffer.toString();
             String[] array = str.split(",");
             stKey=array[0];
-            Toast.makeText(this, "s: "+stKey, Toast.LENGTH_SHORT).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

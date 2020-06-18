@@ -42,8 +42,8 @@ public class FragmentClass extends Fragment {
         wirteFile();
         readFileAndFirebase();
 
-            Intent intent = new Intent(getActivity(), StudentAccount.class);
-            getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), StudentAccount.class);
+        getActivity().startActivity(intent);
 
 /*
         bt_Class=(Button)view.findViewById(R.id.bt_class);
@@ -72,7 +72,6 @@ public class FragmentClass extends Fragment {
             fileOutputStream.write((textToSave + space).getBytes());
             fileOutputStream.close();
 
-//            Toast.makeText(getActivity(), "text Saved", Toast.LENGTH_SHORT).show();
 
 
         } catch (FileNotFoundException e) {
@@ -115,7 +114,7 @@ public class FragmentClass extends Fragment {
                 @Override
                 public void DataIsInserted(String key) {
                     wirteFile(key);
-                    Toast.makeText(getContext(), "The student record has been inserted", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "The student record has been inserted", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
