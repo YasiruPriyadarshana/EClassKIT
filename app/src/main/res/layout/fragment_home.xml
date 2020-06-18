@@ -29,9 +29,10 @@
 
         <Button
             android:id="@+id/copy_redeem"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/copy_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/copy_icon"
             android:gravity="center"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
