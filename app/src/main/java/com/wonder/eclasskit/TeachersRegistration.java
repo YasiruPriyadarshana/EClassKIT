@@ -90,7 +90,7 @@ public class TeachersRegistration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Teachers teachers = new Teachers("name",email);
+                            Teachers teachers = new Teachers("SIR",email);
                             String tkey=databaseReference.push().getKey();
                             wirteFile(tkey);
                             databaseReference.child(tkey).setValue(teachers);
