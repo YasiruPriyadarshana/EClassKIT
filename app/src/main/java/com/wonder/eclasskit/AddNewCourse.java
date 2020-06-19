@@ -55,7 +55,10 @@ public class AddNewCourse extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String key = keys.get(position);
                 Common.uid=key;
+                AddCourse adc=addCourses.get(position);
                 Intent intent=new Intent(AddNewCourse.this,MainActivity.class);
+                intent.putExtra("year",adc.getClass_yr());
+                intent.putExtra("sub",adc.getSubjectname());
                 startActivity(intent);
             }
         });
@@ -78,6 +81,7 @@ public class AddNewCourse extends AppCompatActivity {
                 }
 
                 adapter = new ListAdapterAddClass(AddNewCourse.this, R.layout.itemaddnewclass, addCourses);
+
 
                 if (QuizHometListView.getFooterViewsCount() > 0)
                 {

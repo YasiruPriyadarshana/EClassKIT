@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Adpter.ListAdapterMyCourses;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Course;
+import com.wonder.eclasskit.Object.Enroll;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,7 +46,7 @@ public class StudentAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_account);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/");
+
 
         enroll=(Button)findViewById(R.id.enroll_btn);
         enrollkey=(EditText)findViewById(R.id.enroll_txt);
@@ -59,11 +60,13 @@ public class StudentAccount extends AppCompatActivity {
             public void onClick(View v) {
                 enroll.setEnabled(false);
                 String key=enrollkey.getText().toString();
-                databaseReference.addValueEventListener(new ValueEventListener() {
+                databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/"+key);
+
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        addCourses(dataSnapshot.child(key).getValue().toString());
+                        addCourses(dataSnapshot.child("subject").getValue().toString(),dataSnapshot.child("tname").getValue().toString(),dataSnapshot.child("id").getValue().toString());
                         enroll.setEnabled(true);
                     }
 
@@ -113,8 +116,8 @@ public class StudentAccount extends AppCompatActivity {
         });
     }
 
-    private void addCourses(String uid){
-        Course course = new Course("IT","Teacher",uid);
+    private void addCourses(String cname,String tea,String uid){
+        Course course = new Course(cname,tea,uid);
         databaseRefCourse.child(databaseRefCourse.push().getKey()).setValue(course).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
