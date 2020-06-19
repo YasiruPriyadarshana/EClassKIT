@@ -30,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Quizobj;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class addQuestions extends AppCompatActivity {
         setContentView(R.layout.activity_add_questions);
         Intent intent=getIntent();
         keyname=intent.getStringExtra("key");
-        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+keyname+"/quiz");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+ Common.uid+"/"+keyname+"/quiz");
         storage= FirebaseStorage.getInstance().getReference();
 
         questCategory_spinner = (Spinner)findViewById(R.id.categoryquest_spin);

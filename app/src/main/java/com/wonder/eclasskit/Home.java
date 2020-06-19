@@ -50,7 +50,6 @@ public class Home extends Fragment {
         if (TextUtils.isEmpty(Common.uid)) {
             user = FirebaseAuth.getInstance().getCurrentUser();
             Common.uid = user.getUid();
-            Toast.makeText(getActivity(), "a  "+Common.uid, Toast.LENGTH_SHORT).show();
 
         }
         if (Common.limit == 1){

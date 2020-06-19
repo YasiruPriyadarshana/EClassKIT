@@ -46,9 +46,9 @@ public class AddNewCourse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_course);
-        readFile();
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+tKey+"/newcourse");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid+"/newcourse");
         QuizHometListView=(ListView)findViewById(R.id.add_newclass_listview);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,39 +118,13 @@ public class AddNewCourse extends AppCompatActivity {
 
     private void uplodeFile(String subname,String classyr) {
         AddCourse course=new AddCourse(subname,classyr);
+        adapter.clear();
         databaseReference.child(databaseReference.push().getKey()).setValue(course).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(AddNewCourse.this, "New Course Added", Toast.LENGTH_SHORT).show();
-                adapter.clear();
             }
         });
     }
 
-
-    public void readFile() {
-        try {
-            FileInputStream fileInputStream = openFileInput("teachercourse.txt");
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer = new StringBuffer();
-
-
-            String lines;
-            while ((lines = bufferedReader.readLine()) != null) {
-                stringBuffer.append(lines + "\n");
-            }
-            String str = stringBuffer.toString();
-            String[] array = str.split(",");
-            tKey=array[0];
-            Toast.makeText(this, "s: "+tKey, Toast.LENGTH_SHORT).show();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

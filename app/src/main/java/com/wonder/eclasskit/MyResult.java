@@ -42,7 +42,7 @@ public class MyResult extends AppCompatActivity {
         setContentView(R.layout.activity_my_result);
 
         String key=getIntent().getStringExtra("key");
-        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+key+"/Answer_Student/");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/Answer_Student/"+key);
         name=(TextView)findViewById(R.id.myname);
         marks=(TextView)findViewById(R.id.mymarks);
         results=new ArrayList<>();

@@ -73,7 +73,7 @@ public class quizMain extends AppCompatActivity {
         Intent intent=getIntent();
         keyname=intent.getStringExtra("key");
         time=intent.getStringExtra("time");
-        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+keyname+"/quiz");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+Common.uid+"/"+keyname+"/quiz");
 
         final TextView timeleft=(TextView)findViewById(R.id.time_left);
 
