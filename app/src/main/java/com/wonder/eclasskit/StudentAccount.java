@@ -45,8 +45,6 @@ public class StudentAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_account);
 
-
-
         databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/");
 
         enroll=(Button)findViewById(R.id.enroll_btn);
@@ -143,7 +141,6 @@ public class StudentAccount extends AppCompatActivity {
             String[] array = str.split(",");
             stKey=array[0];
 
-            Toast.makeText(this, "as: "+stKey, Toast.LENGTH_SHORT).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

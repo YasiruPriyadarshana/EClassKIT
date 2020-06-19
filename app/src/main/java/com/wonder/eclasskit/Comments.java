@@ -287,6 +287,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
         }else if (requestCode==78 && resultCode == RESULT_OK && data!=null) {
             imgUriR=data.getData();
+            imageView.setVisibility(View.VISIBLE);
             Picasso.with(getApplicationContext()).load(imgUriR).into(imageView);
                 Toast.makeText(this, "Image added", Toast.LENGTH_SHORT).show();
 
@@ -309,6 +310,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     @Override
     public void onHandleSelectionClear() {
         adapter.clear();
+        recreate();
     }
 
     @Override
