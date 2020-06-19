@@ -36,6 +36,7 @@ public class Home extends Fragment {
     private EditText redeem;
     private DatabaseReference databaseReference;
     private String tKey;
+    private FirebaseUser user;
 
     View view;
     @Override
@@ -47,8 +48,10 @@ public class Home extends Fragment {
         redeem=(EditText)view.findViewById(R.id.redeem_code_txt);
 
         if (TextUtils.isEmpty(Common.uid)) {
-            readFile();
-            Common.uid = tKey;
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            Common.uid = user.getUid();
+            Toast.makeText(getActivity(), "a  "+Common.uid, Toast.LENGTH_SHORT).show();
+
         }
         if (Common.limit == 1){
             redeem.setVisibility(View.GONE);
@@ -92,29 +95,29 @@ public class Home extends Fragment {
         return view;
     }
 
-    public void readFile() {
-        try {
-            FileInputStream fileInputStream = requireActivity().openFileInput("teachercourse.txt");
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer = new StringBuffer();
-
-
-            String lines;
-            while ((lines = bufferedReader.readLine()) != null) {
-                stringBuffer.append(lines + "\n");
-            }
-            String str = stringBuffer.toString();
-            String[] array = str.split(",");
-            tKey=array[0];
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public void readFile() {
+//        try {
+//            FileInputStream fileInputStream = requireActivity().openFileInput("teachercourse.txt");
+//            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+//
+//            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+//            StringBuffer stringBuffer = new StringBuffer();
+//
+//
+//            String lines;
+//            while ((lines = bufferedReader.readLine()) != null) {
+//                stringBuffer.append(lines + "\n");
+//            }
+//            String str = stringBuffer.toString();
+//            String[] array = str.split(",");
+//            tKey=array[0];
+//
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }

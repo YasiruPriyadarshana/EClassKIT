@@ -48,7 +48,7 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
         mResource=resource;
         this.mCallback=mCallback;
         this.keys=keys;
-        tRefarenceStudents= FirebaseDatabase.getInstance().getReference("event");
+        tRefarenceStudents= FirebaseDatabase.getInstance().getReference("event/"+ Common.uid);
     }
 
     @Override

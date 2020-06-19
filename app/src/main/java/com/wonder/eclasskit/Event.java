@@ -103,84 +103,84 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
 
                 adapter = new ListAdapterEvent(getContext(), R.layout.itemevent, eventobjs, keys,anInterface);
 
-                if (EventListView.getFooterViewsCount() > 0)
-                {
-                    EventListView.removeFooterView(v);
-                }
-                v = getLayoutInflater().inflate(R.layout.footerviewevent, null);
+
                 if (Common.limit != 1) {
+
+                    if (EventListView.getFooterViewsCount() > 0) {
+                        EventListView.removeFooterView(v);
+                    }
+                    v = getLayoutInflater().inflate(R.layout.footerviewevent, null);
+
                     EventListView.addFooterView(v);
-                }
 
-                selectimage = (ImageButton) v.findViewById(R.id.evnt_imgbtn);
-                event = (TextView) v.findViewById(R.id.title_in);
-                desc = (TextView) v.findViewById(R.id.desc_in);
+                    selectimage = (ImageButton) v.findViewById(R.id.evnt_imgbtn);
+                    event = (TextView) v.findViewById(R.id.title_in);
+                    desc = (TextView) v.findViewById(R.id.desc_in);
+                    time = (Button) v.findViewById(R.id.date);
+                    updateEvent = (Button) v.findViewById(R.id.add_event);
 
-                time = (Button) v.findViewById(R.id.date);
+                    time.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar c=Calendar.getInstance();
+                            year = c.get(Calendar.YEAR);
+                            month = c.get(Calendar.MONTH);
+                            day = c.get(Calendar.DAY_OF_MONTH);
 
+                            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    yearFinal=year;
+                                    monthFinal=month+1;
+                                    dayFinal=dayOfMonth;
 
+                                    Calendar c=Calendar.getInstance();
 
-                time.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Calendar c=Calendar.getInstance();
-                        year = c.get(Calendar.YEAR);
-                        month = c.get(Calendar.MONTH);
-                        day = c.get(Calendar.DAY_OF_MONTH);
+                                    TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                            hourFinal=hourOfDay;
+                                            minuteFinal=minute;
 
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                yearFinal=year;
-                                monthFinal=month+1;
-                                dayFinal=dayOfMonth;
-
-                                Calendar c=Calendar.getInstance();
-
-                                TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                                    @Override
-                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                        hourFinal=hourOfDay;
-                                        minuteFinal=minute;
-
-                                        time.setText(""+yearFinal+"-"+monthFinal+"-"+dayFinal+" "+hourFinal+":"+minuteFinal);
-                                    }
-                                }, hour, minute, false);
-                                timePickerDialog.show();
-                            }
-                        }, year, month, day);
-                        datePickerDialog.show();
-                    }
-                });
-
-
-                updateEvent = (Button) v.findViewById(R.id.add_event);
-                selectimage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                            selectIMG();
-                        } else {
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                                            time.setText(""+yearFinal+"-"+monthFinal+"-"+dayFinal+" "+hourFinal+":"+minuteFinal);
+                                        }
+                                    }, hour, minute, false);
+                                    timePickerDialog.show();
+                                }
+                            }, year, month, day);
+                            datePickerDialog.show();
                         }
-                    }
-                });
-                updateEvent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (imgUri != null) {
-                            title_st=event.getText().toString();
-                            desc_st=desc.getText().toString();
-                            time_st=time.getText().toString();
-                            if (title_st.isEmpty() || desc_st.isEmpty() || time_st.isEmpty()){
-                                Toast.makeText(getContext(), "fill details", Toast.LENGTH_SHORT).show();
-                            }else {
-                                uplodeFile(imgUri);
+                    });
+
+                    selectimage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                                selectIMG();
+                            } else {
+                                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
                             }
-                        } else
-                            Toast.makeText(getContext(), "select a File", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        }
+                    });
+                    updateEvent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (imgUri != null) {
+                                title_st = event.getText().toString();
+                                desc_st = desc.getText().toString();
+                                time_st = time.getText().toString();
+                                if (title_st.isEmpty() || desc_st.isEmpty() || time_st.isEmpty()) {
+                                    Toast.makeText(getContext(), "fill details", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    uplodeFile(imgUri);
+                                }
+                            } else
+                                Toast.makeText(getContext(), "select a File", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+                }
 
                 EventListView.setAdapter(adapter);
 
@@ -240,6 +240,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
         progressDialog.setTitle("Uploading File");
         progressDialog.show();
 
+        adapter.clear();
         //imageuploade
         StorageReference reference2 =storage.child("Event/"+System.currentTimeMillis()+".png");
         reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -255,7 +256,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                 databaseReference.child(databaseReference.push().getKey()).setValue(eventobj);
                 Toast.makeText(getContext(), "Event Details uploaded", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
-                adapter.clear();
+
                 //pdf uplode
 
                 //end
