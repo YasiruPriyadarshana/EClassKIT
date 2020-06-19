@@ -45,7 +45,7 @@ public class StudentAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_account);
 
-        readFile();
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/");
 
@@ -55,7 +55,7 @@ public class StudentAccount extends AppCompatActivity {
         courses=new ArrayList<>();
         CourseListView = (ListView)findViewById(R.id.listView_Courses);
 
-        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+stKey+"/courses");
+        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+readFile()+"/courses");
         enroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +126,7 @@ public class StudentAccount extends AppCompatActivity {
         adapter.clear();
     }
 
-    public void readFile() {
+    public String readFile() {
         try {
             FileInputStream fileInputStream = openFileInput("student.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
@@ -143,12 +143,15 @@ public class StudentAccount extends AppCompatActivity {
             String[] array = str.split(",");
             stKey=array[0];
 
+            Toast.makeText(this, "as: "+stKey, Toast.LENGTH_SHORT).show();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return stKey;
     }
 
 }
