@@ -8,40 +8,43 @@
     android:background="@drawable/eclasskitbackground"
     tools:context=".AboutUs">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/teacher_img"
+        android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_gravity="center"
         android:layout_margin="30dp"
         android:background="@drawable/button_states" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/teacherN_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginTop="20dp"
-        android:text="Teacher Name"
-        android:textColor="#342E6D"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        android:text="SET Teacher Name"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/teacher_desc_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
         android:text="@string/aboutusdesc"
-        android:textColor="#3D5E5D"
-        android:textSize="18sp"
-        android:textStyle="italic" />
+        android:textColor="#610D0D"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <ImageButton

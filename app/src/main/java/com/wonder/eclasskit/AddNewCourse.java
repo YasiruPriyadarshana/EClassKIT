@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Adpter.ListAdapterAddClass;
 import com.wonder.eclasskit.Object.AddCourse;
 import com.wonder.eclasskit.Object.Common;
+import com.wonder.eclasskit.Object.Teachers;
 
 
 import java.io.BufferedReader;
@@ -40,27 +41,45 @@ public class AddNewCourse extends AppCompatActivity {
     private View v;
     private String tKey;
     private ArrayList<String> keys;
+    private EditText course,year;
+    private Button save;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_course);
-        readFile();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+tKey+"/newcourse");
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid+"/newcourse");
         QuizHometListView=(ListView)findViewById(R.id.add_newclass_listview);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String key = keys.get(position);
                 Common.uid=key;
+                AddCourse adc=addCourses.get(position);
                 Intent intent=new Intent(AddNewCourse.this,MainActivity.class);
+                intent.putExtra("year",adc.getClass_yr());
+                intent.putExtra("sub",adc.getSubjectname());
                 startActivity(intent);
             }
         });
         addCourses=new ArrayList<>();
         viewAllFiles();
+
+        save=(Button)findViewById(R.id.save_ftcourse);
+        course=(EditText)findViewById(R.id.sub_name_1);
+        year=(EditText)findViewById(R.id.class_yr_1);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
+                Teachers teachers=new Teachers("",course.getText().toString(),year.getText().toString());
+                databaseReference.setValue(teachers);
+                Toast.makeText(AddNewCourse.this, "Details added", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void viewAllFiles() {
@@ -78,6 +97,7 @@ public class AddNewCourse extends AppCompatActivity {
                 }
 
                 adapter = new ListAdapterAddClass(AddNewCourse.this, R.layout.itemaddnewclass, addCourses);
+
 
                 if (QuizHometListView.getFooterViewsCount() > 0)
                 {
@@ -118,39 +138,13 @@ public class AddNewCourse extends AppCompatActivity {
 
     private void uplodeFile(String subname,String classyr) {
         AddCourse course=new AddCourse(subname,classyr);
+        adapter.clear();
         databaseReference.child(databaseReference.push().getKey()).setValue(course).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(AddNewCourse.this, "New Course Added", Toast.LENGTH_SHORT).show();
-                adapter.clear();
             }
         });
     }
 
-
-    public void readFile() {
-        try {
-            FileInputStream fileInputStream = openFileInput("teachercourse.txt");
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer = new StringBuffer();
-
-
-            String lines;
-            while ((lines = bufferedReader.readLine()) != null) {
-                stringBuffer.append(lines + "\n");
-            }
-            String str = stringBuffer.toString();
-            String[] array = str.split(",");
-            tKey=array[0];
-            Toast.makeText(this, "s: "+tKey, Toast.LENGTH_SHORT).show();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

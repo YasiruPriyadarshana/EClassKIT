@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Adpter.ListAdapterMyCourses;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Course;
+import com.wonder.eclasskit.Object.Enroll;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,9 +47,7 @@ public class StudentAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_account);
 
-        readFile();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/");
 
         enroll=(Button)findViewById(R.id.enroll_btn);
         enrollkey=(EditText)findViewById(R.id.enroll_txt);
@@ -55,25 +55,38 @@ public class StudentAccount extends AppCompatActivity {
         courses=new ArrayList<>();
         CourseListView = (ListView)findViewById(R.id.listView_Courses);
 
-        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+stKey+"/courses");
+        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+readFile()+"/courses");
         enroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enroll.setEnabled(false);
                 String key=enrollkey.getText().toString();
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        addCourses(dataSnapshot.child(key).getValue().toString());
-                        enroll.setEnabled(true);
-                    }
+                if (TextUtils.isEmpty(key)){
+                    Toast.makeText(StudentAccount.this, "Enter Enroll key", Toast.LENGTH_SHORT).show();
+                }else {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        enroll.setEnabled(true);
-                    }
-                });
+                    databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/" + key);
+
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChildren()) {
+                                addCourses(dataSnapshot.child("subject").getValue().toString(), dataSnapshot.child("tname").getValue().toString(), dataSnapshot.child("id").getValue().toString());
+
+                            }else {
+                                Toast.makeText(StudentAccount.this, "Enroll key Error", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                enroll.setEnabled(true);
             }
         });
 
@@ -115,8 +128,8 @@ public class StudentAccount extends AppCompatActivity {
         });
     }
 
-    private void addCourses(String uid){
-        Course course = new Course("IT","Teacher",uid);
+    private void addCourses(String cname,String tea,String uid){
+        Course course = new Course(cname,tea,uid);
         databaseRefCourse.child(databaseRefCourse.push().getKey()).setValue(course).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -126,7 +139,7 @@ public class StudentAccount extends AppCompatActivity {
         adapter.clear();
     }
 
-    public void readFile() {
+    public String readFile() {
         try {
             FileInputStream fileInputStream = openFileInput("student.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
@@ -143,12 +156,14 @@ public class StudentAccount extends AppCompatActivity {
             String[] array = str.split(",");
             stKey=array[0];
 
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return stKey;
     }
 
 }

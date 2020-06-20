@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class TeacherLogin extends AppCompatActivity {
     private EditText email_txt, password_txt;
     private Button loginBtn,toRegister;
+    private ProgressBar progressBar;
 
 
     private FirebaseAuth mAuth;
@@ -36,12 +38,14 @@ public class TeacherLogin extends AppCompatActivity {
         password_txt = findViewById(R.id.password);
         loginBtn = findViewById(R.id.login);
         toRegister= findViewById(R.id.toRegister_btn);
+        progressBar = findViewById(R.id.progressBar_login);
 
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 loginUserAccount();
             }
         });
@@ -78,12 +82,13 @@ public class TeacherLogin extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
-
                             Intent intent = new Intent(TeacherLogin.this, MainActivity.class);
+                            progressBar.setVisibility(View.GONE);
                             startActivity(intent);
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });

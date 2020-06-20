@@ -279,6 +279,7 @@ public class VideoHome extends Fragment  {
 
         //videoimage
         StorageReference reference2 =storage.child("videos/"+System.currentTimeMillis()+".png");
+        adapter.clear();
         reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -307,11 +308,6 @@ public class VideoHome extends Fragment  {
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                         double currentProgress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
                         progressDialog.setMessage("Uploaded: "+(int)currentProgress+"%");
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        adapter.clear();
                     }
                 });
                 //end

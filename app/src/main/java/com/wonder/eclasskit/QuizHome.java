@@ -37,7 +37,7 @@ public class QuizHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_home);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
         databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+ Common.uid);
         QuizHometListView=(ListView)findViewById(R.id.recyclerviewquizhome);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,31 +71,36 @@ public class QuizHome extends AppCompatActivity {
 
                 adapter = new ListAdapterQuizHome(QuizHome.this, R.layout.itemquizhome, quizHms,keys);
 
-                if (QuizHometListView.getFooterViewsCount() > 0)
-                {
-                    QuizHometListView.removeFooterView(v);
-                }
-                v = getLayoutInflater().inflate(R.layout.footerviewquiz, null);
                 if (Common.limit != 1) {
-                    QuizHometListView.addFooterView(v);
-                }
 
-                Button updatequiz = (Button) v.findViewById(R.id.addnewquiz_home);
-                final EditText quiz_name=(EditText)v.findViewById(R.id.addquiz_name);
-                final EditText quiz_time=(EditText)v.findViewById(R.id.ttl_quiz_time);
-
-                updatequiz.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                            String quiz_txt=quiz_name.getText().toString();
-                            String quiz_tm=quiz_time.getText().toString();
-                            if (quiz_txt.isEmpty() && quiz_tm.isEmpty()){
-                                Toast.makeText(QuizHome.this, "fill details", Toast.LENGTH_SHORT).show();
-                            }else {
-                                uplodeFile(quiz_txt,quiz_tm);
-                            }
+                    if (QuizHometListView.getFooterViewsCount() > 0) {
+                        QuizHometListView.removeFooterView(v);
                     }
-                });
+                    v = getLayoutInflater().inflate(R.layout.footerviewquiz, null);
+
+                    QuizHometListView.addFooterView(v);
+
+
+                    Button updatequiz = (Button) v.findViewById(R.id.addnewquiz_home);
+                    final EditText quiz_name = (EditText) v.findViewById(R.id.addquiz_name);
+                    final EditText quiz_time = (EditText) v.findViewById(R.id.ttl_quiz_time);
+
+                    updatequiz.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String quiz_txt = quiz_name.getText().toString();
+                            String quiz_tm = quiz_time.getText().toString();
+                            if (quiz_txt.isEmpty()) {
+                                Toast.makeText(QuizHome.this, "Give Name", Toast.LENGTH_SHORT).show();
+                            } else if(Integer.parseInt(quiz_tm) <=5){
+                                Toast.makeText(QuizHome.this, "Give Time grater then 5min", Toast.LENGTH_SHORT).show();
+                            }else {
+                                uplodeFile(quiz_txt, quiz_tm);
+                            }
+                        }
+                    });
+
+                }
 
                 QuizHometListView.setAdapter(adapter);
 
@@ -111,11 +116,11 @@ public class QuizHome extends AppCompatActivity {
 
     private void uplodeFile(String quiz,String time) {
         QuizHm quizHm=new QuizHm(quiz,time);
+        adapter.clear();
         databaseReference.child(databaseReference.push().getKey()).setValue(quizHm).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(QuizHome.this, "New Quiz Added", Toast.LENGTH_SHORT).show();
-                adapter.clear();
             }
         });
     }

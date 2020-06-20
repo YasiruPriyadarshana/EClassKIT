@@ -406,5 +406,11 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        isPlaying = false;
+    }
+
 
 }

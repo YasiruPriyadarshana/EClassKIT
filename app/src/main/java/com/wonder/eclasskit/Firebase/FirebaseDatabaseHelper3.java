@@ -27,7 +27,7 @@ public class FirebaseDatabaseHelper3 {
 
     public FirebaseDatabaseHelper3(String name) {
         tDatabase = FirebaseDatabase.getInstance();
-        tRefarenceStudents= tDatabase.getReference("quizHome/"+name+"/Answer_Student");
+        tRefarenceStudents= tDatabase.getReference("quizHome/Answer_Student/"+name);
     }
 
 

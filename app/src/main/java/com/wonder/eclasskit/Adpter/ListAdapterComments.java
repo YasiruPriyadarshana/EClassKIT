@@ -160,6 +160,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 final EditText desc = (EditText)v.findViewById(R.id.rep_in);
                 Button addImage=(Button)v.findViewById(R.id.repaddimage);
                 final ImageView repimage=(ImageView)v.findViewById(R.id.repimage_in);
+                repimage.setVisibility(View.GONE);
 
 
 
@@ -169,7 +170,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 
                             mCallback.onHandleSelection(repimage);
-
+                            setListViewHeightBasedOnChildren(ReplyListView,60);
 //                            Toast.makeText(mContext, "sa:"+ReplyListView.getPositionForView(v), Toast.LENGTH_SHORT).show();
 
                         } else {
@@ -193,7 +194,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
 
                 ReplyListView.setAdapter(adapter);
-                setListViewHeightBasedOnChildren(ReplyListView);
+                setListViewHeightBasedOnChildren(ReplyListView,0);
 
                 ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -224,10 +225,8 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         //imageuploade
         if (imgUri == null) {
             Reply replytobj = new Reply(name, rep_st,null);
-
             dr.child("1"+dr.push().getKey()).setValue(replytobj);
             Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
-            mCallback.onHandleSelectionClear();
 
 
         }else {
@@ -240,28 +239,19 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     while (!uri.isComplete()) ;
                     p = uri.getResult();
 
-
                     Reply replytobj = new Reply(name, rep_st, p.toString());
-
                     dr.child("1"+dr.push().getKey()).setValue(replytobj);
                     Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
 
                 }
-            }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
-                    mCallback.onHandleSelectionClear();
-                }
-            });
-            ;//end
+            });//end
 
 
         }
-
+        mCallback.onHandleSelectionClear();
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView myListView) {
+    public static void setListViewHeightBasedOnChildren(ListView myListView,int v) {
         ListAdapter adapter = myListView.getAdapter();
         if (myListView != null) {
             int totalHeight = 0;
@@ -272,7 +262,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             }
 
             ViewGroup.LayoutParams params = myListView.getLayoutParams();
-            params.height = totalHeight + (myListView.getDividerHeight() * (adapter.getCount() - 1));
+            params.height = totalHeight + (myListView.getDividerHeight() * (adapter.getCount() - 1)) + v;
             myListView.setLayoutParams(params);
         }
 

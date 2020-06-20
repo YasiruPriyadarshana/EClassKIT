@@ -38,7 +38,7 @@ public class ReviewQuiz extends AppCompatActivity {
         setContentView(R.layout.activity_review_quiz);
         Intent intent=getIntent();
         String keyname=intent.getStringExtra("key");
-        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+keyname+"/Answer_Student");
+        databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/Answer_Student/"+keyname);
         ReviewListView=(ListView)findViewById(R.id.recyclerviewreview);
         answers=new ArrayList<>();
         reviews=new ArrayList<>();

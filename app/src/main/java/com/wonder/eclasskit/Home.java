@@ -4,6 +4,7 @@ package com.wonder.eclasskit;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -18,9 +19,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.wonder.eclasskit.Object.AddCourse;
 import com.wonder.eclasskit.Object.Common;
+import com.wonder.eclasskit.Object.Enroll;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -34,8 +40,11 @@ public class Home extends Fragment {
     private ImageButton timeTable;
     private Button copy;
     private EditText redeem;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseRfTeacher;
     private String tKey;
+    private FirebaseUser user;
+    private Enroll enroll;
+    private String year,subject;
 
     View view;
     @Override
@@ -47,13 +56,17 @@ public class Home extends Fragment {
         redeem=(EditText)view.findViewById(R.id.redeem_code_txt);
 
         if (TextUtils.isEmpty(Common.uid)) {
-            readFile();
-            Common.uid = tKey;
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            Common.uid = user.getUid();
+
         }
         if (Common.limit == 1){
             redeem.setVisibility(View.GONE);
             copy.setVisibility(View.GONE);
         }
+        Intent intent = requireActivity().getIntent();
+        year=intent.getStringExtra("year");
+        subject=intent.getStringExtra("sub");
 
         quiz=view.findViewById(R.id.quiz);
         timeTable=view.findViewById(R.id.classTimetb);
@@ -80,41 +93,63 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 String redeemcd=redeem.getText().toString();
                 String teacher=Common.uid;
-                databaseReference.child(redeemcd).setValue(teacher).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getActivity(), "Redeem copied", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (TextUtils.isEmpty(subject)){
+                    databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
+                    databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            subject = dataSnapshot.child("subject").getValue().toString();
+                            year = dataSnapshot.child("syear").getValue().toString();
+                            enroll = new Enroll(teacher, "", subject, year);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                if (redeemcd.isEmpty()) {
+                    Toast.makeText(getActivity(), "Give Enrollment Key", Toast.LENGTH_SHORT).show();
+                }else if (redeemcd.length() < 6){
+                    Toast.makeText(getActivity(), "Too Short (need 6 character)", Toast.LENGTH_SHORT).show();
+                }else {
+                    databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getActivity(), "Redeem copied", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
         return view;
     }
 
-    public void readFile() {
-        try {
-            FileInputStream fileInputStream = requireActivity().openFileInput("teachercourse.txt");
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer = new StringBuffer();
-
-
-            String lines;
-            while ((lines = bufferedReader.readLine()) != null) {
-                stringBuffer.append(lines + "\n");
-            }
-            String str = stringBuffer.toString();
-            String[] array = str.split(",");
-            tKey=array[0];
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public void readFile() {
+//        try {
+//            FileInputStream fileInputStream = requireActivity().openFileInput("teachercourse.txt");
+//            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+//
+//            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+//            StringBuffer stringBuffer = new StringBuffer();
+//
+//
+//            String lines;
+//            while ((lines = bufferedReader.readLine()) != null) {
+//                stringBuffer.append(lines + "\n");
+//            }
+//            String str = stringBuffer.toString();
+//            String[] array = str.split(",");
+//            tKey=array[0];
+//
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }
