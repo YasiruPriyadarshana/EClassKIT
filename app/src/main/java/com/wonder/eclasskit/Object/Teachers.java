@@ -8,6 +8,8 @@ public class Teachers {
     private String twitter;
     private String youtube;
     private String web;
+    private String subject;
+    private String syear;
 
 
     public Teachers() {
@@ -82,5 +84,29 @@ public class Teachers {
 
     public void setWeb(String web) {
         this.web = web;
+    }
+    // for enroll
+
+
+    public Teachers(String name,String subject, String syear) {
+        this.subject = subject;
+        this.syear = syear;
+        this.name =name;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getSyear() {
+        return syear;
+    }
+
+    public void setSyear(String syear) {
+        this.syear = syear;
     }
 }

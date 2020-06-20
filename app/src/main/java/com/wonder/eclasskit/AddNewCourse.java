@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Adpter.ListAdapterAddClass;
 import com.wonder.eclasskit.Object.AddCourse;
 import com.wonder.eclasskit.Object.Common;
+import com.wonder.eclasskit.Object.Teachers;
 
 
 import java.io.BufferedReader;
@@ -40,6 +41,8 @@ public class AddNewCourse extends AppCompatActivity {
     private View v;
     private String tKey;
     private ArrayList<String> keys;
+    private EditText course,year;
+    private Button save;
 
 
     @Override
@@ -64,6 +67,20 @@ public class AddNewCourse extends AppCompatActivity {
         });
         addCourses=new ArrayList<>();
         viewAllFiles();
+
+        save=(Button)findViewById(R.id.save_ftcourse);
+        course=(EditText)findViewById(R.id.sub_name_1);
+        year=(EditText)findViewById(R.id.class_yr_1);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
+                Teachers teachers=new Teachers("",course.getText().toString(),year.getText().toString());
+                databaseReference.setValue(teachers);
+                Toast.makeText(AddNewCourse.this, "Details added", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void viewAllFiles() {

@@ -90,9 +90,11 @@ public class QuizHome extends AppCompatActivity {
                         public void onClick(View v) {
                             String quiz_txt = quiz_name.getText().toString();
                             String quiz_tm = quiz_time.getText().toString();
-                            if (quiz_txt.isEmpty() && quiz_tm.isEmpty()) {
-                                Toast.makeText(QuizHome.this, "fill details", Toast.LENGTH_SHORT).show();
-                            } else {
+                            if (quiz_txt.isEmpty()) {
+                                Toast.makeText(QuizHome.this, "Give Name", Toast.LENGTH_SHORT).show();
+                            } else if(Integer.parseInt(quiz_tm) <=5){
+                                Toast.makeText(QuizHome.this, "Give Time grater then 5min", Toast.LENGTH_SHORT).show();
+                            }else {
                                 uplodeFile(quiz_txt, quiz_tm);
                             }
                         }

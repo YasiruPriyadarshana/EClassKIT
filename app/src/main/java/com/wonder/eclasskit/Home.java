@@ -93,7 +93,24 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 String redeemcd=redeem.getText().toString();
                 String teacher=Common.uid;
-                enroll =new Enroll(teacher,"",subject,year);
+                if (TextUtils.isEmpty(subject)){
+                    databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
+                    databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            subject = dataSnapshot.child("subject").getValue().toString();
+                            year = dataSnapshot.child("syear").getValue().toString();
+                            enroll = new Enroll(teacher, "", subject, year);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else {
+
+                }
                 databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

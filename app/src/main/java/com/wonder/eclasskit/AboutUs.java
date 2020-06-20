@@ -2,12 +2,24 @@ package com.wonder.eclasskit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -28,11 +40,17 @@ import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Teachers;
 import com.wonder.eclasskit.Object.UploadPDF;
 
+import java.io.IOException;
+
+import in.gauriinfotech.commons.Commons;
+
 public class AboutUs extends AppCompatActivity {
     private ImageButton Web,Facebook,Twitter,Youtube;
     private Button setname,setdesc;
     private DatabaseReference databaseReference;
-    String weburl,fburl,twitterurl,youtubeurl;
+    private String weburl,fburl,twitterurl,youtubeurl;
+    private ImageButton teacherimage;
+    private Uri imgUri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +61,7 @@ public class AboutUs extends AppCompatActivity {
         Youtube=(ImageButton)findViewById(R.id.youtube);
         setname=(Button)findViewById(R.id.teacherN_btn);
         setdesc=(Button)findViewById(R.id.teacher_desc_btn);
+        teacherimage=(ImageButton)findViewById(R.id.teacher_img);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+ Common.uid);
 
@@ -107,9 +126,25 @@ public class AboutUs extends AppCompatActivity {
         });
 
 
-
         if (Common.limit != 1){
 
+            teacherimage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            teacherimage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ContextCompat.checkSelfPermission(AboutUs.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                        selectIMG();
+                    } else {
+                        ActivityCompat.requestPermissions(AboutUs.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                    }
+                }
+            });
 
             setname.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -274,5 +309,40 @@ public class AboutUs extends AppCompatActivity {
         });
     }
 
+    private void selectIMG(){
+        Intent intent=new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 76);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==76 && resultCode == RESULT_OK && data!=null) {
+            imgUri=data.getData();
+
+            String fullPath = Commons.getPath(imgUri,AboutUs.this);
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(AboutUs.this.getContentResolver(),imgUri);
+                Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+                BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+                Paint paint = new Paint();
+                paint.setShader(shader);
+                paint.setAntiAlias(true);
+                Canvas c = new Canvas(circleBitmap);
+                c.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2, paint);
+                teacherimage.setImageBitmap(circleBitmap);
+            }catch (IOException e){
+                Toast.makeText(AboutUs.this, "fucked: "+e, Toast.LENGTH_SHORT).show();
+            }
+
+
+
+
+        } else {
+            Toast.makeText(AboutUs.this, "Please select a Photo", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

@@ -27,6 +27,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="Class year" />
+
+        <Button
+            android:id="@+id/save_ftcourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:text="save" />
     </androidx.cardview.widget.CardView>
     <ListView
         android:id="@+id/add_newclass_listview"

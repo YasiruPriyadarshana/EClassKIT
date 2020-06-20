@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -60,21 +61,32 @@ public class StudentAccount extends AppCompatActivity {
             public void onClick(View v) {
                 enroll.setEnabled(false);
                 String key=enrollkey.getText().toString();
-                databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/"+key);
 
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (TextUtils.isEmpty(key)){
+                    Toast.makeText(StudentAccount.this, "Enter Enroll key", Toast.LENGTH_SHORT).show();
+                }else {
 
-                        addCourses(dataSnapshot.child("subject").getValue().toString(),dataSnapshot.child("tname").getValue().toString(),dataSnapshot.child("id").getValue().toString());
-                        enroll.setEnabled(true);
-                    }
+                    databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/" + key);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        enroll.setEnabled(true);
-                    }
-                });
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChildren()) {
+                                addCourses(dataSnapshot.child("subject").getValue().toString(), dataSnapshot.child("tname").getValue().toString(), dataSnapshot.child("id").getValue().toString());
+
+                            }else {
+                                Toast.makeText(StudentAccount.this, "Enroll key Error", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                enroll.setEnabled(true);
             }
         });
 
