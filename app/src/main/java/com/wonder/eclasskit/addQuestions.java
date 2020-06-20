@@ -156,6 +156,12 @@ public class addQuestions extends AppCompatActivity {
             Quizobj quizobj = new Quizobj(quest_st,null, ans1_st, ans2_st, ans3_st, ans4_st, ans5_st, type);
             databaseReference.child(databaseReference.push().getKey()).setValue(quizobj);
             Toast.makeText(addQuestions.this, "Quiz Details uploaded", Toast.LENGTH_SHORT).show();
+            ans1.setText("");
+            ans2.setText("");
+            ans3.setText("");
+            ans4.setText("");
+            ans5.setText("");
+            quest.setText("");
 
         } else {
             final ProgressDialog progressDialog = new ProgressDialog(addQuestions.this);
@@ -178,7 +184,13 @@ public class addQuestions extends AppCompatActivity {
                     Toast.makeText(addQuestions.this, "Quiz Details uploaded", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
 
-                    //pdf uplode
+                    //clear field
+                    ans1.setText("");
+                    ans2.setText("");
+                    ans3.setText("");
+                    ans4.setText("");
+                    ans5.setText("");
+                    quest.setText("");
 
                     //end
                 }
@@ -192,5 +204,13 @@ public class addQuestions extends AppCompatActivity {
             });//end
 
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this,QuizHome.class);
+        startActivity(intent);
     }
 }

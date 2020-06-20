@@ -75,6 +75,8 @@ public class quizMain extends AppCompatActivity {
         time=intent.getStringExtra("time");
         databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+Common.uid+"/"+keyname+"/quiz");
 
+        if (Common.limit == 1) {
+
         final TextView timeleft=(TextView)findViewById(R.id.time_left);
 
         int hoursToGo = 0;
@@ -84,29 +86,31 @@ public class quizMain extends AppCompatActivity {
 
         int millisToGo = secondsToGo*1000+minutesToGo*1000*60+hoursToGo*1000*60*60;
 
-        new CountDownTimer(millisToGo,1000) {
 
-            @Override
-            public void onTick(long millis) {
-                int seconds = (int) (millis / 1000) % 60 ;
-                int minutes = (int) ((millis / (1000*60)) % 60);
+            new CountDownTimer(millisToGo, 1000) {
+
+                @Override
+                public void onTick(long millis) {
+                    int seconds = (int) (millis / 1000) % 60;
+                    int minutes = (int) ((millis / (1000 * 60)) % 60);
 //                int hours   = (int) ((millis / (1000*60*60)) % 24);
-                String text = String.format("%02d : %02d",minutes,seconds);
-                if (minutes==0){
-                    timeleft.setText(text);
-                    timeleft.setTextColor(Color.parseColor("#FF0000"));
-                }else {
-                    timeleft.setText(text);
+                    String text = String.format("%02d : %02d", minutes, seconds);
+                    if (minutes == 0) {
+                        timeleft.setText(text);
+                        timeleft.setTextColor(Color.parseColor("#FF0000"));
+                    } else {
+                        timeleft.setText(text);
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onFinish() {
-                timeleft.setText("Kabooom");
-                submit();
-            }
-        }.start();
+                @Override
+                public void onFinish() {
+                    timeleft.setText("Kabooom");
+                    submit();
+                }
+            }.start();
+        }
 
 
         mTabLayout=findViewById(R.id.quiztablayout);
@@ -216,6 +220,7 @@ public class quizMain extends AppCompatActivity {
             Intent intent=new Intent(this,addQuestions.class);
             intent.putExtra("key",keyname);
             startActivity(intent);
+            finish();
             return true;
         }if (id == R.id.review_quest) {
             Intent intent=new Intent(this,ReviewQuiz.class);
@@ -308,4 +313,6 @@ public class quizMain extends AppCompatActivity {
         result_tmp=String.valueOf(temp);
         return result_tmp;
     }
+
+
 }

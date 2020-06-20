@@ -56,4 +56,11 @@
         android:text="If You Dont Have eClassKit Account CLICK HERE"
         android:textColor="#610D0D" />
 
+    <ProgressBar
+        android:id="@+id/progressBar_login"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
 </LinearLayout>
