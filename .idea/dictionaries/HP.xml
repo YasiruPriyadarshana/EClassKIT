@@ -2,6 +2,9 @@
   <dictionary name="HP">
     <words>
       <w>footerview</w>
+      <w>footerviewclass</w>
+      <w>footerviewevent</w>
+      <w>footerviewvideo</w>
     </words>
   </dictionary>
 </component>

@@ -63,8 +63,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:background="#FFFFFF"
-        android:text="If You Already Have Account CLICK HERE"
-        android:textColor="#610D0D" />
+        android:text="If You Already Have Account CLICK HERE" />
 
     <ProgressBar
         android:id="@+id/progressBar"

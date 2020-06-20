@@ -13,28 +13,28 @@
 
         <ImageButton
             android:id="@+id/ibtn_pastpaper"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="#2F398F"
-            android:src="@mipmap/pastpapers" />
+            android:src="@mipmap/pastpapers_foreground" />
 
         <ImageButton
             android:id="@+id/ibtn_modelpapers"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="#E27443"
-            android:src="@mipmap/modelpapers" />
+            android:src="@mipmap/modelpapers_foreground" />
 
         <ImageButton
             android:id="@+id/ibtn_notes"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="#15A295"
-            android:src="@mipmap/notes" />
+            android:src="@mipmap/notes_foreground" />
 
     </LinearLayout>
 </FrameLayout>

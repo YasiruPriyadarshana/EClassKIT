@@ -52,7 +52,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:background="#FFFFFF"
-        android:text="If You Dont Have eClassKit Account CLICK HERE"
-        android:textColor="#610D0D" />
+        android:text="If You Dont Have eClassKit Account CLICK HERE" />
 
 </LinearLayout>
