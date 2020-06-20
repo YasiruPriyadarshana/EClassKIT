@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-
         mTabLayout=findViewById(R.id.tablayout);
         home=findViewById(R.id.home);
         note=findViewById(R.id.note);

@@ -108,15 +108,19 @@ public class Home extends Fragment {
 
                         }
                     });
-                }else {
-
                 }
-                databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getActivity(), "Redeem copied", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (redeemcd.isEmpty()) {
+                    Toast.makeText(getActivity(), "Give Enrollment Key", Toast.LENGTH_SHORT).show();
+                }else if (redeemcd.length() < 6){
+                    Toast.makeText(getActivity(), "Too Short (need 6 character)", Toast.LENGTH_SHORT).show();
+                }else {
+                    databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getActivity(), "Redeem copied", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 

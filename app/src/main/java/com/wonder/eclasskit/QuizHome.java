@@ -37,7 +37,7 @@ public class QuizHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_home);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
         databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+ Common.uid);
         QuizHometListView=(ListView)findViewById(R.id.recyclerviewquizhome);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

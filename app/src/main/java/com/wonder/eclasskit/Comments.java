@@ -78,7 +78,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
 
         name1=getIntent().getStringExtra("name");
         databaseReference = FirebaseDatabase.getInstance().getReference("comments/"+ Common.uid+"/" +name1.substring(0, name1.length() - 4));

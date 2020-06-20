@@ -50,7 +50,6 @@ public class AddNewCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_course);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid+"/newcourse");
         QuizHometListView=(ListView)findViewById(R.id.add_newclass_listview);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
