@@ -44,7 +44,7 @@ public class Home extends Fragment {
     private String tKey;
     private FirebaseUser user;
     private Enroll enroll;
-    private String year,subject;
+    private String year,subject,tname;
 
     View view;
     @Override
@@ -100,7 +100,8 @@ public class Home extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             subject = dataSnapshot.child("subject").getValue().toString();
                             year = dataSnapshot.child("syear").getValue().toString();
-                            enroll = new Enroll(teacher, "", subject, year);
+                            tname =  dataSnapshot.child("name").getValue().toString();
+                            enroll = new Enroll(teacher, tname, subject, year);
                         }
 
                         @Override
