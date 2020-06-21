@@ -64,6 +64,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private Uri p;
     private ValueEventListener valueEventListener;
     private String sort = "1";
+    private DatabaseReference databaseRfTeacher;
 
 
 
@@ -98,7 +99,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         final String key=keys.get(position);
         final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4)+"/"+key+"/reply");
         storage= FirebaseStorage.getInstance().getReference();
-//        Toast.makeText(getContext(),"comments/"+name1.substring(0, name1.length() - 4)+"/"+key, Toast.LENGTH_SHORT).show();
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
         LayoutInflater inflater=LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
@@ -227,34 +228,46 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         if (TextUtils.isEmpty(Common.cmtSort)){
             sort = "2";
         }
+        Toast.makeText(mContext, "a"+Common.repname, Toast.LENGTH_SHORT).show();
 
         //imageuploade
-        if (imgUri == null) {
-            Reply replytobj = new Reply(name, rep_st,null);
-            dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
-            Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
-
-
-        }else {
-            StorageReference reference2 = storage.child("ReplyIMG/" + System.currentTimeMillis() + ".png");
-            reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-
-                    while (!uri.isComplete()) ;
-                    p = uri.getResult();
-
-                    Reply replytobj = new Reply(name, rep_st, p.toString());
-                    dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
-                    Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
-
-                }
-            });//end
-
-
-        }
-        mCallback.onHandleSelectionClear();
+//        if (imgUri == null) {
+//            Reply replytobj;
+//            if (TextUtils.isEmpty(name)){
+//                replytobj = new Reply(getname(), rep_st,null);
+//            }else{
+//                replytobj = new Reply(name, rep_st,null);
+//            }
+//
+//            dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
+//            Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
+//
+//
+//        }else {
+//            StorageReference reference2 = storage.child("ReplyIMG/" + System.currentTimeMillis() + ".png");
+//            reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+//
+//                    while (!uri.isComplete()) ;
+//                    p = uri.getResult();
+//                    Reply replytobj;
+//                    if (TextUtils.isEmpty(name)){
+//                        replytobj = new Reply(getname(), rep_st, p.toString());
+//                    }else{
+//                        replytobj = new Reply(name, rep_st, p.toString());
+//                    }
+//
+//                    dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
+//                    Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });//end
+//
+//
+//        }
+//        mCallback.onHandleSelectionClear();
     }
 
     public static void setListViewHeightBasedOnChildren(ListView myListView,int v) {

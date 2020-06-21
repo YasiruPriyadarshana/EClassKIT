@@ -259,6 +259,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                         name =  dataSnapshot.child("name").getValue().toString();
                         cmtSort = 1;
                         Common.cmtSort = "1";
+                        Common.repname = name;
                     }
 
                     @Override

@@ -110,7 +110,7 @@ public void notifime(){
             .setTicker("TickerTitle")
             .setContentTitle("Check New Event")
             .setContentText("Learn With Chirath Science Seminar")
-            .setSmallIcon(R.drawable.leranwithchirathlogo)
+            .setSmallIcon(R.mipmap.logo)
             .setAutoCancel(true);
 
 
