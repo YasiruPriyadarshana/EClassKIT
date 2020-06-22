@@ -231,43 +231,43 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         Toast.makeText(mContext, "a"+Common.repname, Toast.LENGTH_SHORT).show();
 
         //imageuploade
-//        if (imgUri == null) {
-//            Reply replytobj;
-//            if (TextUtils.isEmpty(name)){
-//                replytobj = new Reply(getname(), rep_st,null);
-//            }else{
-//                replytobj = new Reply(name, rep_st,null);
-//            }
-//
-//            dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
-//            Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
-//
-//
-//        }else {
-//            StorageReference reference2 = storage.child("ReplyIMG/" + System.currentTimeMillis() + ".png");
-//            reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-//
-//                    while (!uri.isComplete()) ;
-//                    p = uri.getResult();
-//                    Reply replytobj;
-//                    if (TextUtils.isEmpty(name)){
-//                        replytobj = new Reply(getname(), rep_st, p.toString());
-//                    }else{
-//                        replytobj = new Reply(name, rep_st, p.toString());
-//                    }
-//
-//                    dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
-//                    Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
-//
-//                }
-//            });//end
-//
-//
-//        }
-//        mCallback.onHandleSelectionClear();
+        if (imgUri == null) {
+            Reply replytobj;
+            if (TextUtils.isEmpty(name)){
+                replytobj = new Reply("", rep_st,null);
+            }else{
+                replytobj = new Reply(name, rep_st,null);
+            }
+
+            dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
+            Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
+
+
+        }else {
+            StorageReference reference2 = storage.child("ReplyIMG/" + System.currentTimeMillis() + ".png");
+            reference2.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+
+                    while (!uri.isComplete()) ;
+                    p = uri.getResult();
+                    Reply replytobj;
+                    if (TextUtils.isEmpty(name)){
+                        replytobj = new Reply("", rep_st, p.toString());
+                    }else{
+                        replytobj = new Reply(name, rep_st, p.toString());
+                    }
+
+                    dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
+                    Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
+
+                }
+            });//end
+
+
+        }
+        mCallback.onHandleSelectionClear();
     }
 
     public static void setListViewHeightBasedOnChildren(ListView myListView,int v) {

@@ -54,9 +54,9 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private SeekBar currentProgress;
     private ProgressBar bufferBar;
     private boolean isPlaying;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseRfTeacher;
     private Uri videoUri;
-
+    private int cmtSort=2;
     private int current=0;
     private int duration=0;
 
@@ -86,6 +86,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         uname=intent.getStringExtra("name");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("VideoComments/"+ Common.uid+"/" +uname.substring(0, uname.length() - 4));
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
         commentMS= new ArrayList<>();
         CommentListView=(ListView)findViewById(R.id.video_comment_list);
         anInterface=this;
@@ -312,7 +313,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private void uplodeFile() {
 
         CommentM commentobj = new CommentM(getName(), cmt_str,null);
-        databaseReference.child("2"+databaseReference.push().getKey()).setValue(commentobj);
+        databaseReference.child(cmtSort+""+databaseReference.push().getKey()).setValue(commentobj);
         Toast.makeText(VideoPlayer.this, "Add new comment", Toast.LENGTH_SHORT).show();
         adapter.clear();
 
@@ -322,21 +323,38 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
     public String getName(){
         try {
-            FileInputStream fileInputStream = openFileInput("apprequirement.txt");
-            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+            if (Common.limit == 1) {
+                FileInputStream fileInputStream = openFileInput("apprequirement.txt");
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer =new StringBuffer();
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuffer stringBuffer = new StringBuffer();
 
 
-            String lines;
-            while ((lines = bufferedReader.readLine()) != null){
-                stringBuffer.append(lines + "\n");
+                String lines;
+                while ((lines = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(lines + "\n");
+                }
+                String str = stringBuffer.toString();
+                array = str.split(",");
+
+                name = array[0];
+            }else{
+                databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        name =  dataSnapshot.child("name").getValue().toString();
+                        cmtSort = 1;
+                        Common.cmtSort = "1";
+                        Common.repname = name;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
-            String str =stringBuffer.toString();
-            array = str.split(",");
-
-            name=array[0];
 
         } catch (FileNotFoundException e){
             e.printStackTrace();

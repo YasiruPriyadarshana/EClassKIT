@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -120,6 +121,8 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
                 {
                     ReplyListView.removeFooterView(v);
                 }
+                ImageView repimage=(ImageView)v.findViewById(R.id.repimage_in);
+                repimage.setVisibility(View.GONE);
                 ReplyListView.addFooterView(v);
                 Button updateReply = (Button) v.findViewById(R.id.addrep);
                 EditText desc = (EditText)v.findViewById(R.id.rep_in);
@@ -144,7 +147,7 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
 
 
                 ReplyListView.setAdapter(adapter);
-
+                setListViewHeightBasedOnChildren(ReplyListView,0);
 
                 ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -183,7 +186,22 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
 
     }
 
+    public static void setListViewHeightBasedOnChildren(ListView myListView,int v) {
+        ListAdapter adapter = myListView.getAdapter();
+        if (myListView != null) {
+            int totalHeight = 0;
+            for (int i = 0; i < adapter.getCount(); i++) {
+                View item= adapter.getView(i, null, myListView);
+                item.measure(0, 0);
+                totalHeight += item.getMeasuredHeight();
+            }
 
+            ViewGroup.LayoutParams params = myListView.getLayoutParams();
+            params.height = totalHeight + (myListView.getDividerHeight() * (adapter.getCount() - 1)) + v;
+            myListView.setLayoutParams(params);
+        }
+
+    }
 
 
 }
