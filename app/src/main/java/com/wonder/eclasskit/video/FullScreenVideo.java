@@ -2,6 +2,7 @@ package com.wonder.eclasskit.video;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -22,10 +23,11 @@ public class FullScreenVideo extends AppCompatActivity {
         int uiOptions =  View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         decorView.setSystemUiVisibility(uiOptions);
-
+        Intent intent=getIntent();
+        String url=intent.getStringExtra("url");
 
         VideoView videoView = (VideoView) findViewById(R.id.launcherVideo);
-        Uri src = Uri.parse("https://firebasestorage.googleapis.com/v0/b/learn-with-chirath.appspot.com/o/videos%2FWhat%20We%20Miss%20When%20We're%20Complaining%20by%20Jay%20shetty%20_%20wordables_HD.mp4?alt=media&token=5ccf1729-143a-4de6-9e06-4394dc0389dc");
+        Uri src = Uri.parse(url);
         videoView.setVideoURI(src);
 
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

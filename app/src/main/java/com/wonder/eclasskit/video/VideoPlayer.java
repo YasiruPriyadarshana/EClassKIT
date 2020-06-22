@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -50,7 +51,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private ImageView playBtn;
     private TextView currentTime;
     private TextView durationtime;
-    private ProgressBar currentProgress;
+    private SeekBar currentProgress;
     private ProgressBar bufferBar;
     private boolean isPlaying;
     private DatabaseReference databaseReference;
@@ -71,6 +72,8 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private ImageButton imagepdf;
     private EditText desc;
     private AdpterVideoComment.CallbackInterface anInterface;
+    private AsyncTask task;
+
 
 
     @Override
@@ -91,10 +94,10 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         playBtn=(ImageView)findViewById(R.id.play_btn);
         currentTime=(TextView)findViewById(R.id.currentTime);
         durationtime=(TextView)findViewById(R.id.durationTime);
-        currentProgress=(ProgressBar)findViewById(R.id.videoProgress);
+        currentProgress=(SeekBar) findViewById(R.id.videoProgress);
         bufferBar=(ProgressBar)findViewById(R.id.bufferProgress);
         fullscreen=(Button)findViewById(R.id.fullScreen_btn);
-        currentProgress.setMax(100);
+
 
         videoUri=Uri.parse(url);
 
@@ -130,14 +133,37 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                 duration = mp.getDuration()/1000;
                 String durationString = String.format("%02d:%02d",duration/60,duration%60);
                 durationtime.setText(durationString);
+                currentProgress.setMax(100);
+                videoView.start();
             }
         });
 
-        videoView.start();
+
+
+
         isPlaying=true;
         playBtn.setImageResource(R.drawable.ic_playvideo);
 
-        new videoProgress().execute();
+        task=new videoProgress().execute();
+
+        currentProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(videoView != null && fromUser){
+                    videoView.seekTo(progress * duration *10);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isPlaying = false;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                isPlaying = true;
+            }
+        });
 
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +186,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
             public void onClick(View v) {
                 isPlaying=false;
                 Intent intent1 =new Intent(VideoPlayer.this,FullScreenVideo.class);
+                intent1.putExtra("url",url);
                 startActivity(intent1);
             }
         });
@@ -173,6 +200,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     protected void onStop() {
         super.onStop();
         isPlaying = false;
+
     }
 
     public class videoProgress extends AsyncTask<Void, Integer, Void> {
@@ -410,6 +438,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     public void onBackPressed() {
         super.onBackPressed();
         isPlaying = false;
+        
     }
 
 
