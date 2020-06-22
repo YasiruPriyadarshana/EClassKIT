@@ -203,6 +203,8 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
     }
 
+
+
     public class videoProgress extends AsyncTask<Void, Integer, Void> {
 
         @SuppressLint("WrongThread")
@@ -215,7 +217,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                     publishProgress(current);
                 }
 
-            }while (currentProgress.getProgress() <= 100);
+            }while (currentProgress.getProgress() <= 100000);
 
             return null;
         }
@@ -438,7 +440,8 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     public void onBackPressed() {
         super.onBackPressed();
         isPlaying = false;
-        
+        task.cancel(true);
+        finish();
     }
 
 
