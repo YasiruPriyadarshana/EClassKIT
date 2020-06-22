@@ -234,7 +234,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         if (imgUri == null) {
             Reply replytobj;
             if (TextUtils.isEmpty(name)){
-                replytobj = new Reply("", rep_st,null);
+                replytobj = new Reply(Common.repname, rep_st,null);
             }else{
                 replytobj = new Reply(name, rep_st,null);
             }
@@ -254,7 +254,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     p = uri.getResult();
                     Reply replytobj;
                     if (TextUtils.isEmpty(name)){
-                        replytobj = new Reply("", rep_st, p.toString());
+                        replytobj = new Reply(Common.repname, rep_st, p.toString());
                     }else{
                         replytobj = new Reply(name, rep_st, p.toString());
                     }

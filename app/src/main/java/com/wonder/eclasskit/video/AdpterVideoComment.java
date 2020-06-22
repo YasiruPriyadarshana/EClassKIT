@@ -2,6 +2,7 @@ package com.wonder.eclasskit.video;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,11 +175,13 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
     }
 
     private void uplodeFile(final Uri imgUri,final DatabaseReference dr,final String rep_st) {
-
+        Reply replytobj;
         //imageuploade
-
-            Reply replytobj = new Reply(name, rep_st,null);
-
+            if (TextUtils.isEmpty(name)){
+                replytobj = new Reply(Common.repname, rep_st, null);
+            }else {
+                replytobj = new Reply(name, rep_st, null);
+            }
             dr.child("1"+dr.push().getKey()).setValue(replytobj);
             Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
             mCallback.onHandleSelectionClear();

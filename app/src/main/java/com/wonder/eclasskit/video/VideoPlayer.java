@@ -73,6 +73,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private EditText desc;
     private AdpterVideoComment.CallbackInterface anInterface;
     private AsyncTask task;
+    int i=0;
 
 
 
@@ -246,6 +247,9 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    adapter.clear();
+                }
                 ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     CommentM commentM = postSnapshot.getValue(CommentM.class);
@@ -297,7 +301,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
 
 
-
+                i=1;
             }
 
             @Override
