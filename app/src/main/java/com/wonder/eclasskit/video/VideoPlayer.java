@@ -214,6 +214,8 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         protected Void doInBackground(Void... voids) {
 
             do {
+                if (isCancelled())
+                    break;
                 if (isPlaying) {
                     current = videoView.getCurrentPosition() / 1000;
                     publishProgress(current);
