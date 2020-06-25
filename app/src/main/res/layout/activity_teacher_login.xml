@@ -53,7 +53,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:background="#FFFFFF"
-        android:text="If You Dont Have eClassKit Account CLICK HERE" />
+        android:text="If You Dont Have a eClassKit Account\n CLICK HERE" />
 
     <ProgressBar
         android:id="@+id/progressBar_login"

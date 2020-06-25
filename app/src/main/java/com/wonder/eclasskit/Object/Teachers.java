@@ -10,6 +10,7 @@ public class Teachers {
     private String web;
     private String subject;
     private String syear;
+    private String imgurl;
 
 
     public Teachers() {
@@ -20,7 +21,7 @@ public class Teachers {
         this.email = email;
     }
 
-    public Teachers(String name, String email, String desc, String facebook, String twitter, String youtube, String web) {
+    public Teachers(String name, String email, String desc, String facebook, String twitter, String youtube, String web, String subject, String syear, String imgurl) {
         this.name = name;
         this.email = email;
         this.desc = desc;
@@ -28,6 +29,9 @@ public class Teachers {
         this.twitter = twitter;
         this.youtube = youtube;
         this.web = web;
+        this.subject = subject;
+        this.syear = syear;
+        this.imgurl = imgurl;
     }
 
     public String getName() {
@@ -94,6 +98,7 @@ public class Teachers {
         this.name =name;
     }
 
+
     public String getSubject() {
         return subject;
     }
@@ -108,5 +113,13 @@ public class Teachers {
 
     public void setSyear(String syear) {
         this.syear = syear;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 }

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 
 import android.net.Uri;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import com.wonder.eclasskit.Object.CommentM;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Reply;
 import com.wonder.eclasskit.R;
 
@@ -59,8 +61,10 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     private ArrayList<String> keys;
     private StorageReference storage;
     private ListAdapterReply adapter;
-    Uri p;
+    private Uri p;
     private ValueEventListener valueEventListener;
+    private String sort = "1";
+    private DatabaseReference databaseRfTeacher;
 
 
 
@@ -95,7 +99,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         final String key=keys.get(position);
         final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4)+"/"+key+"/reply");
         storage= FirebaseStorage.getInstance().getReference();
-//        Toast.makeText(getContext(),"comments/"+name1.substring(0, name1.length() - 4)+"/"+key, Toast.LENGTH_SHORT).show();
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
         LayoutInflater inflater=LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
@@ -221,11 +225,21 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
     }
 
     private void uplodeFile(final Uri imgUri,final DatabaseReference dr,final String rep_st) {
+        if (TextUtils.isEmpty(Common.cmtSort)){
+            sort = "2";
+        }
+        Toast.makeText(mContext, "a"+Common.repname, Toast.LENGTH_SHORT).show();
 
         //imageuploade
         if (imgUri == null) {
-            Reply replytobj = new Reply(name, rep_st,null);
-            dr.child("1"+dr.push().getKey()).setValue(replytobj);
+            Reply replytobj;
+            if (TextUtils.isEmpty(name)){
+                replytobj = new Reply(Common.repname, rep_st,null);
+            }else{
+                replytobj = new Reply(name, rep_st,null);
+            }
+
+            dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
             Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
 
 
@@ -238,9 +252,14 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
 
                     while (!uri.isComplete()) ;
                     p = uri.getResult();
+                    Reply replytobj;
+                    if (TextUtils.isEmpty(name)){
+                        replytobj = new Reply(Common.repname, rep_st, p.toString());
+                    }else{
+                        replytobj = new Reply(name, rep_st, p.toString());
+                    }
 
-                    Reply replytobj = new Reply(name, rep_st, p.toString());
-                    dr.child("1"+dr.push().getKey()).setValue(replytobj);
+                    dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
                     Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
 
                 }

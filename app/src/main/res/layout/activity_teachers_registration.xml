@@ -64,7 +64,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:background="#FFFFFF"
-        android:text="If You Already Have Account CLICK HERE" />
+        android:text="If You Already Have An Account CLICK HERE" />
 
     <ProgressBar
         android:id="@+id/progressBar"

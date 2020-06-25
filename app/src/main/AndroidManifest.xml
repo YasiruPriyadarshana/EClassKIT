@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".video.FullScreenVideo"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/FullScreen"
             />
         <activity android:name=".AddNewCourse" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".video.VideoPlayer" android:windowSoftInputMode="adjustPan"/>
@@ -31,6 +31,7 @@
         <activity android:name=".AboutUs" />
         <activity android:name=".GetInfo" />
         <activity android:name=".Settings" />
+
         <activity
             android:name=".Starting"
             android:theme="@style/SplashTheme">

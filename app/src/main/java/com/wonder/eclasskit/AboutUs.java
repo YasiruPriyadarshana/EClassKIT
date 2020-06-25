@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -28,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,21 +38,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Teachers;
 import com.wonder.eclasskit.Object.UploadPDF;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 
 import in.gauriinfotech.commons.Commons;
 
 public class AboutUs extends AppCompatActivity {
-    private ImageButton Web,Facebook,Twitter,Youtube;
+    private ImageButton Web,Facebook,Twitter,Youtube,profilepic;
     private Button setname,setdesc;
     private DatabaseReference databaseReference;
     private String weburl,fburl,twitterurl,youtubeurl;
     private ImageButton teacherimage;
     private Uri imgUri;
+    private StorageReference storage;
+    private byte[] data1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,12 +137,27 @@ public class AboutUs extends AppCompatActivity {
 
         if (Common.limit != 1){
 
-            teacherimage.setOnClickListener(new View.OnClickListener() {
+            teacherimage.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
+                public boolean onLongClick(View v) {
+                    storage= FirebaseStorage.getInstance().getReference();
+                    StorageReference reference = storage.child("Teacher/"+System.currentTimeMillis()+".png");
 
+                    reference.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Task<Uri> uri=taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uri.isComplete());
+                            Uri p=uri.getResult();
+                            databaseReference.child("imgurl").setValue(p.toString());
+
+                            Toast.makeText(AboutUs.this, "Profile uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return false;
                 }
             });
+
 
             teacherimage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -294,6 +318,11 @@ public class AboutUs extends AppCompatActivity {
                 youtubeurl = value.getYoutube();
                 twitterurl = value.getTwitter();
                 weburl = value.getWeb();
+                String url = value.getImgurl();
+
+                if (!TextUtils.isEmpty(url)) {
+                    Picasso.with(AboutUs.this).load(url).into(teacherimage);
+                }
 
                 if (!TextUtils.isEmpty(value.getName())) {
                     setname.setText(value.getName());
@@ -310,10 +339,19 @@ public class AboutUs extends AppCompatActivity {
     }
 
     private void selectIMG(){
-        Intent intent=new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 76);
+        Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        pickImageIntent.setType("image/*");
+        pickImageIntent.putExtra("crop", "true");
+        pickImageIntent.putExtra("outputX", 400);
+        pickImageIntent.putExtra("outputY", 400);
+        pickImageIntent.putExtra("aspectX", 1);
+        pickImageIntent.putExtra("aspectY", 1);
+        pickImageIntent.putExtra("scale", true);
+//        pickImageIntent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+        pickImageIntent.putExtra("outputFormat",
+                Bitmap.CompressFormat.JPEG.toString());
+        startActivityForResult(pickImageIntent, 76);
     }
 
     @Override
@@ -322,7 +360,6 @@ public class AboutUs extends AppCompatActivity {
         if (requestCode==76 && resultCode == RESULT_OK && data!=null) {
             imgUri=data.getData();
 
-            String fullPath = Commons.getPath(imgUri,AboutUs.this);
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(AboutUs.this.getContentResolver(),imgUri);
@@ -334,10 +371,17 @@ public class AboutUs extends AppCompatActivity {
                 Canvas c = new Canvas(circleBitmap);
                 c.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2, paint);
                 teacherimage.setImageBitmap(circleBitmap);
+
+                teacherimage.setDrawingCacheEnabled(true);
+                teacherimage.buildDrawingCache();
+                Bitmap bitmap1 = teacherimage.getDrawingCache();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap1.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                data1 = baos.toByteArray();
+
             }catch (IOException e){
                 Toast.makeText(AboutUs.this, "fucked: "+e, Toast.LENGTH_SHORT).show();
             }
-
 
 
 

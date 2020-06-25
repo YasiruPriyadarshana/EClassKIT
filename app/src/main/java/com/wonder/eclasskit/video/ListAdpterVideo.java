@@ -39,7 +39,7 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
         TextView nameVideo=(TextView)convertView.findViewById(R.id.video_title_txt);
         ImageView imageVideo=(ImageView)convertView.findViewById(R.id.video_thumb);
 
-        nameVideo.setText(name);
+        nameVideo.setText(name.substring(0, name.length() - 4));
 
 
         Picasso.with(getContext()).load(vurl).fit().into(imageVideo);

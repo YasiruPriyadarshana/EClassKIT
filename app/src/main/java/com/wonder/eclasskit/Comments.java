@@ -43,6 +43,7 @@ import com.wonder.eclasskit.Adpter.ListAdapterComments;
 
 import com.wonder.eclasskit.Object.CommentM;
 import com.wonder.eclasskit.Object.Common;
+import com.wonder.eclasskit.Object.Enroll;
 
 
 import java.io.BufferedReader;
@@ -55,7 +56,7 @@ import java.util.ArrayList;
 
 
 public class Comments extends AppCompatActivity implements ListAdapterComments.CallbackInterface {
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseRfTeacher;
     ListView CommentListView;
     private ArrayList<CommentM> commentMS;
     private ListAdapterComments adapter;
@@ -71,6 +72,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     private Uri imgUri,imgUriR;
     private ListAdapterComments.CallbackInterface anInterface;
     private ValueEventListener valueEventListener;
+    private int cmtSort=2;
     int i=0;
 
 
@@ -83,6 +85,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         name1=getIntent().getStringExtra("name");
         databaseReference = FirebaseDatabase.getInstance().getReference("comments/"+ Common.uid+"/" +name1.substring(0, name1.length() - 4));
         storage= FirebaseStorage.getInstance().getReference();
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
         CommentListView=(ListView)findViewById(R.id.recyclerviewcomment);
         commentMS = new ArrayList<>();
 
@@ -198,7 +201,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         //imageuploade
         if (imgUri == null) {
             CommentM commentobj = new CommentM(getName(), cmt_str,null);
-            databaseReference.child("1"+databaseReference.push().getKey()).setValue(commentobj);
+            databaseReference.child(cmtSort+""+databaseReference.push().getKey()).setValue(commentobj);
             Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
             adapter.clear();
         } else {
@@ -213,7 +216,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
                     CommentM commentobj = new CommentM(getName(), cmt_str, p.toString());
 
-                    databaseReference.child("1"+databaseReference.push().getKey()).setValue(commentobj);
+                    databaseReference.child(cmtSort+""+databaseReference.push().getKey()).setValue(commentobj);
                     Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
 
 
@@ -231,22 +234,40 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
 
     public String getName(){
+
         try {
+            if (Common.limit == 1){
             FileInputStream fileInputStream = openFileInput("apprequirement.txt");
-            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer =new StringBuffer();
+            StringBuffer stringBuffer = new StringBuffer();
 
 
             String lines;
-            while ((lines = bufferedReader.readLine()) != null){
+            while ((lines = bufferedReader.readLine()) != null) {
                 stringBuffer.append(lines + "\n");
             }
-            String str =stringBuffer.toString();
+            String str = stringBuffer.toString();
             array = str.split(",");
 
-            name=array[0];
+            name = array[0];
+          }else{
+                databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        name =  dataSnapshot.child("name").getValue().toString();
+                        cmtSort = 1;
+                        Common.cmtSort = "1";
+                        Common.repname = name;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
 
         } catch (FileNotFoundException e){
             e.printStackTrace();

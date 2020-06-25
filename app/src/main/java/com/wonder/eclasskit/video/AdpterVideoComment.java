@@ -2,6 +2,7 @@ package com.wonder.eclasskit.video;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -120,6 +122,8 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
                 {
                     ReplyListView.removeFooterView(v);
                 }
+                ImageView repimage=(ImageView)v.findViewById(R.id.repimage_in);
+                repimage.setVisibility(View.GONE);
                 ReplyListView.addFooterView(v);
                 Button updateReply = (Button) v.findViewById(R.id.addrep);
                 EditText desc = (EditText)v.findViewById(R.id.rep_in);
@@ -144,7 +148,7 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
 
 
                 ReplyListView.setAdapter(adapter);
-
+                setListViewHeightBasedOnChildren(ReplyListView,0);
 
                 ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -171,11 +175,13 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
     }
 
     private void uplodeFile(final Uri imgUri,final DatabaseReference dr,final String rep_st) {
-
+        Reply replytobj;
         //imageuploade
-
-            Reply replytobj = new Reply(name, rep_st,null);
-
+            if (TextUtils.isEmpty(name)){
+                replytobj = new Reply(Common.repname, rep_st, null);
+            }else {
+                replytobj = new Reply(name, rep_st, null);
+            }
             dr.child("1"+dr.push().getKey()).setValue(replytobj);
             Toast.makeText(getContext(), "Add new Reply", Toast.LENGTH_SHORT).show();
             mCallback.onHandleSelectionClear();
@@ -183,7 +189,22 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
 
     }
 
+    public static void setListViewHeightBasedOnChildren(ListView myListView,int v) {
+        ListAdapter adapter = myListView.getAdapter();
+        if (myListView != null) {
+            int totalHeight = 0;
+            for (int i = 0; i < adapter.getCount(); i++) {
+                View item= adapter.getView(i, null, myListView);
+                item.measure(0, 0);
+                totalHeight += item.getMeasuredHeight();
+            }
 
+            ViewGroup.LayoutParams params = myListView.getLayoutParams();
+            params.height = totalHeight + (myListView.getDividerHeight() * (adapter.getCount() - 1)) + v;
+            myListView.setLayoutParams(params);
+        }
+
+    }
 
 
 }

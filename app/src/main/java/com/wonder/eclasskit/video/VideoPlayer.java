@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -50,12 +51,12 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private ImageView playBtn;
     private TextView currentTime;
     private TextView durationtime;
-    private ProgressBar currentProgress;
+    private SeekBar currentProgress;
     private ProgressBar bufferBar;
     private boolean isPlaying;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseRfTeacher;
     private Uri videoUri;
-
+    private int cmtSort=2;
     private int current=0;
     private int duration=0;
 
@@ -71,6 +72,9 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private ImageButton imagepdf;
     private EditText desc;
     private AdpterVideoComment.CallbackInterface anInterface;
+    private AsyncTask task;
+    int i=0;
+
 
 
     @Override
@@ -83,6 +87,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         uname=intent.getStringExtra("name");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("VideoComments/"+ Common.uid+"/" +uname.substring(0, uname.length() - 4));
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
         commentMS= new ArrayList<>();
         CommentListView=(ListView)findViewById(R.id.video_comment_list);
         anInterface=this;
@@ -91,10 +96,10 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         playBtn=(ImageView)findViewById(R.id.play_btn);
         currentTime=(TextView)findViewById(R.id.currentTime);
         durationtime=(TextView)findViewById(R.id.durationTime);
-        currentProgress=(ProgressBar)findViewById(R.id.videoProgress);
+        currentProgress=(SeekBar) findViewById(R.id.videoProgress);
         bufferBar=(ProgressBar)findViewById(R.id.bufferProgress);
         fullscreen=(Button)findViewById(R.id.fullScreen_btn);
-        currentProgress.setMax(100);
+
 
         videoUri=Uri.parse(url);
 
@@ -130,14 +135,37 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                 duration = mp.getDuration()/1000;
                 String durationString = String.format("%02d:%02d",duration/60,duration%60);
                 durationtime.setText(durationString);
+                currentProgress.setMax(100);
+                videoView.start();
             }
         });
 
-        videoView.start();
+
+
+
         isPlaying=true;
         playBtn.setImageResource(R.drawable.ic_playvideo);
 
-        new videoProgress().execute();
+        task=new videoProgress().execute();
+
+        currentProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(videoView != null && fromUser){
+                    videoView.seekTo(progress * duration *10);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isPlaying = false;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                isPlaying = true;
+            }
+        });
 
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +188,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
             public void onClick(View v) {
                 isPlaying=false;
                 Intent intent1 =new Intent(VideoPlayer.this,FullScreenVideo.class);
+                intent1.putExtra("url",url);
                 startActivity(intent1);
             }
         });
@@ -173,7 +202,10 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     protected void onStop() {
         super.onStop();
         isPlaying = false;
+
     }
+
+
 
     public class videoProgress extends AsyncTask<Void, Integer, Void> {
 
@@ -182,12 +214,14 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         protected Void doInBackground(Void... voids) {
 
             do {
+                if (isCancelled())
+                    break;
                 if (isPlaying) {
                     current = videoView.getCurrentPosition() / 1000;
                     publishProgress(current);
                 }
 
-            }while (currentProgress.getProgress() <= 100);
+            }while (currentProgress.getProgress() <= 100000);
 
             return null;
         }
@@ -215,6 +249,9 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         valueEventListener= databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    adapter.clear();
+                }
                 ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     CommentM commentM = postSnapshot.getValue(CommentM.class);
@@ -266,7 +303,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
 
 
-
+                i=1;
             }
 
             @Override
@@ -282,7 +319,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     private void uplodeFile() {
 
         CommentM commentobj = new CommentM(getName(), cmt_str,null);
-        databaseReference.child("2"+databaseReference.push().getKey()).setValue(commentobj);
+        databaseReference.child(cmtSort+""+databaseReference.push().getKey()).setValue(commentobj);
         Toast.makeText(VideoPlayer.this, "Add new comment", Toast.LENGTH_SHORT).show();
         adapter.clear();
 
@@ -292,21 +329,38 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
     public String getName(){
         try {
-            FileInputStream fileInputStream = openFileInput("apprequirement.txt");
-            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+            if (Common.limit == 1) {
+                FileInputStream fileInputStream = openFileInput("apprequirement.txt");
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer =new StringBuffer();
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuffer stringBuffer = new StringBuffer();
 
 
-            String lines;
-            while ((lines = bufferedReader.readLine()) != null){
-                stringBuffer.append(lines + "\n");
+                String lines;
+                while ((lines = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(lines + "\n");
+                }
+                String str = stringBuffer.toString();
+                array = str.split(",");
+
+                name = array[0];
+            }else{
+                databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        name =  dataSnapshot.child("name").getValue().toString();
+                        cmtSort = 1;
+                        Common.cmtSort = "1";
+                        Common.repname = name;
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
-            String str =stringBuffer.toString();
-            array = str.split(",");
-
-            name=array[0];
 
         } catch (FileNotFoundException e){
             e.printStackTrace();
@@ -410,6 +464,8 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     public void onBackPressed() {
         super.onBackPressed();
         isPlaying = false;
+        task.cancel(true);
+        finish();
     }
 
 
