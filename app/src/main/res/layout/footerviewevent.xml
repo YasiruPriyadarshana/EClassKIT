@@ -43,6 +43,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_background"
         android:text="Add Event"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
