@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.wonder.eclasskit.Adpter.ListAdapterQuiz;
 import com.wonder.eclasskit.Adpter.ListAdapterQuizList;
 import com.wonder.eclasskit.Firebase.FirebaseDatabaseHelper3;
@@ -59,11 +64,12 @@ public class quizMain extends AppCompatActivity {
     ViewPager mPager;
     private Context context;
     private List<FragmentQuestion> fragmentlist=new ArrayList<>();
-    private Button next;
+    private Button next,delete;
     private ImageButton flag;
     private int position,v1;
     private String[] array;
     private String name,keyname,time;
+    private ArrayList<String> keys;
 
 
     @Override
@@ -142,6 +148,45 @@ public class quizMain extends AppCompatActivity {
             }
         });
 
+        delete=(Button)findViewById(R.id.delete_quest);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int post=mPager.getCurrentItem();
+                AlertDialog.Builder adb = new AlertDialog.Builder(quizMain.this);
+                adb.setMessage("Do you want to Delete?");
+                adb.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Quizobj quizobj=uploadQuizS.get(post);
+
+                        if (!TextUtils.isEmpty(quizobj.getUriimg())) {
+                            StorageReference quizRef = FirebaseStorage.getInstance().getReferenceFromUrl(quizobj.getUriimg());
+                            quizRef.delete();
+                        }
+
+
+                        databaseReference.child(keys.get(post)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(quizMain.this, "Long press deleted", Toast.LENGTH_SHORT).show();
+                                mTabLayout.removeAllTabs();
+                                mPager.removeAllViews();
+                                adapterQuiz.notifyDataSetChanged();
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+                    }
+
+                });
+                adb.setNegativeButton("Cancel", null);
+                adb.show();
+            }
+        });
+
+
         flag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,10 +211,12 @@ public class quizMain extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Quizobj uploadQuizobj = postSnapshot.getValue(Quizobj.class);
                     uploadQuizS.add(uploadQuizobj);
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
                 }
 
 
@@ -187,6 +234,7 @@ public class quizMain extends AppCompatActivity {
                 adapterQuiz= new ListAdapterQuiz(getSupportFragmentManager(),1,fragmentlist);
                 mPager.setAdapter(adapterQuiz);
                 mTabLayout.setupWithViewPager(mPager);
+
             }
 
 

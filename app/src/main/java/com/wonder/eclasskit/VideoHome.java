@@ -57,7 +57,7 @@ import in.gauriinfotech.commons.Commons;
 import static android.app.Activity.RESULT_OK;
 
 
-public class VideoHome extends Fragment  {
+public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDelete{
 
     private ListView VideoListView;
     private DatabaseReference databaseReference;
@@ -75,6 +75,7 @@ public class VideoHome extends Fragment  {
     private ListAdpterVideo adapter;
     private ArrayList<String> keys;
     private int set;
+    private ListAdpterVideo.CallbackDelete anInterface;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,8 +83,7 @@ public class VideoHome extends Fragment  {
         v1 = inflater.inflate(R.layout.fragment_videohome, container, false);
         // Inflate the layout for this fragment
 
-
-
+        anInterface=this;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Videos/"+ Common.uid);
         storage= FirebaseStorage.getInstance().getReference();
@@ -104,44 +104,7 @@ public class VideoHome extends Fragment  {
                 startActivity(intent);
             }
         });
-/*
-        PDFListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final int pos=position;
-                AlertDialog.Builder adb = new AlertDialog.Builder(
-                        Notes.this);
-                adb.setMessage("Are you sure?");
-                adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        UploadPDF uploadP=uploadPDFS.get(pos-1);
-                        Toast.makeText(Notes.this, "link: "+uploadP.getImgurl(), Toast.LENGTH_SHORT).show();
-                        StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getImgurl());
-                        photoRef.delete();
-                        StorageReference pdfRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getUrl());
-                        pdfRef.delete();
-                        adapter.clear();
-                        databaseReference.child(keys.get(pos-1)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(Notes.this, "Long press deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        });
 
-                        DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference("comments/");
-                        databaseReference.child(uploadP.getName().substring(0, uploadP.getName().length() - 4)).removeValue();
-                    }
-                });
-                adb.setNegativeButton("No",null);
-                adb.show();
-
-                return true;
-            }
-        });
-
-
- */
 
         return v1;
     }
@@ -226,7 +189,7 @@ public class VideoHome extends Fragment  {
                 }
 
 
-                adapter = new ListAdpterVideo(getActivity(),R.layout.itemvideo,uploadVideos);
+                adapter = new ListAdpterVideo(getActivity(),R.layout.itemvideo,uploadVideos,keys,anInterface);
 
                 if (VideoListView.getFooterViewsCount() > 0)
                 {
@@ -341,6 +304,8 @@ public class VideoHome extends Fragment  {
     }
 
 
-
-
+    @Override
+    public void onHandledelete() {
+        adapter.clear();
+    }
 }
