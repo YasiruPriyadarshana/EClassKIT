@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class AddNewCourse extends AppCompatActivity {
+public class AddNewCourse extends AppCompatActivity implements ListAdapterAddClass.CallbackDelete{
 
     private DatabaseReference databaseReference;
     private ListView QuizHometListView;
@@ -43,12 +43,14 @@ public class AddNewCourse extends AppCompatActivity {
     private ArrayList<String> keys;
     private EditText course,year;
     private Button save;
-
+    private ListAdapterAddClass.CallbackDelete anInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_course);
+
+        anInterface=this;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid+"/newcourse");
         QuizHometListView=(ListView)findViewById(R.id.add_newclass_listview);
@@ -96,7 +98,7 @@ public class AddNewCourse extends AppCompatActivity {
                     keys.add(mkey);
                 }
 
-                adapter = new ListAdapterAddClass(AddNewCourse.this, R.layout.itemaddnewclass, addCourses);
+                adapter = new ListAdapterAddClass(AddNewCourse.this, R.layout.itemaddnewclass, addCourses,keys,anInterface);
 
 
                 if (QuizHometListView.getFooterViewsCount() > 0)
@@ -147,4 +149,8 @@ public class AddNewCourse extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onHandledelete() {
+        adapter.clear();
+    }
 }

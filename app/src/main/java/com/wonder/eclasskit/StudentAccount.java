@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class StudentAccount extends AppCompatActivity {
+public class StudentAccount extends AppCompatActivity implements ListAdapterMyCourses.CallbackDelete{
 
     private DatabaseReference databaseReference,databaseRefCourse;
     private Button enroll;
@@ -40,6 +40,8 @@ public class StudentAccount extends AppCompatActivity {
     private ListAdapterMyCourses adapter;
     private ListView CourseListView;
     private  String stKey;
+    private ArrayList<String> keys;
+    private ListAdapterMyCourses.CallbackDelete anInterface;
 
 
     @Override
@@ -47,7 +49,7 @@ public class StudentAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_account);
 
-
+        anInterface=this;
 
         enroll=(Button)findViewById(R.id.enroll_btn);
         enrollkey=(EditText)findViewById(R.id.enroll_txt);
@@ -108,14 +110,16 @@ public class StudentAccount extends AppCompatActivity {
         databaseRefCourse.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     Course course = postSnapshot.getValue(Course.class);
                     courses.add(course);
+                    String mkey = postSnapshot.getKey();
+                    keys.add(mkey);
                 }
 
 
-                adapter = new ListAdapterMyCourses(StudentAccount.this,R.layout.itemcourses,courses);
+                adapter = new ListAdapterMyCourses(StudentAccount.this,R.layout.itemcourses,courses,keys,stKey,anInterface);
 
 
                 CourseListView.setAdapter(adapter);
@@ -166,4 +170,8 @@ public class StudentAccount extends AppCompatActivity {
         return stKey;
     }
 
+    @Override
+    public void onHandledelete() {
+        adapter.clear();
+    }
 }

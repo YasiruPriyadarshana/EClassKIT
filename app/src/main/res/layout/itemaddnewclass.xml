@@ -22,4 +22,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="2021 A/L" />
+
+    <Button
+        android:id="@+id/delete_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Delete" />
+
 </androidx.cardview.widget.CardView>

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,22 +21,25 @@ import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Adpter.ListAdapterQuizHome;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.QuizHm;
-import com.wonder.eclasskit.R;
+
 
 import java.util.ArrayList;
 
-public class QuizHome extends AppCompatActivity {
+public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.CallbackDelete{
     private DatabaseReference databaseReference;
     private ListView QuizHometListView;
     private ListAdapterQuizHome adapter;
     private ArrayList<QuizHm> quizHms;
     private View v;
     ArrayList<String> keys,times;
+    private ListAdapterQuizHome.CallbackDelete anInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_home);
 
+        anInterface=this;
         databaseReference = FirebaseDatabase.getInstance().getReference("quizHome/"+ Common.uid);
         QuizHometListView=(ListView)findViewById(R.id.recyclerviewquizhome);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,7 +71,7 @@ public class QuizHome extends AppCompatActivity {
                     times.add(quizHm.getTime());
                 }
 
-                adapter = new ListAdapterQuizHome(QuizHome.this, R.layout.itemquizhome, quizHms,keys);
+                adapter = new ListAdapterQuizHome(QuizHome.this, R.layout.itemquizhome, quizHms,keys,anInterface);
 
                 if (Common.limit != 1) {
 
@@ -123,5 +125,10 @@ public class QuizHome extends AppCompatActivity {
                 Toast.makeText(QuizHome.this, "New Quiz Added", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onHandledelete() {
+        adapter.clear();
     }
 }
