@@ -13,6 +13,8 @@
             android:id="@+id/name_st_ans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:text="TextView" />
 
@@ -20,6 +22,8 @@
             android:id="@+id/marks_st"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:text="TextView" />
     </LinearLayout>
