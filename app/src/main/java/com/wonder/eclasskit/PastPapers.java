@@ -44,7 +44,7 @@ import java.io.File;
 import java.util.ArrayList;
 import in.gauriinfotech.commons.Commons;
 
-public class PastPapers extends AppCompatActivity {
+public class PastPapers extends AppCompatActivity implements ListAdapter.CallbackDelete{
     private ListView PDFListView;
     private DatabaseReference databaseReference;
     private StorageReference storage;
@@ -61,6 +61,8 @@ public class PastPapers extends AppCompatActivity {
     private ListAdapter adapter;
     private ArrayList<String> keys;
     private int set;
+    private ListAdapter.CallbackDelete anInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class PastPapers extends AppCompatActivity {
         storage= FirebaseStorage.getInstance().getReference();
 
         PDFListView=(ListView)findViewById(R.id.recyclerview);
-
+        anInterface=this;
         uploadPDFS = new ArrayList<>();
         viewAllFiles();
 
@@ -89,44 +91,7 @@ public class PastPapers extends AppCompatActivity {
             }
         });
 
-        PDFListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final int pos=position;
-                AlertDialog.Builder adb = new AlertDialog.Builder(
-                        PastPapers.this);
-                adb.setMessage("Are you sure?");
-                adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        UploadPDF uploadP=uploadPDFS.get(pos-1);
-                        Toast.makeText(PastPapers.this, "link: "+uploadP.getImgurl(), Toast.LENGTH_SHORT).show();
-                        StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getImgurl());
-                        photoRef.delete();
-                        StorageReference pdfRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getUrl());
-                        pdfRef.delete();
-                        adapter.clear();
-                        databaseReference.child(keys.get(pos-1)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(PastPapers.this, "Long press deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        });
 
-                        DatabaseReference  databaseReference = FirebaseDatabase.getInstance().getReference("comments/");
-                        databaseReference.child(uploadP.getName().substring(0, uploadP.getName().length() - 4)).removeValue();
-                    }
-                });
-                adb.setNegativeButton("No",null);
-                adb.show();
-
-
-
-                return true;
-
-
-            }
-        });
 
 
 
@@ -208,7 +173,7 @@ public class PastPapers extends AppCompatActivity {
                 }
 
 
-                adapter = new ListAdapter(getApplicationContext(),R.layout.item,uploadPDFS);
+                adapter = new ListAdapter(PastPapers.this,R.layout.item,uploadPDFS,keys,anInterface,"pastpapers/");
 
                 if (PDFListView.getFooterViewsCount() > 0)
                 {
@@ -331,6 +296,8 @@ public class PastPapers extends AppCompatActivity {
     }
 
 
-
-
+    @Override
+    public void onHandledelete() {
+        adapter.clear();
+    }
 }

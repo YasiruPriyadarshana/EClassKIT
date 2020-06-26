@@ -123,7 +123,9 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
                     ReplyListView.removeFooterView(v);
                 }
                 ImageView repimage=(ImageView)v.findViewById(R.id.repimage_in);
+                Button repaddimage=(Button)v.findViewById(R.id.repaddimage);
                 repimage.setVisibility(View.GONE);
+                repaddimage.setVisibility(View.GONE);
                 ReplyListView.addFooterView(v);
                 Button updateReply = (Button) v.findViewById(R.id.addrep);
                 EditText desc = (EditText)v.findViewById(R.id.rep_in);
