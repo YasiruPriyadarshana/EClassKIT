@@ -166,15 +166,16 @@ public class quizMain extends AppCompatActivity {
                             quizRef.delete();
                         }
 
+                        mTabLayout.removeAllTabs();
+                        mPager.removeAllViews();
+                        uploadQuizS.clear();
+
 
                         databaseReference.child(keys.get(post)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(quizMain.this, "Long press deleted", Toast.LENGTH_SHORT).show();
-                                mTabLayout.removeAllTabs();
-                                mPager.removeAllViews();
-                                adapterQuiz.notifyDataSetChanged();
-                                adapter.notifyDataSetChanged();
+
                             }
                         });
 

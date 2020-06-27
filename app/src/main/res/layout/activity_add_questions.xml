@@ -24,7 +24,8 @@
         android:layout_height="170dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:background="@mipmap/uplodeimge" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -135,18 +136,19 @@
 
     <Spinner
         android:id="@+id/categoryquest_spin"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="70dp"
-        android:entries="@array/quest_type" />
+        android:entries="@array/quest_type"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp" />
 
     <Button
         android:id="@+id/addnew_quest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_background"
         android:text="Add New Question"

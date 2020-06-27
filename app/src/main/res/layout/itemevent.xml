@@ -16,10 +16,11 @@
         android:id="@+id/title_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:text="@string/eventtitle"
-        android:textColor="#492C7A"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -32,12 +33,12 @@
 
         <LinearLayout
             android:id="@+id/LL1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:background="#E9F3F5"
+            android:background="#BED50000"
             android:orientation="vertical"
             android:padding="6dp">
 
@@ -45,23 +46,27 @@
                 android:id="@+id/days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="00" />
+                android:text="00"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Days" />
+                android:text="Days"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:background="#E9F3F5"
+            android:background="#BED50000"
             android:orientation="vertical"
             android:padding="6dp">
 
@@ -69,23 +74,27 @@
                 android:id="@+id/hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="00" />
+                android:text="00"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hours" />
+                android:text="Hours"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL3"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:background="#E9F3F5"
+            android:background="#BED50000"
             android:orientation="vertical"
             android:padding="6dp">
 
@@ -93,23 +102,27 @@
                 android:id="@+id/minutes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="00" />
+                android:text="00"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Minutes" />
+                android:text="Minutes"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL4"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:background="#E9F3F5"
+            android:background="#BED50000"
             android:orientation="vertical"
             android:padding="6dp">
 
@@ -117,13 +130,17 @@
                 android:id="@+id/seconds"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="00" />
+                android:text="00"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Seconds" />
+                android:text="Seconds"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -145,14 +162,15 @@
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:text="@string/eventdesc"
-        android:textColor="#0E867B"
-        android:textStyle="italic" />
+        android:textColor="#000000"
+        android:textSize="16dp" />
 
     <Button
         android:id="@+id/delete_event"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginLeft="230dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/button_background"
         android:text="Delete"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />

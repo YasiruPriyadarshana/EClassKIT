@@ -134,9 +134,7 @@ public class Notes extends AppCompatActivity implements ListAdapter.CallbackDele
             selectFile.setImageBitmap(bitmap);
 
 
-            selectFile.setDrawingCacheEnabled(true);
-            selectFile.buildDrawingCache();
-            Bitmap bitmap = selectFile.getDrawingCache();
+
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             data1 = baos.toByteArray();

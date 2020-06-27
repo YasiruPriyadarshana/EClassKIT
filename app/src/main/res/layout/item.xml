@@ -19,15 +19,15 @@
         android:layout_marginLeft="80dp"
         android:text="TextView"
         android:textAlignment="center"
-        android:textColor="#9C27B0" />
+        android:textColor="#610D0D" />
 
     <ImageView
         android:id="@+id/pdfView"
-        android:layout_width="135dp"
-        android:layout_height="130dp"
+        android:layout_width="110dp"
+        android:layout_height="128dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="4dp"
-        android:contentDescription="asaasd"
+        android:layout_marginTop="5dp"
+        android:scaleType="fitXY"
         app:srcCompat="@color/colorPrimary" />
 
     <ImageButton

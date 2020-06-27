@@ -34,6 +34,7 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_gravity="center|right"
+            android:layout_marginRight="10dp"
             android:background="@drawable/button_background"
             android:text="save"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />

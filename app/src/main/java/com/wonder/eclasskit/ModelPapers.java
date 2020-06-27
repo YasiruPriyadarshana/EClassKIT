@@ -133,9 +133,9 @@ public class ModelPapers extends AppCompatActivity implements ListAdapter.Callba
             selectFile.setImageBitmap(bitmap);
 
 
-            selectFile.setDrawingCacheEnabled(true);
-            selectFile.buildDrawingCache();
-            Bitmap bitmap = selectFile.getDrawingCache();
+//            selectFile.setDrawingCacheEnabled(true);
+//            selectFile.buildDrawingCache();
+//            Bitmap bitmap = selectFile.getDrawingCache();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             data1 = baos.toByteArray();

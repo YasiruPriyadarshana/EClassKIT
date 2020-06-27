@@ -14,15 +14,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="teacher" />
+        android:text="teacher"
+        android:textColor="#000000"
+        android:textSize="16dp" />
 
     <TextView
         android:id="@+id/course_teacher_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|left"
-        android:layout_margin="10dp"
-        android:text="Course" />
+        android:layout_margin="20dp"
+        android:text="Course"
+        android:textColor="#000000"
+        android:textSize="16dp" />
 
     <Button
         android:id="@+id/remove_course"

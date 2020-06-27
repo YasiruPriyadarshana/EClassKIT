@@ -143,7 +143,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
                 na.setText(name1);
                 uri=getIntent().getStringExtra("image");
-                Picasso.with(Comments.this).load(uri).into(imagepdf);
+                Picasso.with(Comments.this).load(uri).fit().into(imagepdf);
                 final String url=getIntent().getStringExtra("url");
                 imagepdf.setOnClickListener(new View.OnClickListener() {
                     @Override

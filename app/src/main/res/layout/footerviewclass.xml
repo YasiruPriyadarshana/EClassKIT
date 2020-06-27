@@ -3,12 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
+    android:background="#FFFFFF"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title121"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="Add New Timetable"
+        android:textColor="#000000"
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <TextView
@@ -26,7 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/day_categories" />
+            android:entries="@array/day_categories"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -49,7 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/grade_categories" />
+            android:entries="@array/grade_categories"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -72,8 +87,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#FFFFFF"
-            android:hint="Click To Set Time" />
+            android:background="@android:color/transparent"
+            android:hint="Click To Set Time"
+            android:paddingRight="45dp" />
 
     </LinearLayout>
 
@@ -97,7 +113,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/institute_categories" />
+            android:entries="@array/institute_categories"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -120,7 +138,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:entries="@array/class1_categories" />
+            android:entries="@array/class1_categories"
+            android:textAlignment="center" />
 
 
     </LinearLayout>
@@ -129,8 +148,9 @@
         android:id="@+id/addclassdet"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="210dp"
+        android:layout_gravity="right"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="28dp"
         android:layout_weight="1"
         android:background="@drawable/button_background"
         android:text="Add Class"
