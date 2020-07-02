@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,15 +23,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wonder.eclasskit.Object.AddCourse;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Enroll;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 
 
 public class Home extends Fragment {
@@ -93,34 +87,44 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 String redeemcd=redeem.getText().toString();
                 String teacher=Common.uid;
-                if (TextUtils.isEmpty(subject)){
-                    databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
-                    databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            subject = dataSnapshot.child("subject").getValue().toString();
-                            year = dataSnapshot.child("syear").getValue().toString();
-                            tname =  dataSnapshot.child("name").getValue().toString();
-                            enroll = new Enroll(teacher, tname, subject, year);
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
                 if (redeemcd.isEmpty()) {
                     Toast.makeText(getActivity(), "Give Enrollment Key", Toast.LENGTH_SHORT).show();
                 }else if (redeemcd.length() < 6){
                     Toast.makeText(getActivity(), "Too Short (need 6 character)", Toast.LENGTH_SHORT).show();
                 }else {
-                    databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getActivity(), "Redeem copied", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    if (TextUtils.isEmpty(subject)){
+                        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
+                        databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                subject = dataSnapshot.child("subject").getValue().toString();
+                                year = dataSnapshot.child("syear").getValue().toString();
+                                tname =  dataSnapshot.child("name").getValue().toString();
+                                enroll = new Enroll(teacher, tname, subject, year);
+                                databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getActivity(), "Enroll key copied", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }else {
+                        enroll = new Enroll(teacher, tname, subject, year);
+                        databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getActivity(), "Enroll key copied", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
                 }
             }
         });
@@ -153,4 +157,6 @@ public class Home extends Fragment {
 //        }
 //
 //    }
+
+
 }

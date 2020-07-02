@@ -186,10 +186,12 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         fullscreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fullscreen.setClickable(false);
                 isPlaying=false;
                 Intent intent1 =new Intent(VideoPlayer.this,FullScreenVideo.class);
                 intent1.putExtra("url",url);
                 startActivity(intent1);
+                fullscreen.setClickable(true);
             }
         });
 
