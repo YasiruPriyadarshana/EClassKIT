@@ -127,7 +127,8 @@ public class quizMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 position=mPager.getCurrentItem()+1;
-                if (position==adapterQuiz.getCount()) {
+
+                if (position==adapterQuiz.getCount() && Common.limit == 1) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
                             quizMain.this);
                     adb.setMessage("Do you want to complete?");

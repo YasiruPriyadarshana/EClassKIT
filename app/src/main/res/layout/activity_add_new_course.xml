@@ -6,28 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.wonder.eclasskit.AddNewCourse">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true">
 
-
-        <EditText
-            android:id="@+id/sub_name_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:hint="First Course" />
-
-        <EditText
-            android:id="@+id/class_yr_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|left"
-            android:layout_margin="10dp"
-            android:hint="Class year" />
 
         <Button
             android:id="@+id/save_ftcourse"
@@ -38,10 +27,30 @@
             android:background="@drawable/button_background"
             android:text="save"
             android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
+        <EditText
+            android:id="@+id/class_yr_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="20dp"
+            android:hint="Class year"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/sub_name_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="First Course"
+            android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
+
     <ListView
         android:id="@+id/add_newclass_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:divider="@null" />
 </LinearLayout>

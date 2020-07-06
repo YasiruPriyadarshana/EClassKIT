@@ -151,19 +151,19 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
 
                 ReplyListView.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(ReplyListView,0);
+                if (Common.limit != 1) {
+                    ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                            String key = keys.get(position);
+                            Reply reply = replies.get(position);
+                            mCallback.popUpReply(key, reply.getUrirep(), databaseReference2);
 
-                ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        String key=keys.get(position);
-                        Reply reply=replies.get(position);
-                        mCallback.popUpReply(key,reply.getUrirep(),databaseReference2);
 
-
-                        return false;
-                    }
-                });
-
+                            return false;
+                        }
+                    });
+                }
 
             }
 

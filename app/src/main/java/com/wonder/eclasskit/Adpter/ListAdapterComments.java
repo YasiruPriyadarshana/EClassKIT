@@ -120,16 +120,17 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
             imgC.setVisibility(View.GONE);
         }
         viewAllFiles(ReplyListView,databaseReference2);
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+        if (Common.limit != 1) {
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
 
-                mCallback.popUp(key,uri);
-                return true;
-            }
+                    mCallback.popUp(key, uri);
+                    return true;
+                }
 
-        });
-
+            });
+        }
 
 
         return convertView;
@@ -200,17 +201,20 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 ReplyListView.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(ReplyListView,0);
 
-                ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        String key=keys.get(position);
-                        Reply reply=replies.get(position);
-                        mCallback.popUpReply(key,reply.getUrirep(),databaseReference2);
+                if (Common.limit != 1) {
+
+                    ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                            String key = keys.get(position);
+                            Reply reply = replies.get(position);
+                            mCallback.popUpReply(key, reply.getUrirep(), databaseReference2);
 
 
-                        return false;
-                    }
-                });
+                            return false;
+                        }
+                    });
+                }
 
 
             }

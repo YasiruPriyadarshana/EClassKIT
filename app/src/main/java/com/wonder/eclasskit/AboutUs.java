@@ -59,6 +59,7 @@ public class AboutUs extends AppCompatActivity {
     private Uri imgUri;
     private StorageReference storage;
     private byte[] data1;
+    private boolean settodb=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,28 +138,6 @@ public class AboutUs extends AppCompatActivity {
 
         if (Common.limit != 1){
 
-            teacherimage.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    storage= FirebaseStorage.getInstance().getReference();
-                    StorageReference reference = storage.child("Teacher/"+System.currentTimeMillis()+".png");
-
-                    reference.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Task<Uri> uri=taskSnapshot.getStorage().getDownloadUrl();
-                            while (!uri.isComplete());
-                            Uri p=uri.getResult();
-                            databaseReference.child("imgurl").setValue(p.toString());
-
-                            Toast.makeText(AboutUs.this, "Profile uploaded", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    return false;
-                }
-            });
-
-
             teacherimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -169,6 +148,37 @@ public class AboutUs extends AppCompatActivity {
                     }
                 }
             });
+
+            teacherimage.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    teacherimage.setClickable(false);
+                    if (settodb) {
+                        storage = FirebaseStorage.getInstance().getReference();
+                        StorageReference reference = storage.child("Teacher/" + System.currentTimeMillis() + ".png");
+
+                        reference.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                                while (!uri.isComplete()) ;
+                                Uri p = uri.getResult();
+                                databaseReference.child("imgurl").setValue(p.toString());
+
+                                Toast.makeText(AboutUs.this, "Profile uploaded", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    } else{
+                        Toast.makeText(AboutUs.this, "Select picture", Toast.LENGTH_SHORT).show();
+                    }
+                    teacherimage.setClickable(true);
+                    return true;
+                }
+            });
+
+
+
 
             setname.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -378,15 +388,14 @@ public class AboutUs extends AppCompatActivity {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap1.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 data1 = baos.toByteArray();
+                settodb=true;
 
             }catch (IOException e){
-                Toast.makeText(AboutUs.this, "fucked: "+e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AboutUs.this, "Error: "+e, Toast.LENGTH_SHORT).show();
             }
 
 
 
-        } else {
-            Toast.makeText(AboutUs.this, "Please select a Photo", Toast.LENGTH_SHORT).show();
         }
     }
 }

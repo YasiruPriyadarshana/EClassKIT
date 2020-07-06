@@ -59,7 +59,7 @@ public class FullScreenVideo extends AppCompatActivity {
                 seekBar.setVisibility(View.VISIBLE);
                 current.setVisibility(View.VISIBLE);
                 duration.setVisibility(View.VISIBLE);
-//                seekBar.setProgress(currentPercent);
+                seekBar.setProgress(currentPercent);
 
                 Handler handler = new Handler();
                 final Runnable r = new Runnable() {

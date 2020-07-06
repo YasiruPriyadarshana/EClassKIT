@@ -3,10 +3,8 @@ package com.wonder.eclasskit;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +28,7 @@ import com.wonder.eclasskit.Object.Enroll;
 
 
 public class Home extends Fragment {
+
     private ImageButton quiz;
     private ImageButton timeTable;
     private Button copy;
@@ -140,7 +139,6 @@ public class Home extends Fragment {
 //            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 //            StringBuffer stringBuffer = new StringBuffer();
 //
-//
 //            String lines;
 //            while ((lines = bufferedReader.readLine()) != null) {
 //                stringBuffer.append(lines + "\n");
@@ -149,7 +147,6 @@ public class Home extends Fragment {
 //            String[] array = str.split(",");
 //            tKey=array[0];
 //
-//
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        } catch (IOException e) {
@@ -157,6 +154,5 @@ public class Home extends Fragment {
 //        }
 //
 //    }
-
 
 }
