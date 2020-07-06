@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -144,7 +145,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
 
         isPlaying=true;
-        playBtn.setImageResource(R.drawable.ic_playvideo);
+        playBtn.setImageResource(R.drawable.ic_pausevideo);
 
         task=new videoProgress().execute();
 
@@ -173,11 +174,11 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                 if (isPlaying){
                     videoView.pause();
                     isPlaying=false;
-                    playBtn.setImageResource(R.drawable.ic_pausevideo);
+                    playBtn.setImageResource(R.drawable.ic_playvideo);
                 }else {
                     videoView.start();
                     isPlaying=true;
-                    playBtn.setImageResource(R.drawable.ic_playvideo);
+                    playBtn.setImageResource(R.drawable.ic_pausevideo);
                 }
 
             }
@@ -186,10 +187,12 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         fullscreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                task.cancel(true);
                 fullscreen.setClickable(false);
                 isPlaying=false;
                 Intent intent1 =new Intent(VideoPlayer.this,FullScreenVideo.class);
                 intent1.putExtra("url",url);
+                intent1.putExtra("current",current);
                 startActivity(intent1);
                 fullscreen.setClickable(true);
             }
@@ -203,15 +206,14 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     @Override
     protected void onStop() {
         super.onStop();
-        isPlaying = false;
-
+        isPlaying=false;
     }
 
 
 
     public class videoProgress extends AsyncTask<Void, Integer, Void> {
 
-        @SuppressLint("WrongThread")
+
         @Override
         protected Void doInBackground(Void... voids) {
 
@@ -228,7 +230,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
             return null;
         }
 
-        @SuppressLint("WrongThread")
+
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
@@ -239,6 +241,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
                 String currentString = String.format("%02d:%02d", values[0] / 60, values[0] % 60);
                 currentTime.setText(currentString);
+
 
             }catch (Exception e){
 

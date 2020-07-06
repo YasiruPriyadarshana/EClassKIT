@@ -314,10 +314,8 @@ public class quizMain extends AppCompatActivity {
         adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(quizMain.this, MainActivity.class);
-                quizMain.this.finish();
                 Common.answer.clear();
-                startActivity(intent);
+                finish();
             }
         });
         adb.setNegativeButton("No", null);

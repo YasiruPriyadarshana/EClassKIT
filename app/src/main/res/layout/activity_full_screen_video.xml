@@ -12,7 +12,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:background="@drawable/ic_playvideo" />
+        android:background="@drawable/ic_playvideo"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,7 +41,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:text="0.00"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:visibility="gone" />
 
             <SeekBar
                 android:id="@+id/fseekBar"
@@ -51,7 +53,8 @@
                 android:layout_weight="10"
                 android:max="100"
                 android:progressTint="#F44336"
-                android:thumbTint="#F44336" />
+                android:thumbTint="#F44336"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/f_duration"
@@ -60,7 +63,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="0.00"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/minimize_btn"
@@ -69,7 +73,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_fullscreenvideo" />
+                android:background="@drawable/ic_fullscreenvideo"
+                android:visibility="gone" />
 
         </LinearLayout>
 
