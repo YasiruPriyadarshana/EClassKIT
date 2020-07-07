@@ -86,6 +86,7 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 String redeemcd=redeem.getText().toString();
                 String teacher=Common.uid;
+                databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
 
                 if (redeemcd.isEmpty()) {
                     Toast.makeText(getActivity(), "Give Enrollment Key", Toast.LENGTH_SHORT).show();
@@ -93,7 +94,6 @@ public class Home extends Fragment {
                     Toast.makeText(getActivity(), "Too Short (need 6 character)", Toast.LENGTH_SHORT).show();
                 }else {
                     if (TextUtils.isEmpty(subject)){
-                        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
                         databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -115,6 +115,7 @@ public class Home extends Fragment {
                             }
                         });
                     }else {
+
                         enroll = new Enroll(teacher, tname, subject, year);
                         databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

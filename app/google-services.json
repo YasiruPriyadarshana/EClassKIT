@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "831902598961",
-    "firebase_url": "https://learn-with-chirath.firebaseio.com",
-    "project_id": "learn-with-chirath",
-    "storage_bucket": "learn-with-chirath.appspot.com"
+    "project_number": "955126725494",
+    "firebase_url": "https://eclasskit.firebaseio.com",
+    "project_id": "eclasskit",
+    "storage_bucket": "eclasskit.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:831902598961:android:06e1c20623169597add210",
+        "mobilesdk_app_id": "1:955126725494:android:266083550054f5f60a9857",
         "android_client_info": {
-          "package_name": "com.wonder.learnwithchirath"
+          "package_name": "com.wonder.eclasskit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "831902598961-v25vcljdbfvhg5s3g31hr76scjeup4mh.apps.googleusercontent.com",
+          "client_id": "955126725494-nd5b9npj3gpoipfoh97hebmq9luf7nn6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.wonder.learnwithchirath",
-            "certificate_hash": "31d63016b0f695678ef5a915e4fab3dffe2f518d"
+            "package_name": "com.wonder.eclasskit",
+            "certificate_hash": "24828122ded077a80bdfa9d92b52e2a18d01ea6c"
           }
         },
         {
-          "client_id": "831902598961-vn9b6mgnmbvnv108l93ajue7i24fp3go.apps.googleusercontent.com",
+          "client_id": "955126725494-9e7l9513o2pfms0j08mm86dni6e1i62j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCAnuvy1pFuvGaI0LKDkB_k1A_AknvpGLg"
+          "current_key": "AIzaSyBwh6JjFby8BQpBoIZgi58HNBHN_y_3g_4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "831902598961-vn9b6mgnmbvnv108l93ajue7i24fp3go.apps.googleusercontent.com",
+              "client_id": "955126725494-9e7l9513o2pfms0j08mm86dni6e1i62j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
