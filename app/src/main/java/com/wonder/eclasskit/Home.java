@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,11 +34,15 @@ public class Home extends Fragment {
     private ImageButton timeTable;
     private Button copy;
     private EditText redeem;
+    private TextView coursename;
     private DatabaseReference databaseReference,databaseRfTeacher;
     private String tKey;
     private FirebaseUser user;
     private Enroll enroll;
-    private String year,subject,tname;
+    private String year,subject,tname,delkey;
+    private String intentenroll;
+    int i=0;
+
 
     View view;
     @Override
@@ -51,6 +56,7 @@ public class Home extends Fragment {
         if (TextUtils.isEmpty(Common.uid)) {
             user = FirebaseAuth.getInstance().getCurrentUser();
             Common.uid = user.getUid();
+            Common.uidmain = Common.uid;
 
         }
         if (Common.limit == 1){
@@ -61,8 +67,11 @@ public class Home extends Fragment {
         year=intent.getStringExtra("year");
         subject=intent.getStringExtra("sub");
 
+
         quiz=view.findViewById(R.id.quiz);
         timeTable=view.findViewById(R.id.classTimetb);
+        coursename=view.findViewById(R.id.course_Home_txt);
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/");
 
@@ -80,14 +89,40 @@ public class Home extends Fragment {
                 startActivity(intent);
             }
         });
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain);
+        if (TextUtils.isEmpty(redeem.getText().toString()) || i==1){
+            databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (!TextUtils.isEmpty(intentenroll)){
+                        coursename.setText(dataSnapshot.child("newcourse/"+Common.uid+"/subjectname").getValue().toString());
+                        if (dataSnapshot.hasChild("newcourse/"+Common.uid+"/sredeem")) {
+                            String setkey = dataSnapshot.child("newcourse/" + Common.uid + "/sredeem").getValue().toString();
+                            redeem.setText(setkey);
+                        }
+                    }else if (dataSnapshot.hasChild("sredeem")) {
+                        coursename.setText(dataSnapshot.child("subject").getValue().toString());
+                        String setkey = dataSnapshot.child("sredeem").getValue().toString();
+                        tname=dataSnapshot.child("name").getValue().toString();
+                        redeem.setText(setkey);
 
+                    }
+
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+//add emrollment key
         copy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String redeemcd=redeem.getText().toString();
                 String teacher=Common.uid;
-                databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
 
+               //main course
                 if (redeemcd.isEmpty()) {
                     Toast.makeText(getActivity(), "Give Enrollment Key", Toast.LENGTH_SHORT).show();
                 }else if (redeemcd.length() < 6){
@@ -101,12 +136,18 @@ public class Home extends Fragment {
                                 year = dataSnapshot.child("syear").getValue().toString();
                                 tname =  dataSnapshot.child("name").getValue().toString();
                                 enroll = new Enroll(teacher, tname, subject, year);
+                                if (dataSnapshot.hasChild("sredeem")){
+                                    delkey =  dataSnapshot.child("sredeem").getValue().toString();
+                                    databaseReference.child(delkey).setValue(null);
+                                }
                                 databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+                                        subject="";
                                         Toast.makeText(getActivity(), "Enroll key copied", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                                databaseRfTeacher.child("sredeem").setValue(redeemcd);
                             }
 
                             @Override
@@ -116,11 +157,28 @@ public class Home extends Fragment {
                         });
                     }else {
 
-                        enroll = new Enroll(teacher, tname, subject, year);
-                        databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
+                       //other coursese
+                        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain+"/newcourse/"+Common.uid);
+                        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(getActivity(), "Enroll key copied", Toast.LENGTH_SHORT).show();
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.hasChild("sredeem")){
+                                    delkey =  dataSnapshot.child("sredeem").getValue().toString();
+                                    databaseReference.child(delkey).setValue(null);
+                                    //fix ignore same value ---------------------------------------------
+                                }
+
+                                enroll = new Enroll(teacher, tname, subject, year);
+                                databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getActivity(), "Enroll key copied For Subject", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                databaseRef.child("sredeem").setValue(redeemcd);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
                             }
                         });
                     }
@@ -132,7 +190,17 @@ public class Home extends Fragment {
         return view;
     }
 
-//    public void readFile() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        Intent intent = requireActivity().getIntent();
+        intentenroll=intent.getStringExtra("enroll");
+        if (!TextUtils.isEmpty(intentenroll)){
+            i=1;
+        }
+    }
+
+    //    public void readFile() {
 //        try {
 //            FileInputStream fileInputStream = requireActivity().openFileInput("teachercourse.txt");
 //            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);

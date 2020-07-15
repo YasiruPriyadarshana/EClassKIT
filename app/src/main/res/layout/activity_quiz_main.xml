@@ -7,58 +7,70 @@
     android:orientation="vertical"
     tools:context=".quizMain">
 
-    <TextView
-        android:id="@+id/time_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_margin="5dp"
-        android:layout_marginRight="20dp"
-        android:text="Time left"
-        android:textColor="#000000" />
-
-    <ImageButton
-        android:id="@+id/flag_imgbtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:background="@android:color/transparent"
-        app:srcCompat="@mipmap/flag_foreground" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerquizlist"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/time_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="5dp"
+                android:layout_marginRight="20dp"
+                android:text="Time left"
+                android:textColor="#000000" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/quiztablayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable"/>
+            <ImageButton
+                android:id="@+id/flag_imgbtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@android:color/transparent"
+                app:srcCompat="@mipmap/flag_foreground" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/quizviewpager"
-        android:layout_width="match_parent"
-        android:layout_height="370dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerquizlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
 
-    <Button
-        android:id="@+id/delete_quest"
-        android:layout_width="90dp"
-        android:layout_height="30dp"
-        android:layout_gravity="right"
-        android:background="@android:color/transparent"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:text="Delete" />
+            </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/addnew_quest"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/button_background"
-        android:text="Next" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/quiztablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="scrollable"/>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/quizviewpager"
+                android:layout_width="match_parent"
+                android:layout_height="370dp" />
+
+            <Button
+                android:id="@+id/delete_quest"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:text="Delete" />
+
+            <Button
+                android:id="@+id/addnew_quest"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/button_background"
+                android:text="Next" />
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>

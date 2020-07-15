@@ -52,7 +52,7 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
 
         anInterface=this;
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid+"/newcourse");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain+"/newcourse");
         QuizHometListView=(ListView)findViewById(R.id.add_newclass_listview);
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -63,6 +63,7 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
                 Intent intent=new Intent(AddNewCourse.this,MainActivity.class);
                 intent.putExtra("year",adc.getClass_yr());
                 intent.putExtra("sub",adc.getSubjectname());
+                intent.putExtra("enroll","1");
                 startActivity(intent);
             }
         });
@@ -73,10 +74,23 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
         course=(EditText)findViewById(R.id.sub_name_1);
         year=(EditText)findViewById(R.id.class_yr_1);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("subject")){
+                    course.setText(dataSnapshot.child("subject").getValue().toString());
+                    year.setText(dataSnapshot.child("syear").getValue().toString());
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
                 Teachers teachers=new Teachers("",course.getText().toString(),year.getText().toString());
                 databaseReference.setValue(teachers);
                 Toast.makeText(AddNewCourse.this, "Details added", Toast.LENGTH_SHORT).show();
@@ -152,5 +166,12 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
     @Override
     public void onHandledelete() {
         adapter.clear();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
     }
 }
