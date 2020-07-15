@@ -10,6 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.wonder.eclasskit.Object.Common;
@@ -22,11 +26,16 @@ public class MainActivity extends AppCompatActivity {
     ViewPager mPager;
     PageController pageController;
     private long backPressedTime;
+    private AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MobileAds.initialize(this,"ca-app-pub-3940256099942544~3347511713");
+        adView=(AdView)findViewById(R.id.adView);
+        AdRequest adRequest= new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

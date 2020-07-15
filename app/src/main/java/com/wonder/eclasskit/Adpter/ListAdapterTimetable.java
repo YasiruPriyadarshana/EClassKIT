@@ -25,10 +25,10 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
     private static final String TAG="ListAdapterTimetable";
     private Context mContext;
     private CallbackInterface2 mCallback;
-    int mResource;
+    private int mResource;
     private ArrayList<String> keys;
-    ArrayList<Timetable> object,original;
-    CustomFilter cm;
+    private ArrayList<Timetable> object,original;
+    private CustomFilter cm;
 
 
     public interface CallbackInterface2{
