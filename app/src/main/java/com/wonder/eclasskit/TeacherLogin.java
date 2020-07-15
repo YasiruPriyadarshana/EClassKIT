@@ -3,6 +3,8 @@ package com.wonder.eclasskit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -47,6 +49,8 @@ public class TeacherLogin extends AppCompatActivity {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 loginUserAccount();
+
+
             }
         });
 
@@ -81,10 +85,26 @@ public class TeacherLogin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(TeacherLogin.this, MainActivity.class);
-                            progressBar.setVisibility(View.GONE);
-                            startActivity(intent);
+                            FirebaseUser user=mAuth.getInstance().getCurrentUser();
+                            assert user != null;
+                            if (user.isEmailVerified()) {
+                                Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(TeacherLogin.this, MainActivity.class);
+                                progressBar.setVisibility(View.GONE);
+                                startActivity(intent);
+                            }else {
+
+                                AlertDialog.Builder adb = new AlertDialog.Builder(TeacherLogin.this);
+                                adb.setMessage("Check Your Email For Verification");
+                                adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                                adb.show();
+                            }
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
@@ -94,7 +114,15 @@ public class TeacherLogin extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mAuth.signOut();
+    }
 
-
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.signOut();
+    }
 }

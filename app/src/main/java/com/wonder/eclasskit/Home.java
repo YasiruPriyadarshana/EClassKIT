@@ -53,7 +53,7 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        readStudentId();
+
         copy=(Button)view.findViewById(R.id.copy_redeem);
         redeem=(EditText)view.findViewById(R.id.redeem_code_txt);
 
@@ -66,6 +66,7 @@ public class Home extends Fragment {
         if (Common.limit == 1){
             redeem.setVisibility(View.GONE);
             copy.setVisibility(View.GONE);
+            readStudentId();
         }
         Intent intent = requireActivity().getIntent();
         year=intent.getStringExtra("year");
