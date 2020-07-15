@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,6 +24,7 @@ public class User extends AppCompatActivity {
         Number=(TextView)findViewById(R.id.number_txt);
         Class=(TextView)findViewById(R.id.class_txt);
         readFile();
+
     }
     public void readFile(){
         try {
@@ -49,4 +52,6 @@ public class User extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 }

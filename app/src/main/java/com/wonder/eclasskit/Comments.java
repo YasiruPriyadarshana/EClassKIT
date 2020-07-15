@@ -200,7 +200,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
 
         //imageuploade
         if (imgUri == null) {
-            CommentM commentobj = new CommentM(getName(), cmt_str,null);
+            CommentM commentobj = new CommentM(getName(), cmt_str,null,Common.studentId);
             databaseReference.child(cmtSort+""+databaseReference.push().getKey()).setValue(commentobj);
             Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
             adapter.clear();
@@ -214,7 +214,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
                     while (!uri.isComplete()) ;
                     Uri p = uri.getResult();
 
-                    CommentM commentobj = new CommentM(getName(), cmt_str, p.toString());
+                    CommentM commentobj = new CommentM(getName(), cmt_str, p.toString(),Common.studentId);
 
                     databaseReference.child(cmtSort+""+databaseReference.push().getKey()).setValue(commentobj);
                     Toast.makeText(Comments.this, "Add new comment", Toast.LENGTH_SHORT).show();
@@ -343,7 +343,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     public void popUp(final String key,final String uri) {
         databaseReference.removeEventListener(valueEventListener);
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setMessage("Are you sure?");
+        adb.setMessage("Are you sure you want to delete this comment?");
         adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -381,7 +381,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     public void popUpReply(final String key,final String uri,final DatabaseReference dr) {
         databaseReference.removeEventListener(valueEventListener);
         AlertDialog.Builder adb2 = new AlertDialog.Builder(this);
-        adb2.setMessage("Are you sure?");
+        adb2.setMessage("Are you sure you want to delete this reply?");
         adb2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

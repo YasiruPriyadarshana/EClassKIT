@@ -5,9 +5,17 @@ public class CommentM {
     private String usercmt;
     private String commentdesc;
     private String uricmt;
+    private String stuId;
 
 
     public CommentM() {
+    }
+
+    public CommentM(String usercmt, String commentdesc, String uricmt, String stuId) {
+        this.usercmt = usercmt;
+        this.commentdesc = commentdesc;
+        this.uricmt = uricmt;
+        this.stuId = stuId;
     }
 
     public CommentM(String usercmt, String commentdesc, String uricmt) {
@@ -40,5 +48,11 @@ public class CommentM {
         this.uricmt = uricmt;
     }
 
+    public String getStuId() {
+        return stuId;
+    }
 
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
+    }
 }

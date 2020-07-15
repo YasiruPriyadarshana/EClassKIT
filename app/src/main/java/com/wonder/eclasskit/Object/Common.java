@@ -10,5 +10,6 @@ public class Common {
     public static int limit;
     public static String cmtSort;
     public static String repname;
+    public static String studentId;
 
 }

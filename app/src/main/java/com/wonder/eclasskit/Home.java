@@ -25,7 +25,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Enroll;
 
-
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 public class Home extends Fragment {
@@ -49,7 +53,7 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        readStudentId();
         copy=(Button)view.findViewById(R.id.copy_redeem);
         redeem=(EditText)view.findViewById(R.id.redeem_code_txt);
 
@@ -200,28 +204,27 @@ public class Home extends Fragment {
         }
     }
 
-    //    public void readFile() {
-//        try {
-//            FileInputStream fileInputStream = requireActivity().openFileInput("teachercourse.txt");
-//            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-//
-//            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//            StringBuffer stringBuffer = new StringBuffer();
-//
-//            String lines;
-//            while ((lines = bufferedReader.readLine()) != null) {
-//                stringBuffer.append(lines + "\n");
-//            }
-//            String str = stringBuffer.toString();
-//            String[] array = str.split(",");
-//            tKey=array[0];
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    public void readStudentId(){
+        try {
+            FileInputStream fileInputStream = requireActivity().openFileInput("student.txt");
+            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer =new StringBuffer();
+
+
+            String lines;
+            while ((lines = bufferedReader.readLine()) != null){
+                stringBuffer.append(lines + "\n");
+            }
+            String str =stringBuffer.toString();
+            Common.studentId =str;
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
 }

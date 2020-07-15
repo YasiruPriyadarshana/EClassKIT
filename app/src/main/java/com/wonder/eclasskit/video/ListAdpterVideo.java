@@ -80,7 +80,7 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
                         public boolean onMenuItemClick(MenuItem item) {
 
                             AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
-                            adb.setMessage("Are you sure?");
+                            adb.setMessage("Are you sure you want to delete this video?");
                             adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

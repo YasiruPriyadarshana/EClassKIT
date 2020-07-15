@@ -133,7 +133,7 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+                builder.setMessage("Are you sure you want to delete class details?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
 
             }
         });

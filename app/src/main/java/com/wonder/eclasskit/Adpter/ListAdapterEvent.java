@@ -166,7 +166,7 @@ public class ListAdapterEvent extends ArrayAdapter<Eventobj> {
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+                builder.setMessage("Are you sure you want to delete this Event?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
 
             }
         });

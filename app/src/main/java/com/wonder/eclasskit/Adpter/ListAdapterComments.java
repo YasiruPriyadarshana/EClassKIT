@@ -96,6 +96,7 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         String user=getItem(position).getUsercmt();
         final String comment=getItem(position).getCommentdesc();
         final String uri=getItem(position).getUricmt();
+        final String stuId=getItem(position).getStuId();
         final String key=keys.get(position);
         final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("comments/"+name1.substring(0, name1.length() - 4)+"/"+key+"/reply");
         storage= FirebaseStorage.getInstance().getReference();
@@ -128,7 +129,16 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     mCallback.popUp(key, uri);
                     return true;
                 }
+            });
 
+        }else if (TextUtils.equals(Common.studentId,stuId)){
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    mCallback.popUp(key, uri);
+                    return true;
+                }
             });
         }
 
@@ -201,20 +211,22 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                 ReplyListView.setAdapter(adapter);
                 setListViewHeightBasedOnChildren(ReplyListView,0);
 
-                if (Common.limit != 1) {
 
                     ReplyListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                         @Override
                         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                             String key = keys.get(position);
                             Reply reply = replies.get(position);
-                            mCallback.popUpReply(key, reply.getUrirep(), databaseReference2);
 
-
+                            if (Common.limit != 1) {
+                                mCallback.popUpReply(key, reply.getUrirep(), databaseReference2);
+                            }else if (TextUtils.equals(Common.studentId,reply.getStuId())){
+                                mCallback.popUpReply(key, reply.getUrirep(), databaseReference2);
+                            }
                             return false;
                         }
                     });
-                }
+
 
 
             }
@@ -238,9 +250,9 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
         if (imgUri == null) {
             Reply replytobj;
             if (TextUtils.isEmpty(name)){
-                replytobj = new Reply(Common.repname, rep_st,null);
+                replytobj = new Reply(Common.repname, rep_st,null,Common.studentId);
             }else{
-                replytobj = new Reply(name, rep_st,null);
+                replytobj = new Reply(name, rep_st,null,Common.studentId);
             }
 
             dr.child(sort+""+dr.push().getKey()).setValue(replytobj);
@@ -258,9 +270,9 @@ public class ListAdapterComments extends ArrayAdapter<CommentM> {
                     p = uri.getResult();
                     Reply replytobj;
                     if (TextUtils.isEmpty(name)){
-                        replytobj = new Reply(Common.repname, rep_st, p.toString());
+                        replytobj = new Reply(Common.repname, rep_st, p.toString(),Common.studentId);
                     }else{
-                        replytobj = new Reply(name, rep_st, p.toString());
+                        replytobj = new Reply(name, rep_st, p.toString(),Common.studentId);
                     }
 
                     dr.child(sort+""+dr.push().getKey()).setValue(replytobj);

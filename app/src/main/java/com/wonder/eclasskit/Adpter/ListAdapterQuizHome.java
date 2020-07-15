@@ -83,7 +83,7 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
                             return true;
                         }else {
                             AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
-                            adb.setMessage("Are you sure?");
+                            adb.setMessage("Are you sure you want to delete this quiz?");
                             adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

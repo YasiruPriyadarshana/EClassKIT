@@ -74,7 +74,7 @@ public class ListAdapter extends ArrayAdapter<UploadPDF> {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
-                adb.setMessage("Are you sure?");
+                adb.setMessage("Are you sure you want to delete this PDF?");
                 adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
