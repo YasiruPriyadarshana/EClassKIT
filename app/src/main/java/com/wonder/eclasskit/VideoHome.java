@@ -12,15 +12,18 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +34,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +53,8 @@ import com.wonder.eclasskit.Object.UploadVideo;
 import com.wonder.eclasskit.video.VideoPlayer;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -65,7 +71,6 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
     private ArrayList<UploadVideo> uploadVideos;
     private ImageButton selectFile;
     private TextView nameUpfile;
-    private Bitmap bitmap;
     private Uri videoUri;
     private byte[] data1;
     private static String name;
@@ -74,6 +79,7 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
     private View v,v1;
     private ListAdpterVideo adapter;
     private ArrayList<String> keys;
+    private Bitmap bitmap1;
     private int set;
     private ListAdpterVideo.CallbackDelete anInterface;
 
@@ -139,22 +145,33 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
             name=name1;
 
 
-            String fullPath = Commons.getPath(videoUri,getContext());
-
             nameUpfile.setText(name1);
-            Toast.makeText(getActivity(), "see: "+fullPath, Toast.LENGTH_SHORT).show();
 
 
-            Bitmap bitmap1 = ThumbnailUtils.createVideoThumbnail(fullPath, MediaStore.Video.Thumbnails.MINI_KIND);
-            selectFile.setImageBitmap(bitmap1);
+/*
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P) {
+                bitmap1 = ThumbnailUtils.createVideoThumbnail(fullPath, MediaStore.Video.Thumbnails.MINI_KIND);
+                selectFile.setImageBitmap(bitmap1);
 
-
-
+            }else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q){
+                try {
+                    File thumbFile = new File(fullPath);
+                    Size thumbSize = new Size(200, 200);
+                    bitmap1 = ThumbnailUtils.createVideoThumbnail(thumbFile, thumbSize,null);
+                    selectFile.setImageBitmap(bitmap1);
+                } catch (IOException e) {
+                    Toast.makeText(getContext(), "Ex:"+e, Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
             bitmap1.compress(Bitmap.CompressFormat.PNG, 100, baos);
             data1 = baos.toByteArray();
-
+*/
+            Glide.with(requireContext())
+                    .asBitmap()
+                    .load(videoUri)
+                    .into(selectFile);
 
 
 
@@ -241,26 +258,26 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
         progressDialog.show();
 
         //videoimage
-        StorageReference reference2 =storage.child("videos/"+System.currentTimeMillis()+".png");
-        adapter.clear();
-        reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uri=taskSnapshot.getStorage().getDownloadUrl();
-                while (!uri.isComplete());
-                url2=uri.getResult();
-
-                Uri p=vidUri;
+//        StorageReference reference2 =storage.child("videos/"+System.currentTimeMillis()+".png");
+//        adapter.clear();
+//        reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Task<Uri> uri=taskSnapshot.getStorage().getDownloadUrl();
+//                while (!uri.isComplete());
+//                url2=uri.getResult();
+//
+//                Uri p=vidUri;
                 //video uplode
                 StorageReference reference =storage.child("videos/"+name);
-                reference.putFile(p).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                reference.putFile(vidUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uri=taskSnapshot.getStorage().getDownloadUrl();
                         while (!uri.isComplete());
                         Uri url=uri.getResult();
 
-                        UploadVideo uploadVideo=new UploadVideo(url.toString(),name,url2.toString());
+                        UploadVideo uploadVideo=new UploadVideo(url.toString(),name);
 
                         databaseReference.child(databaseReference.push().getKey()).setValue(uploadVideo);
                         Toast.makeText(getActivity(), "Video File uploaded", Toast.LENGTH_SHORT).show();
@@ -275,9 +292,9 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                 });
                 //end
             }
-        });//end
-
-    }
+//        });//end
+//
+//    }
 
     private int permission() {
         set=2;

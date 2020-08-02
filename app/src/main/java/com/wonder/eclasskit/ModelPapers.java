@@ -1,6 +1,7 @@
 package com.wonder.eclasskit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,12 +9,14 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.view.View;
@@ -42,6 +45,10 @@ import com.wonder.eclasskit.Object.UploadPDF;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import in.gauriinfotech.commons.Commons;
 
@@ -116,26 +123,18 @@ public class ModelPapers extends AppCompatActivity implements ListAdapter.Callba
         if (requestCode==76 && resultCode == RESULT_OK && data!=null) {
             pdfUri=data.getData();
             String name1=queryName(getContentResolver(),pdfUri);
-
-
             name=name1;
 
-
-            String fullPath = Commons.getPath(pdfUri,getApplicationContext());
-
             nameUpfile.setText(name1);
-            Toast.makeText(this, "see: "+fullPath, Toast.LENGTH_SHORT).show();
-            File pdfFile = new File(fullPath);
-            GenaratePdfThumb genaratePdf=new GenaratePdfThumb();
-            bitmap=genaratePdf.pdfToBitmap(pdfFile);
 
-
+            String pathfile = createCopyAndReturnRealPath(this,pdfUri);
+            Toast.makeText(this, "a: "+pdfUri.getPathSegments(), Toast.LENGTH_SHORT).show();
+            File pdfFile = new File(pathfile);
+            GenaratePdfThumb genaratePdf = new GenaratePdfThumb();
+            bitmap = genaratePdf.pdfToBitmap(pdfFile);
             selectFile.setImageBitmap(bitmap);
 
 
-//            selectFile.setDrawingCacheEnabled(true);
-//            selectFile.buildDrawingCache();
-//            Bitmap bitmap = selectFile.getDrawingCache();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             data1 = baos.toByteArray();
@@ -154,6 +153,40 @@ public class ModelPapers extends AppCompatActivity implements ListAdapter.Callba
         returnCursor.close();
         return name;
     }
+
+    @Nullable
+    public static String createCopyAndReturnRealPath(
+            @NonNull Context context, @NonNull Uri uri) {
+        final ContentResolver contentResolver = context.getContentResolver();
+        if (contentResolver == null)
+            return null;
+
+        // Create file path inside app's data dir
+        String filePath = context.getApplicationInfo().dataDir + File.separator
+                + System.currentTimeMillis();
+
+        File file = new File(filePath);
+        try {
+            InputStream inputStream = contentResolver.openInputStream(uri);
+            if (inputStream == null)
+                return null;
+
+            OutputStream outputStream = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buf)) > 0)
+                outputStream.write(buf, 0, len);
+
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException ignore) {
+            return null;
+        }
+
+        return file.getAbsolutePath();
+    }
+
+
 
     private void viewAllFiles() {
 
@@ -180,7 +213,7 @@ public class ModelPapers extends AppCompatActivity implements ListAdapter.Callba
                     PDFListView.removeHeaderView(v2);
                 }
 
-                v2=getLayoutInflater().inflate(R.layout.header_notes, null);
+                v2=getLayoutInflater().inflate(R.layout.header_modelpapers, null);
                 v=getLayoutInflater().inflate(R.layout.footerview, null);
                 PDFListView.addHeaderView(v2);
                 if (Common.limit != 1) {

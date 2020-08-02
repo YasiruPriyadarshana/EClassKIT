@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +57,7 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         String name=getItem(position).getvName();
-        String vurl=getItem(position).getThumbnailUrl();
+        String vurl=getItem(position).getVideourl();
 
 
         LayoutInflater inflater=LayoutInflater.from(mContext);
@@ -122,8 +123,12 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
         nameVideo.setText(name.substring(0, name.length() - 4));
 
 
-        Picasso.with(getContext()).load(vurl).fit().into(imageVideo);
-
+//        Picasso.with(getContext()).load(vurl).fit().into(imageVideo);
+        Glide.with(mContext)
+                .asBitmap()
+                .load(vurl)
+                .centerCrop()
+                .into(imageVideo);
         return convertView;
     }
 }

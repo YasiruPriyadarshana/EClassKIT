@@ -117,12 +117,10 @@ public class TeacherLogin extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        mAuth.signOut();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mAuth.signOut();
     }
 }
