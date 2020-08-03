@@ -237,6 +237,7 @@ public class quizMain extends AppCompatActivity {
                 mPager.setAdapter(adapterQuiz);
                 mTabLayout.setupWithViewPager(mPager);
 
+
             }
 
 

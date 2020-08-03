@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -42,11 +45,16 @@ import com.google.firebase.storage.UploadTask;
 import com.wonder.eclasskit.Adpter.ListAdapterEvent;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Eventobj;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import in.gauriinfotech.commons.Commons;
+
 
 import static android.app.Activity.RESULT_OK;
 
@@ -213,7 +221,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
         if (requestCode==76 && resultCode == RESULT_OK && data!=null) {
             imgUri=data.getData();
 
-            String fullPath = Commons.getPath(imgUri,getContext());
+            String fullPath = createCopyAndReturnRealPath(getContext(),imgUri);
 
 
             Toast.makeText(getContext(), "see: "+fullPath, Toast.LENGTH_SHORT).show();
@@ -233,6 +241,38 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
         } else {
             Toast.makeText(getContext(), "Please select a file", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Nullable
+    public static String createCopyAndReturnRealPath(
+            @NonNull Context context, @NonNull Uri uri) {
+        final ContentResolver contentResolver = context.getContentResolver();
+        if (contentResolver == null)
+            return null;
+
+        // Create file path inside app's data dir
+        String filePath = context.getApplicationInfo().dataDir + File.separator
+                + System.currentTimeMillis();
+
+        File file = new File(filePath);
+        try {
+            InputStream inputStream = contentResolver.openInputStream(uri);
+            if (inputStream == null)
+                return null;
+
+            OutputStream outputStream = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buf)) > 0)
+                outputStream.write(buf, 0, len);
+
+            outputStream.close();
+            inputStream.close();
+        } catch (IOException ignore) {
+            return null;
+        }
+
+        return file.getAbsolutePath();
     }
 
     private void uplodeFile(final Uri imgUri) {

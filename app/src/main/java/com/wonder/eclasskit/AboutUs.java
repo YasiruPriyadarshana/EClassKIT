@@ -48,7 +48,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 
-import in.gauriinfotech.commons.Commons;
+
 
 public class AboutUs extends AppCompatActivity {
     private ImageButton Web,Facebook,Twitter,Youtube,profilepic;
