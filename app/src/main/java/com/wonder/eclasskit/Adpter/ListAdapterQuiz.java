@@ -26,7 +26,6 @@ public class ListAdapterQuiz extends FragmentPagerAdapter {
     }
 
 
-
     @NonNull
     @Override
     public Fragment getItem(int position) {

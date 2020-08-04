@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.MainActivity;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.R;
 import com.wonder.eclasskit.Settings;
 
@@ -72,7 +73,7 @@ public class BackgroundService extends Service {
 
 
 private void run2(){
-    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("event");
+    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("event/"+ Common.uid);
     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

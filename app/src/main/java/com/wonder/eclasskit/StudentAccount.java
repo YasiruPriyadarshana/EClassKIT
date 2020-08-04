@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +44,7 @@ public class StudentAccount extends AppCompatActivity implements ListAdapterMyCo
     private  String stKey;
     private ArrayList<String> keys;
     private ListAdapterMyCourses.CallbackDelete anInterface;
+    private ArrayList<String> oldEnroll;
 
 
     @Override
@@ -55,9 +58,17 @@ public class StudentAccount extends AppCompatActivity implements ListAdapterMyCo
         enrollkey=(EditText)findViewById(R.id.enroll_txt);
 
         courses=new ArrayList<>();
+        oldEnroll=new ArrayList<>();
         CourseListView = (ListView)findViewById(R.id.listView_Courses);
 
-        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+readFile()+"/courses");
+        String refkey=Common.studentregkey;
+        if (TextUtils.isEmpty(refkey)){
+            refkey=readFile();
+        }
+
+
+
+        databaseRefCourse =FirebaseDatabase.getInstance().getReference("student/"+refkey+"/courses");
         enroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +86,7 @@ public class StudentAccount extends AppCompatActivity implements ListAdapterMyCo
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if (dataSnapshot.hasChildren()) {
                                 addCourses(dataSnapshot.child("subject").getValue().toString(), dataSnapshot.child("tname").getValue().toString(), dataSnapshot.child("id").getValue().toString());
-
+                                enrollkey.setText("");
                             }else {
                                 Toast.makeText(StudentAccount.this, "Enroll key Error", Toast.LENGTH_SHORT).show();
                             }
@@ -116,6 +127,7 @@ public class StudentAccount extends AppCompatActivity implements ListAdapterMyCo
                     courses.add(course);
                     String mkey = postSnapshot.getKey();
                     keys.add(mkey);
+                    oldEnroll.add(course.getcName()+"a"+course.getcTeacher());
                 }
 
 
@@ -134,13 +146,18 @@ public class StudentAccount extends AppCompatActivity implements ListAdapterMyCo
 
     private void addCourses(String cname,String tea,String uid){
         Course course = new Course(cname,tea,uid);
-        databaseRefCourse.child(databaseRefCourse.push().getKey()).setValue(course).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(StudentAccount.this, "Enrollment success", Toast.LENGTH_SHORT).show();
-            }
-        });
-        adapter.clear();
+
+        if (!oldEnroll.contains(cname+"a"+tea)) {
+            databaseRefCourse.child(databaseRefCourse.push().getKey()).setValue(course).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    Toast.makeText(StudentAccount.this, "Enrollment success", Toast.LENGTH_SHORT).show();
+                    adapter.clear();
+                }
+            });
+        }
+
+
     }
 
     public String readFile() {

@@ -55,9 +55,9 @@
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_background"
-        android:text="Login As Teacher Click HERE"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:background="@android:color/transparent"
+        android:text="@string/click_here_to_login_as_teacher"
+        android:textColor="#610D0D"
         android:textSize="14sp" />
 
 </LinearLayout>

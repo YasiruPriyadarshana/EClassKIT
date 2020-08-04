@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 
 public class AddNewCourse extends AppCompatActivity implements ListAdapterAddClass.CallbackDelete{
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseReference2;
     private ListView QuizHometListView;
     private ListAdapterAddClass adapter;
     private ArrayList<AddCourse> addCourses;
@@ -44,6 +45,7 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
     private EditText course,year;
     private Button save;
     private ListAdapterAddClass.CallbackDelete anInterface;
+    private String tname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +76,17 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
         course=(EditText)findViewById(R.id.sub_name_1);
         year=(EditText)findViewById(R.id.class_yr_1);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain+"/Main");
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("subject")){
                     course.setText(dataSnapshot.child("subject").getValue().toString());
                     year.setText(dataSnapshot.child("syear").getValue().toString());
+
+                }
+                if (dataSnapshot.hasChild("name")){
+                    tname =dataSnapshot.child("name").getValue().toString();
                 }
             }
             @Override
@@ -91,9 +97,15 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Teachers teachers=new Teachers("",course.getText().toString(),year.getText().toString());
-                databaseReference.setValue(teachers);
-                Toast.makeText(AddNewCourse.this, "Details added", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(course.getText().toString())){
+                    Toast.makeText(AddNewCourse.this, "Course name is empty", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(year.getText().toString())){
+                    Toast.makeText(AddNewCourse.this, "Course year is empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    Teachers teachers=new Teachers(tname,course.getText().toString(),year.getText().toString());
+                    databaseReference2.setValue(teachers);
+                    Toast.makeText(AddNewCourse.this, "Details added", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -123,11 +135,11 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
                 QuizHometListView.addFooterView(v);
 
 
-                Button updatequiz = (Button) v.findViewById(R.id.addnewcourse);
+                Button addnewcourse = (Button) v.findViewById(R.id.addnewcourse);
                 EditText name=(EditText)v.findViewById(R.id.sub_name);
                 EditText year=(EditText)v.findViewById(R.id.class_year);
 
-                updatequiz.setOnClickListener(new View.OnClickListener() {
+                addnewcourse.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String name_st=name.getText().toString();

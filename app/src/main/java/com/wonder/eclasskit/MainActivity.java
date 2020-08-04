@@ -76,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         if (Common.limit == 1) {
-        MenuItem item = menu.findItem(R.id.action_addclass);
-        item.setVisible(false);   //hide it
+            MenuItem item = menu.findItem(R.id.action_addclass);
+            item.setVisible(false);   //hide it
+        }else {
+            MenuItem item = menu.findItem(R.id.action_user);
+            item.setVisible(false);
         }
         return true;
     }

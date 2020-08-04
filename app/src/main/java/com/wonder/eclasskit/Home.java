@@ -1,6 +1,8 @@
 package com.wonder.eclasskit;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -94,7 +96,8 @@ public class Home extends Fragment {
                 startActivity(intent);
             }
         });
-        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain);
+ //show emrollment key
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain+"/Main");
         if (TextUtils.isEmpty(redeem.getText().toString()) || i==1){
             databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -110,7 +113,6 @@ public class Home extends Fragment {
                         String setkey = dataSnapshot.child("sredeem").getValue().toString();
                         tname=dataSnapshot.child("name").getValue().toString();
                         redeem.setText(setkey);
-
                     }
 
                 }
@@ -137,22 +139,50 @@ public class Home extends Fragment {
                         databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                subject = dataSnapshot.child("subject").getValue().toString();
-                                year = dataSnapshot.child("syear").getValue().toString();
-                                tname =  dataSnapshot.child("name").getValue().toString();
-                                enroll = new Enroll(teacher, tname, subject, year);
-                                if (dataSnapshot.hasChild("sredeem")){
-                                    delkey =  dataSnapshot.child("sredeem").getValue().toString();
-                                    databaseReference.child(delkey).setValue(null);
-                                }
-                                databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        subject="";
-                                        Toast.makeText(getActivity(), "Enroll key copied", Toast.LENGTH_SHORT).show();
+                                if (!dataSnapshot.hasChild("name")){
+                                    AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
+                                    adb.setMessage("Please set teacher name");
+                                    adb.setPositiveButton("Set now", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent1=new Intent(getActivity(),AboutUs.class);
+                                            startActivity(intent1);
+                                        }
+                                    });
+                                    adb.setNegativeButton("Cancel",null);
+
+                                    adb.show();
+                                }else if (!dataSnapshot.hasChild("subject")){
+                                    AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
+                                    adb.setMessage("Please set subject name");
+                                    adb.setPositiveButton("Set now", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent2=new Intent(getActivity(),AddNewCourse.class);
+                                            startActivity(intent2);
+                                        }
+                                    });
+                                    adb.setNegativeButton("Cancel",null);
+
+                                    adb.show();
+                                }else {
+                                    subject = dataSnapshot.child("subject").getValue().toString();
+                                    year = dataSnapshot.child("syear").getValue().toString();
+                                    tname = dataSnapshot.child("name").getValue().toString();
+                                    enroll = new Enroll(teacher, tname, subject, year);
+                                    if (dataSnapshot.hasChild("sredeem")) {
+                                        delkey = dataSnapshot.child("sredeem").getValue().toString();
+                                        databaseReference.child(delkey).setValue(null);
                                     }
-                                });
-                                databaseRfTeacher.child("sredeem").setValue(redeemcd);
+                                    databaseReference.child(redeemcd).setValue(enroll).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            subject = "";
+                                            Toast.makeText(getActivity(), "Enroll key copied", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    databaseRfTeacher.child("sredeem").setValue(redeemcd);
+                                }
                             }
 
                             @Override

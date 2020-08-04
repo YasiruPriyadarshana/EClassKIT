@@ -12,4 +12,7 @@ public class Common {
     public static String repname;
     public static String studentId;
 
+    public static String studentregname;
+    public static String studentregemail;
+    public static String studentregkey;
 }

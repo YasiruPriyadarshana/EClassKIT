@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Student;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class FirebaseDatabaseHelper {
 
     public void addstudent(Student student,final DataStatus dataStatus){
         String key = mRefarenceStudents.push().getKey();
-
+        Common.studentregkey=key;
         mRefarenceStudents.child(key).setValue(student)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

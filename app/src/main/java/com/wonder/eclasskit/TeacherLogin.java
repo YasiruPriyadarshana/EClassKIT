@@ -96,6 +96,7 @@ public class TeacherLogin extends AppCompatActivity {
 
                                 AlertDialog.Builder adb = new AlertDialog.Builder(TeacherLogin.this);
                                 adb.setMessage("Check Your Email For Verification");
+                                mAuth.signOut();
                                 adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -114,13 +115,5 @@ public class TeacherLogin extends AppCompatActivity {
                 });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 }

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.wonder.eclasskit.Firebase.FirebaseDatabaseHelper;
+import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Student;
 
 import java.io.BufferedReader;
@@ -40,7 +41,7 @@ public class FragmentClass extends Fragment {
         view = inflater.inflate(R.layout.fragment_fragment_class, container, false);
 
         wirteFile();
-        readFileAndFirebase();
+        WriteFileAndFirebase();
 
         Intent intent = new Intent(getActivity(), StudentAccount.class);
         getActivity().startActivity(intent);
@@ -81,8 +82,9 @@ public class FragmentClass extends Fragment {
         }
     }
 
-    public void readFileAndFirebase(){
-        try {
+    public void WriteFileAndFirebase(){
+//        try {
+            /*
             FileInputStream fileInputStream = requireActivity().openFileInput("apprequirement.txt");
             InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
 
@@ -96,12 +98,10 @@ public class FragmentClass extends Fragment {
             }
             String str =stringBuffer.toString();
             String[] array = str.split(",");
+*/
+            Student student=new Student(Common.studentregname,Common.studentregemail);
 
-            Student student=new Student();
-            student.setEmail(array[2]);
-            student.setName(array[0]);
-            student.setGrade(array[3]);
-            student.setMobile_number(array[1]);
+
 
 
 
@@ -114,7 +114,7 @@ public class FragmentClass extends Fragment {
                 @Override
                 public void DataIsInserted(String key) {
                     wirteFile(key);
-//                    Toast.makeText(getContext(), "The student record has been inserted", Toast.LENGTH_SHORT).show();
+                    wirteFileAll();
                 }
 
                 @Override
@@ -134,15 +134,11 @@ public class FragmentClass extends Fragment {
 //            Toast.makeText(getContext(),"text Saved",Toast.LENGTH_SHORT).show();
 //            FileOutputStream fileOutputStream = requireActivity().openFileOutput("appdata.txt",Context.MODE_APPEND);
 //            fileOutputStream.write(buffer1.toString().getBytes());
-
-
-
-
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+//        } catch (FileNotFoundException e){
+//            e.printStackTrace();
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
     }
 
     private void wirteFile(String textToSave) {
@@ -161,7 +157,20 @@ public class FragmentClass extends Fragment {
             e.printStackTrace();
         }
     }
+    private void wirteFileAll() {
+        String textToSave = Common.studentregname+",123,"+Common.studentregemail;
 
+        try {
+            FileOutputStream fileOutputStream = requireActivity().openFileOutput("apprequirement.txt", Context.MODE_APPEND);
+            fileOutputStream.write(textToSave.getBytes());
+            fileOutputStream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

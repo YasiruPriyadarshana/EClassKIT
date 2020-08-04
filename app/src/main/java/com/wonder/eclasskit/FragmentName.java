@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.wonder.eclasskit.Object.Common;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -83,7 +84,8 @@ public class FragmentName extends Fragment {
                 bt_Name.setEnabled(false);
                 int length=Name.getText().length();
                 if (length>3){
-                wirteFile();
+
+                Common.studentregname=Name.getText().toString();;
 
                 FragmentTransaction ft = requireActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.fragmentplace, new FragmentEmail());
@@ -98,7 +100,7 @@ public class FragmentName extends Fragment {
 
         return view;
     }
-
+/*
     private void wirteFile() {
 
         String textToSave = Name.getText().toString();
@@ -111,13 +113,12 @@ public class FragmentName extends Fragment {
             fileOutputStream.write((textToSave + space + num + space).getBytes());
             fileOutputStream.close();
 
-//            Toast.makeText(getActivity(), "text Saved", Toast.LENGTH_SHORT).show();
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+*/
 }
