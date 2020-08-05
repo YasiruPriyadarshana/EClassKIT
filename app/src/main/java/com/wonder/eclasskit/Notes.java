@@ -69,6 +69,7 @@ public class Notes extends AppCompatActivity implements ListAdapter.CallbackDele
     private ArrayList<String> keys;
     private int set;
     private ListAdapter.CallbackDelete anInterface;
+    private int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +192,9 @@ public class Notes extends AppCompatActivity implements ListAdapter.CallbackDele
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    adapter.clear();
+                }
                 keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     UploadPDF uploadPDF = postSnapshot.getValue(UploadPDF.class);
@@ -242,6 +246,7 @@ public class Notes extends AppCompatActivity implements ListAdapter.CallbackDele
                     }
                 });
                 PDFListView.setAdapter(adapter);
+                i=1;
             }
 
             @Override

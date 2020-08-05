@@ -57,7 +57,7 @@ import java.util.ArrayList;
 
 public class Comments extends AppCompatActivity implements ListAdapterComments.CallbackInterface {
     private DatabaseReference databaseReference,databaseRfTeacher;
-    ListView CommentListView;
+    private ListView CommentListView;
     private ArrayList<CommentM> commentMS;
     private ListAdapterComments adapter;
     private View v,v2;
@@ -73,7 +73,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
     private ListAdapterComments.CallbackInterface anInterface;
     private ValueEventListener valueEventListener;
     private int cmtSort=2;
-    int i=0;
+    private int i=0;
 
 
     @Override

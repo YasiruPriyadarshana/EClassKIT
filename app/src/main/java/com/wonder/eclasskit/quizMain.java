@@ -161,24 +161,26 @@ public class quizMain extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
                         Quizobj quizobj=uploadQuizS.get(post);
+                        Toast.makeText(quizMain.this, "p: "+post, Toast.LENGTH_SHORT).show();
+//                        if (!TextUtils.isEmpty(quizobj.getUriimg())) {
+//                            StorageReference quizRef = FirebaseStorage.getInstance().getReferenceFromUrl(quizobj.getUriimg());
+//                            quizRef.delete();
+//                        }
+//
+                        uploadQuizS.remove(post);
+                        adapter.notifyDataSetChanged();
+                        adapterQuiz.deletePage(post);
 
-                        if (!TextUtils.isEmpty(quizobj.getUriimg())) {
-                            StorageReference quizRef = FirebaseStorage.getInstance().getReferenceFromUrl(quizobj.getUriimg());
-                            quizRef.delete();
-                        }
-
-                        mTabLayout.removeAllTabs();
-                        mPager.removeAllViews();
-                        uploadQuizS.clear();
-
-
-                        databaseReference.child(keys.get(post)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(quizMain.this, "Long press deleted", Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
+//
+//
+//
+//                        databaseReference.child(keys.get(post)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                Toast.makeText(quizMain.this, "Long press deleted", Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                        });
 
                     }
 
@@ -210,7 +212,7 @@ public class quizMain extends AppCompatActivity {
 
     private void viewAllFiles() {
         uploadQuizS = new ArrayList<>();
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 keys = new ArrayList<>();
@@ -236,7 +238,7 @@ public class quizMain extends AppCompatActivity {
                 adapterQuiz= new ListAdapterQuiz(getSupportFragmentManager(),1,fragmentlist);
                 mPager.setAdapter(adapterQuiz);
                 mTabLayout.setupWithViewPager(mPager);
-
+                mPager.setSaveFromParentEnabled(false);
 
             }
 

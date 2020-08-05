@@ -1,15 +1,15 @@
 package com.wonder.eclasskit.Object;
 
-public class Timetable {
+public class TimetableObj {
     private String date;
     private String grade;
     private String time;
     private String institute;
     private String gcalss;
 
-    public Timetable() {
+    public TimetableObj() {
     }
-    public Timetable(String date, String grade, String time, String institute, String gcalss) {
+    public TimetableObj(String date, String grade, String time, String institute, String gcalss) {
         this.date = date;
         this.grade = grade;
         this.time = time;

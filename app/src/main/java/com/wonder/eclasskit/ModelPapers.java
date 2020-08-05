@@ -70,6 +70,7 @@ public class ModelPapers extends AppCompatActivity implements ListAdapter.Callba
     private ArrayList<String> keys;
     private int set;
     private ListAdapter.CallbackDelete anInterface;
+    private int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +195,9 @@ public class ModelPapers extends AppCompatActivity implements ListAdapter.Callba
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    adapter.clear();
+                }
                 keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
                     UploadPDF uploadPDF = postSnapshot.getValue(UploadPDF.class);
@@ -244,6 +248,7 @@ public class ModelPapers extends AppCompatActivity implements ListAdapter.Callba
                     }
                 });
                 PDFListView.setAdapter(adapter);
+                i=1;
             }
 
             @Override

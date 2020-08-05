@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+
 
 import com.wonder.eclasskit.FragmentQuestion;
 
@@ -17,7 +19,8 @@ public class ListAdapterQuiz extends FragmentPagerAdapter {
     private int mCurrentPosition = -1;
     private static final String TAG="ListAdapterQuiz";
     private Context mContext;
-    List<FragmentQuestion> fragmentQuestions;
+    private List<FragmentQuestion> fragmentQuestions;
+    private int change;
 
     public ListAdapterQuiz(@NonNull FragmentManager fm, int behavior, List<FragmentQuestion> fragmentQuestions) {
         super(fm, behavior);
@@ -55,6 +58,19 @@ public class ListAdapterQuiz extends FragmentPagerAdapter {
                 pager.measureCurrentView(fragment.getView());
             }
         }
+    }
+
+
+
+    public void deletePage(int position)
+    {
+        fragmentQuestions.remove(position-1);
+        notifyDataSetChanged();
+        change=position;
+    }
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return PagerAdapter.POSITION_NONE;
     }
 
 

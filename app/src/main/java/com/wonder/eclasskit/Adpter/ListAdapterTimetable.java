@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 
 import com.wonder.eclasskit.Firebase.FirebaseDatabaseHelper2;
 import com.wonder.eclasskit.Object.Common;
-import com.wonder.eclasskit.Object.Timetable;
+import com.wonder.eclasskit.Object.TimetableObj;
 import com.wonder.eclasskit.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
     private CallbackInterface2 mCallback;
     private int mResource;
     private ArrayList<String> keys;
-    private ArrayList<Timetable> object,original;
+    private ArrayList<TimetableObj> object,original;
     private CustomFilter cm;
 
 
@@ -35,7 +35,7 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
         void onHandleSelection2();
     }
 
-    public ListAdapterTimetable(Context context, int resource, ArrayList<Timetable> objects,ArrayList<String> keys,CallbackInterface2 mCallback) {
+    public ListAdapterTimetable(Context context, int resource, ArrayList<TimetableObj> objects, ArrayList<String> keys, CallbackInterface2 mCallback) {
         mContext=context;
         mResource=resource;
         this.mCallback=mCallback;
@@ -104,7 +104,7 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
                                 mCallback.onHandleSelection2();
                                 new FirebaseDatabaseHelper2().deleteClassDetails(key, new FirebaseDatabaseHelper2.DataStatus() {
                                     @Override
-                                    public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
+                                    public void DataIsLoaded(List<TimetableObj> timetables, List<String> keys) {
 
                                     }
 
@@ -160,11 +160,11 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
 
             if (constraint!=null && constraint.length()>0) {
                 constraint = constraint.toString().toUpperCase();
-                ArrayList<Timetable> filters = new ArrayList<>();
+                ArrayList<TimetableObj> filters = new ArrayList<>();
 
                 for (int i = 0; i < object.size(); i++) {
                     if (object.get(i).getInstitute().toUpperCase().contains(constraint)) {
-                        Timetable singlerow = new Timetable(object.get(i).getDate(), object.get(i).getGrade(), object.get(i).getTime(), object.get(i).getInstitute(), object.get(i).getGcalss());
+                        TimetableObj singlerow = new TimetableObj(object.get(i).getDate(), object.get(i).getGrade(), object.get(i).getTime(), object.get(i).getInstitute(), object.get(i).getGcalss());
                         filters.add(singlerow);
                     }
                 }
@@ -179,7 +179,7 @@ public class ListAdapterTimetable extends BaseAdapter implements Filterable{
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            original=(ArrayList<Timetable>)results.values;
+            original=(ArrayList<TimetableObj>)results.values;
             notifyDataSetChanged();
         }
     }

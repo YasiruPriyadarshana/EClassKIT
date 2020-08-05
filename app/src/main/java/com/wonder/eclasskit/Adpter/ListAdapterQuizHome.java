@@ -71,6 +71,11 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
                 PopupMenu popup = new PopupMenu(v.getContext(),v);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.memu_popup, popup.getMenu());
+                if (Common.limit == 1) {
+                    MenuItem item = popup.getMenu().findItem(R.id.action_delete);
+                    item.setVisible(false);   //hide it
+                }
+
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {

@@ -31,8 +31,9 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
     private ListAdapterQuizHome adapter;
     private ArrayList<QuizHm> quizHms;
     private View v;
-    ArrayList<String> keys,times;
+    private ArrayList<String> keys,times;
     private ListAdapterQuizHome.CallbackDelete anInterface;
+    private int i=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,9 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    adapter.clear();
+                }
                 keys = new ArrayList<>();
                 times=new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -105,7 +109,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
                 }
 
                 QuizHometListView.setAdapter(adapter);
-
+                i=1;
 
             }
 

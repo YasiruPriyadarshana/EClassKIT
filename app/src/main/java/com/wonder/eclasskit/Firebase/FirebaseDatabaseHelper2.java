@@ -6,7 +6,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.wonder.eclasskit.Object.Common;
-import com.wonder.eclasskit.Object.Timetable;
+import com.wonder.eclasskit.Object.TimetableObj;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,13 @@ public class FirebaseDatabaseHelper2 {
     private FirebaseDatabase tDatabase;
     private DatabaseReference tRefarenceStudents;
 
-    private List<Timetable> timetables= new ArrayList<>();
+    private List<TimetableObj> timetableObjs = new ArrayList<>();
     Uri url2;
 
 
 
     public interface  DataStatus{
-        void DataIsLoaded(List<Timetable> timetables, List<String> keys);
+        void DataIsLoaded(List<TimetableObj> timetableObjs, List<String> keys);
         void DataIsInserted();
         void DataIsUpdated();
         void DataIsDeleted();
@@ -34,9 +34,9 @@ public class FirebaseDatabaseHelper2 {
 
 
 
-    public void addClassDetails(Timetable timetable, final FirebaseDatabaseHelper2.DataStatus dataStatus){
-        String day=timetable.getDate();
-        String grade=timetable.getGrade();
+    public void addClassDetails(TimetableObj timetableObj, final FirebaseDatabaseHelper2.DataStatus dataStatus){
+        String day= timetableObj.getDate();
+        String grade= timetableObj.getGrade();
         if (grade.equals("Grade 9 (English Medium)")){
             grade="1_";
         }else if (grade.equals("Grade 10(English Medium)")) {
@@ -61,7 +61,7 @@ public class FirebaseDatabaseHelper2 {
             day="7";
         }
         String key = tRefarenceStudents.push().getKey();
-        tRefarenceStudents.child(day+grade+key).setValue(timetable)
+        tRefarenceStudents.child(day+grade+key).setValue(timetableObj)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

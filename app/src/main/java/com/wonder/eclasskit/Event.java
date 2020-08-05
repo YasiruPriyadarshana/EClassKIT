@@ -75,6 +75,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
     private ListAdapterEvent.CallbackInterfaceE anInterface;
     private int day,month,year,hour,minute;
     private int dayFinal,monthFinal,yearFinal,hourFinal,minuteFinal;
+    private int i=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,6 +101,9 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    adapter.clear();
+                }
                 ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Eventobj uploadimg = postSnapshot.getValue(Eventobj.class);
@@ -191,7 +195,7 @@ public class Event extends Fragment implements ListAdapterEvent.CallbackInterfac
                 }
 
                 EventListView.setAdapter(adapter);
-
+                i=1;
             }
 
             @Override

@@ -115,6 +115,8 @@ public class addQuestions extends AppCompatActivity {
                     Toast.makeText(addQuestions.this, "fill details", Toast.LENGTH_SHORT).show();
                 }else {
                     uplodeFile(imgUri);
+                    imgUri=null;
+                    selectimage.setImageBitmap(null);
                 }
             }
         });

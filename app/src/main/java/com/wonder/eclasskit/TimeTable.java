@@ -23,16 +23,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.wonder.eclasskit.Adpter.ListAdapterTimetable;
 import com.wonder.eclasskit.Firebase.FirebaseDatabaseHelper2;
 import com.wonder.eclasskit.Object.Common;
-import com.wonder.eclasskit.Object.Timetable;
+import com.wonder.eclasskit.Object.TimetableObj;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Class extends AppCompatActivity implements ListAdapterTimetable.CallbackInterface2{
+public class TimeTable extends AppCompatActivity implements ListAdapterTimetable.CallbackInterface2{
 
     private DatabaseReference databaseReference;
-    private ArrayList<Timetable> timetables;
+    private ArrayList<TimetableObj> timetableObjs;
     private ListView TimetableListView;
     private View v,v1,v2;
     private Spinner Category_day;
@@ -44,11 +44,11 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
     private ListAdapterTimetable.CallbackInterface2 anInterface;
     private int hour,minute,hour2,minute2;
     private int hourFinal,minuteFinal,hourFinal2,minuteFinal2;
-
+    private int i=0;
     private ListAdapterTimetable adapter;
-    String tmp,ampm,ampm2;;
-    int e1,e2,e3,e4,e5,e6,e7=0;
-    ArrayList<Timetable> t1,t2,t3,t4,t5,t6,t7;
+    private String tmp,ampm,ampm2;;
+    private int e1,e2,e3,e4,e5,e6,e7=0;
+    private ArrayList<TimetableObj> t1,t2,t3,t4,t5,t6,t7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
 
         databaseReference = FirebaseDatabase.getInstance().getReference("timetable/"+ Common.uid);
         TimetableListView = (ListView) findViewById(R.id.recyclerviewclass);
-        timetables = new ArrayList<>();
+        timetableObjs = new ArrayList<>();
 
         anInterface=this;
 
@@ -80,9 +80,13 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (i==1){
+                    timetableObjs.clear();
+                    adapter.notifyDataSetChanged();
+                }
                 ArrayList<String> keys = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Timetable ttable = postSnapshot.getValue(Timetable.class);
+                    TimetableObj ttable = postSnapshot.getValue(TimetableObj.class);
 //                    make list in order
                     tmp = ttable.getDate();
                     String mkey = postSnapshot.getKey();
@@ -122,12 +126,12 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
                         }
                         e7 = 7;
                     }
-                    timetables.add(ttable);
+                    timetableObjs.add(ttable);
                     keys.add(mkey);
                 }
 
 
-                adapter = new ListAdapterTimetable(Class.this, R.layout.itemclass, timetables, keys,anInterface);
+                adapter = new ListAdapterTimetable(TimeTable.this, R.layout.itemclass, timetableObjs, keys,anInterface);
 
                 if (TimetableListView.getFooterViewsCount() > 0) {
                     TimetableListView.removeFooterView(v);
@@ -159,7 +163,7 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
                     public void onClick(View v) {
 
                         Calendar c=Calendar.getInstance();
-                        TimePickerDialog timePickerDialog=new TimePickerDialog(Class.this, new TimePickerDialog.OnTimeSetListener() {
+                        TimePickerDialog timePickerDialog=new TimePickerDialog(TimeTable.this, new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 hourFinal=hourOfDay;
@@ -171,7 +175,7 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
                                 minuteFinal=minute;
 
                                 Calendar c=Calendar.getInstance();
-                                TimePickerDialog timePickerDialog=new TimePickerDialog(Class.this, new TimePickerDialog.OnTimeSetListener() {
+                                TimePickerDialog timePickerDialog=new TimePickerDialog(TimeTable.this, new TimePickerDialog.OnTimeSetListener() {
                                     @Override
                                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                         hourFinal2=hourOfDay;
@@ -198,30 +202,30 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
                 Addclassdet.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(Class.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
-                        Timetable timetable = new Timetable();
-                        timetable.setDate(Category_day.getSelectedItem().toString());
-                        timetable.setGrade(Category_grade.getSelectedItem().toString());
-                        timetable.setTime(time.getText().toString());
-                        timetable.setInstitute(Category_institute.getSelectedItem().toString());
-                        timetable.setGcalss(Category_class.getSelectedItem().toString());
+                        Toast.makeText(TimeTable.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
+                        TimetableObj timetableObj = new TimetableObj();
+                        timetableObj.setDate(Category_day.getSelectedItem().toString());
+                        timetableObj.setGrade(Category_grade.getSelectedItem().toString());
+                        timetableObj.setTime(time.getText().toString());
+                        timetableObj.setInstitute(Category_institute.getSelectedItem().toString());
+                        timetableObj.setGcalss(Category_class.getSelectedItem().toString());
 
 
                         if (time.getText().toString().isEmpty()) {
-                            Toast.makeText(Class.this, "Enter time", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TimeTable.this, "Enter time", Toast.LENGTH_SHORT).show();
                         } else {
 
 
-                            new FirebaseDatabaseHelper2().addClassDetails(timetable, new FirebaseDatabaseHelper2.DataStatus() {
+                            new FirebaseDatabaseHelper2().addClassDetails(timetableObj, new FirebaseDatabaseHelper2.DataStatus() {
                                 @Override
-                                public void DataIsLoaded(List<Timetable> timetables, List<String> keys) {
+                                public void DataIsLoaded(List<TimetableObj> timetableObjs, List<String> keys) {
 
                                 }
 
                                 @Override
                                 public void DataIsInserted() {
 
-                                    Toast.makeText(Class.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TimeTable.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -234,7 +238,7 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
 
                                 }
                             });
-                            timetables.clear();
+                            timetableObjs.clear();
                             adapter.notifyDataSetChanged();
                             e1 = 0;
                             e2 = 0;
@@ -268,7 +272,7 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
                 });
 
                 TimetableListView.setAdapter(adapter);
-
+                i=1;
             }
 
 
@@ -283,7 +287,7 @@ public class Class extends AppCompatActivity implements ListAdapterTimetable.Cal
 
     @Override
     public void onHandleSelection2() {
-        timetables.clear();
+        timetableObjs.clear();
         adapter.notifyDataSetChanged();
         e1 = 0;
         e2 = 0;
