@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -13,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -23,12 +20,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -42,15 +39,12 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Teachers;
-import com.wonder.eclasskit.Object.UploadPDF;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URL;
 
 
-
-public class AboutUs extends AppCompatActivity {
+public class AboutTeacher extends AppCompatActivity {
     private ImageButton Web,Facebook,Twitter,Youtube,profilepic;
     private Button setname,setdesc;
     private DatabaseReference databaseReference;
@@ -87,7 +81,7 @@ public class AboutUs extends AppCompatActivity {
                     i.setData(Uri.parse(weburl));
                     startActivity(i);
                 }else {
-                    Toast.makeText(AboutUs.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AboutTeacher.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -101,7 +95,7 @@ public class AboutUs extends AppCompatActivity {
                     i.setData(Uri.parse(fburl));
                     startActivity(i);
                 }else {
-                    Toast.makeText(AboutUs.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AboutTeacher.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -115,7 +109,7 @@ public class AboutUs extends AppCompatActivity {
                     i.setData(Uri.parse(twitterurl));
                     startActivity(i);
                 }else {
-                    Toast.makeText(AboutUs.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AboutTeacher.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -129,7 +123,7 @@ public class AboutUs extends AppCompatActivity {
                     i.setData(Uri.parse(youtubeurl));
                     startActivity(i);
                 }else {
-                    Toast.makeText(AboutUs.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AboutTeacher.this, "Not Set By Teacher", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -141,10 +135,10 @@ public class AboutUs extends AppCompatActivity {
             teacherimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (ContextCompat.checkSelfPermission(AboutUs.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(AboutTeacher.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         selectIMG();
                     } else {
-                        ActivityCompat.requestPermissions(AboutUs.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                        ActivityCompat.requestPermissions(AboutTeacher.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
                     }
                 }
             });
@@ -165,12 +159,14 @@ public class AboutUs extends AppCompatActivity {
                                 Uri p = uri.getResult();
                                 databaseReference.child("imgurl").setValue(p.toString());
 
-                                Toast.makeText(AboutUs.this, "Profile uploaded", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AboutTeacher.this, "Profile uploaded", Toast.LENGTH_SHORT).show();
+                                data1=null;
+                                settodb=false;
                             }
                         });
 
                     } else{
-                        Toast.makeText(AboutUs.this, "Select picture", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AboutTeacher.this, "Select picture", Toast.LENGTH_SHORT).show();
                     }
                     teacherimage.setClickable(true);
                     return true;
@@ -184,7 +180,7 @@ public class AboutUs extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
-                            AboutUs.this);
+                            AboutTeacher.this);
                     adb.setMessage("Change Teacher name");
                     View v1= getLayoutInflater().inflate(R.layout.textfield, null);
                     adb.setView(v1);
@@ -205,7 +201,7 @@ public class AboutUs extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
-                            AboutUs.this);
+                            AboutTeacher.this);
                     adb.setMessage("Change Teacher description");
                     View v1= getLayoutInflater().inflate(R.layout.textfield, null);
                     adb.setView(v1);
@@ -228,7 +224,7 @@ public class AboutUs extends AppCompatActivity {
                 @Override
                 public boolean onLongClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
-                            AboutUs.this);
+                            AboutTeacher.this);
                     adb.setMessage("Set Youtube Link");
                     View v1= getLayoutInflater().inflate(R.layout.textfield, null);
                     adb.setView(v1);
@@ -237,7 +233,11 @@ public class AboutUs extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String val=e.getText().toString();
-                            databaseReference.child("youtube").setValue(val);
+                            if (URLUtil.isValidUrl(val)){
+                            databaseReference.child("youtube").setValue(val);}
+                            else {
+                                Toast.makeText(AboutTeacher.this, "Not a URL", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                     adb.setNegativeButton("No",null);
@@ -251,7 +251,7 @@ public class AboutUs extends AppCompatActivity {
                 @Override
                 public boolean onLongClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
-                            AboutUs.this);
+                            AboutTeacher.this);
                     adb.setMessage("Set Facebook Link");
                     View v1= getLayoutInflater().inflate(R.layout.textfield, null);
                     adb.setView(v1);
@@ -260,7 +260,11 @@ public class AboutUs extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String val=e.getText().toString();
-                            databaseReference.child("facebook").setValue(val);
+                            if (URLUtil.isValidUrl(val)){
+                            databaseReference.child("facebook").setValue(val);}
+                            else {
+                                Toast.makeText(AboutTeacher.this, "Not a URL", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                     adb.setNegativeButton("No",null);
@@ -273,7 +277,7 @@ public class AboutUs extends AppCompatActivity {
                 @Override
                 public boolean onLongClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
-                            AboutUs.this);
+                            AboutTeacher.this);
                     adb.setMessage("Set Twitter Link");
                     View v1= getLayoutInflater().inflate(R.layout.textfield, null);
                     adb.setView(v1);
@@ -282,7 +286,11 @@ public class AboutUs extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String val=e.getText().toString();
-                            databaseReference.child("twitter").setValue(val);
+                            if (URLUtil.isValidUrl(val)){
+                            databaseReference.child("twitter").setValue(val);}
+                            else {
+                                Toast.makeText(AboutTeacher.this, "Not a URL", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                     adb.setNegativeButton("No",null);
@@ -295,7 +303,7 @@ public class AboutUs extends AppCompatActivity {
                 @Override
                 public boolean onLongClick(View v) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
-                            AboutUs.this);
+                            AboutTeacher.this);
                     adb.setMessage("Set Web URL");
                     View v1 = getLayoutInflater().inflate(R.layout.textfield, null);
                     adb.setView(v1);
@@ -304,7 +312,11 @@ public class AboutUs extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String val = e.getText().toString();
-                            databaseReference.child("web").setValue(val);
+                            if (URLUtil.isValidUrl(val)){
+                            databaseReference.child("web").setValue(val);}
+                            else {
+                                Toast.makeText(AboutTeacher.this, "Not a URL", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                     adb.setNegativeButton("No", null);
@@ -324,6 +336,7 @@ public class AboutUs extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Teachers value = dataSnapshot.getValue(Teachers.class);
+                
                 fburl = value.getFacebook();
                 youtubeurl = value.getYoutube();
                 twitterurl = value.getTwitter();
@@ -331,7 +344,7 @@ public class AboutUs extends AppCompatActivity {
                 String url = value.getImgurl();
 
                 if (!TextUtils.isEmpty(url)) {
-                    Picasso.with(AboutUs.this).load(url).into(teacherimage);
+                    Picasso.with(AboutTeacher.this).load(url).into(teacherimage);
                 }
 
                 if (!TextUtils.isEmpty(value.getName())) {
@@ -372,7 +385,7 @@ public class AboutUs extends AppCompatActivity {
 
 
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(AboutUs.this.getContentResolver(),imgUri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(AboutTeacher.this.getContentResolver(),imgUri);
                 Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
                 BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
                 Paint paint = new Paint();
@@ -391,7 +404,7 @@ public class AboutUs extends AppCompatActivity {
                 settodb=true;
 
             }catch (IOException e){
-                Toast.makeText(AboutUs.this, "Error: "+e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AboutTeacher.this, "Error: "+e, Toast.LENGTH_SHORT).show();
             }
 
 

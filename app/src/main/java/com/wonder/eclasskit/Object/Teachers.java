@@ -16,11 +16,6 @@ public class Teachers {
     public Teachers() {
     }
 
-    public Teachers(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
-
     public Teachers(String name, String email, String desc, String facebook, String twitter, String youtube, String web, String subject, String syear, String imgurl) {
         this.name = name;
         this.email = email;
@@ -32,6 +27,11 @@ public class Teachers {
         this.subject = subject;
         this.syear = syear;
         this.imgurl = imgurl;
+    }
+
+    public Teachers(String name, String email) {
+        this.name = name;
+        this.email = email;
     }
 
     public String getName() {

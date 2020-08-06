@@ -26,8 +26,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="DAY	"
+            android:text="DAY         	  "
             android:textColor="#3B447A"
             android:textColorHighlight="#3F51B5"
             android:textStyle="bold" />
@@ -51,8 +50,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="GRADE"
+            android:text="GRADE       "
             android:textColor="#3B447A"
             android:textColorHighlight="#3F51B5"
             android:textStyle="bold" />
@@ -76,8 +74,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TIME"
+            android:text="TIME           "
             android:textColor="#3B447A"
             android:textColorHighlight="#3F51B5"
             android:textStyle="bold" />
@@ -102,19 +99,20 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="INSTITUTE"
             android:textColor="#3B447A"
             android:textColorHighlight="#3F51B5"
             android:textStyle="bold" />
 
-        <Spinner
+        <EditText
             android:id="@+id/category_institute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="17dp"
             android:layout_weight="1"
-            android:entries="@array/institute_categories"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -127,8 +125,7 @@
             android:id="@+id/title_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="CLASS"
+            android:text="CLASS        "
             android:textColor="#3B447A"
             android:textColorHighlight="#3F51B5"
             android:textStyle="bold" />

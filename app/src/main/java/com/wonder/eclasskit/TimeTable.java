@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,7 @@ public class TimeTable extends AppCompatActivity implements ListAdapterTimetable
     private View v,v1,v2;
     private Spinner Category_day;
     private Spinner Category_grade;
-    private Spinner Category_institute;
+    private EditText Category_institute;
     private Spinner Category_class;
     private Button Addclassdet,sort,time;
     private EditText search;
@@ -150,7 +151,7 @@ public class TimeTable extends AppCompatActivity implements ListAdapterTimetable
 
                 Category_day = (Spinner) v.findViewById(R.id.category_day);
                 Category_grade = (Spinner) v.findViewById(R.id.category_grade);
-                Category_institute = (Spinner) v.findViewById(R.id.category_institute);
+                Category_institute = (EditText) v.findViewById(R.id.category_institute);
                 Category_class = (Spinner) v.findViewById(R.id.category_class);
                 Addclassdet = (Button) v.findViewById(R.id.addclassdet);
 
@@ -202,55 +203,58 @@ public class TimeTable extends AppCompatActivity implements ListAdapterTimetable
                 Addclassdet.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(TimeTable.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
-                        TimetableObj timetableObj = new TimetableObj();
-                        timetableObj.setDate(Category_day.getSelectedItem().toString());
-                        timetableObj.setGrade(Category_grade.getSelectedItem().toString());
-                        timetableObj.setTime(time.getText().toString());
-                        timetableObj.setInstitute(Category_institute.getSelectedItem().toString());
-                        timetableObj.setGcalss(Category_class.getSelectedItem().toString());
-
-
-                        if (time.getText().toString().isEmpty()) {
-                            Toast.makeText(TimeTable.this, "Enter time", Toast.LENGTH_SHORT).show();
+                        if (TextUtils.isEmpty(Category_institute.getText().toString())) {
+                            Toast.makeText(TimeTable.this, "Institute is empty", Toast.LENGTH_SHORT).show();
                         } else {
+                            Toast.makeText(TimeTable.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
+                            TimetableObj timetableObj = new TimetableObj();
+                            timetableObj.setDate(Category_day.getSelectedItem().toString());
+                            timetableObj.setGrade(Category_grade.getSelectedItem().toString());
+                            timetableObj.setTime(time.getText().toString());
+                            timetableObj.setInstitute(Category_institute.getText().toString());
+                            timetableObj.setGcalss(Category_class.getSelectedItem().toString());
 
 
-                            new FirebaseDatabaseHelper2().addClassDetails(timetableObj, new FirebaseDatabaseHelper2.DataStatus() {
-                                @Override
-                                public void DataIsLoaded(List<TimetableObj> timetableObjs, List<String> keys) {
+                            if (time.getText().toString().isEmpty()) {
+                                Toast.makeText(TimeTable.this, "Enter time", Toast.LENGTH_SHORT).show();
+                            } else {
 
-                                }
 
-                                @Override
-                                public void DataIsInserted() {
+                                new FirebaseDatabaseHelper2().addClassDetails(timetableObj, new FirebaseDatabaseHelper2.DataStatus() {
+                                    @Override
+                                    public void DataIsLoaded(List<TimetableObj> timetableObjs, List<String> keys) {
 
-                                    Toast.makeText(TimeTable.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
-                                }
+                                    }
 
-                                @Override
-                                public void DataIsUpdated() {
+                                    @Override
+                                    public void DataIsInserted() {
 
-                                }
+                                        Toast.makeText(TimeTable.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
+                                    }
 
-                                @Override
-                                public void DataIsDeleted() {
+                                    @Override
+                                    public void DataIsUpdated() {
 
-                                }
-                            });
-                            timetableObjs.clear();
-                            adapter.notifyDataSetChanged();
-                            e1 = 0;
-                            e2 = 0;
-                            e3 = 0;
-                            e4 = 0;
-                            e5 = 0;
-                            e6 = 0;
-                            e7 = 0;
+                                    }
+
+                                    @Override
+                                    public void DataIsDeleted() {
+
+                                    }
+                                });
+                                timetableObjs.clear();
+                                adapter.notifyDataSetChanged();
+                                e1 = 0;
+                                e2 = 0;
+                                e3 = 0;
+                                e4 = 0;
+                                e5 = 0;
+                                e6 = 0;
+                                e7 = 0;
+                            }
+
+
                         }
-
-
-
                     }
                 });
                 search=(EditText)v2.findViewById(R.id.search_box);

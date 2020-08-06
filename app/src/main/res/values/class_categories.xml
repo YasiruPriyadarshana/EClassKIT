@@ -8,13 +8,8 @@
         <item>Grade 9</item>
         <item>Grade 10</item>
         <item>Grade 11</item>
-    </string-array>
-    <string-array name="institute_categories">
-        <item>OSIS Maharagama</item>
-        <item>Siplin Thalawathugoda</item>
-        <item>Wisdom Piliyandala</item>
-        <item>LIT Maharagama</item>
-        <item>Excel Maradana</item>
+        <item>A/L</item>
+        <item>Other</item>
     </string-array>
     <string-array name="class1_categories">
         <item>Theory / Paper</item>

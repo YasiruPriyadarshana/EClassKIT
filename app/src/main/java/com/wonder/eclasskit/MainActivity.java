@@ -6,9 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         MobileAds.initialize(this,"ca-app-pub-3940256099942544~3347511713");
         adView=(AdView)findViewById(R.id.adView);
         AdRequest adRequest= new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -55,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 2 || tab.getPosition() == 3){
+                    adView.setVisibility(View.VISIBLE);
+                    adView.loadAd(adRequest);
+                }else {
+                    adView.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -98,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }else if (id == R.id.action_aboutUs) {
-            Intent intent=new Intent(this,AboutUs.class);
+            Intent intent=new Intent(this, AboutTeacher.class);
             startActivity(intent);
             return true;
         }else if (id == R.id.action_user) {

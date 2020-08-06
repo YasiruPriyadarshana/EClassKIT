@@ -162,25 +162,25 @@ public class quizMain extends AppCompatActivity {
 
                         Quizobj quizobj=uploadQuizS.get(post);
                         Toast.makeText(quizMain.this, "p: "+post, Toast.LENGTH_SHORT).show();
-//                        if (!TextUtils.isEmpty(quizobj.getUriimg())) {
-//                            StorageReference quizRef = FirebaseStorage.getInstance().getReferenceFromUrl(quizobj.getUriimg());
-//                            quizRef.delete();
-//                        }
-//
+                        if (!TextUtils.isEmpty(quizobj.getUriimg())) {
+                            StorageReference quizRef = FirebaseStorage.getInstance().getReferenceFromUrl(quizobj.getUriimg());
+                            quizRef.delete();
+                        }
+
                         uploadQuizS.remove(post);
                         adapter.notifyDataSetChanged();
                         adapterQuiz.deletePage(post);
 
-//
-//
-//
-//                        databaseReference.child(keys.get(post)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                Toast.makeText(quizMain.this, "Long press deleted", Toast.LENGTH_SHORT).show();
-//
-//                            }
-//                        });
+
+
+
+                        databaseReference.child(keys.get(post)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(quizMain.this, "Long press deleted", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
 
                     }
 

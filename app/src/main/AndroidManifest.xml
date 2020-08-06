@@ -42,7 +42,7 @@
         <activity android:name=".Notes" />
         <activity android:name=".ModelPapers" />
         <activity android:name=".PastPapers" />
-        <activity android:name=".AboutUs" />
+        <activity android:name=".AboutTeacher" />
         <activity android:name=".GetInfo" />
         <activity android:name=".Settings" />
         <activity

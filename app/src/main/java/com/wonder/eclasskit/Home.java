@@ -144,7 +144,7 @@ public class Home extends Fragment {
                                     adb.setPositiveButton("Set now", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Intent intent1=new Intent(getActivity(),AboutUs.class);
+                                            Intent intent1=new Intent(getActivity(), AboutTeacher.class);
                                             startActivity(intent1);
                                         }
                                     });
