@@ -59,8 +59,7 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String key = keys.get(position);
-                Common.uid=key;
+                Common.uid= keys.get(position);
                 AddCourse adc=addCourses.get(position);
                 Intent intent=new Intent(AddNewCourse.this,MainActivity.class);
                 intent.putExtra("year",adc.getClass_yr());

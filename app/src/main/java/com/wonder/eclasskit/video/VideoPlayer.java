@@ -88,7 +88,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
         uname=intent.getStringExtra("name");
 
         databaseReference = FirebaseDatabase.getInstance().getReference("VideoComments/"+ Common.uid+"/" +uname.substring(0, uname.length() - 4));
-        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid+"/Main");
         commentMS= new ArrayList<>();
         CommentListView=(ListView)findViewById(R.id.video_comment_list);
         anInterface=this;
@@ -225,7 +225,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                     publishProgress(current);
                 }
 
-            }while (currentProgress.getProgress() <= 100000);
+            }while (currentProgress.getProgress() <= 1000);
 
             return null;
         }

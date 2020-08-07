@@ -43,6 +43,8 @@ public class FirebaseDatabaseHelper2 {
             grade="2_";
         } else if (grade.equals("Grade 11(English Medium)")) {
             grade="3_";
+        }else {
+            grade="4_";
         }
 
         if (day.equals("Monday")) {

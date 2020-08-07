@@ -67,7 +67,7 @@ public class AboutTeacher extends AppCompatActivity {
         setdesc=(Button)findViewById(R.id.teacher_desc_btn);
         teacherimage=(ImageButton)findViewById(R.id.teacher_img);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+ Common.uid+"/Main");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+ Common.uidmain+"/Main");
 
         setTeacherData();
 

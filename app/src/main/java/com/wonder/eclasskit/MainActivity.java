@@ -54,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 2 || tab.getPosition() == 3){
+                if (tab.getPosition() == 2){
                     adView.setVisibility(View.VISIBLE);
                     adView.loadAd(adRequest);
-                }else {
+                }else if (tab.getPosition() != 3){
                     adView.setVisibility(View.GONE);
                 }
             }

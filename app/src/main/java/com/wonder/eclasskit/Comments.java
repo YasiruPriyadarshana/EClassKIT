@@ -85,7 +85,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
         name1=getIntent().getStringExtra("name");
         databaseReference = FirebaseDatabase.getInstance().getReference("comments/"+ Common.uid+"/" +name1.substring(0, name1.length() - 4));
         storage= FirebaseStorage.getInstance().getReference();
-        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid);
+        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uid+"/Main");
         CommentListView=(ListView)findViewById(R.id.recyclerviewcomment);
         commentMS = new ArrayList<>();
 

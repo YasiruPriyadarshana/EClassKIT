@@ -26,7 +26,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".TeachersRegistration" />
         <activity android:name=".TeacherLogin" />
-        <activity android:name=".TimeTable" />
+        <activity android:name=".TimeTable"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".StudentAccount" />
         <activity android:name=".MyResult" />
         <activity

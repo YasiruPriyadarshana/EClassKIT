@@ -72,7 +72,10 @@ public class Home extends Fragment {
         Intent intent = requireActivity().getIntent();
         year=intent.getStringExtra("year");
         subject=intent.getStringExtra("sub");
-
+        intentenroll=intent.getStringExtra("enroll");
+        if (!TextUtils.isEmpty(intentenroll)){
+            i=1;
+        }
 
         quiz=view.findViewById(R.id.quiz);
         timeTable=view.findViewById(R.id.classTimetb);
@@ -96,31 +99,43 @@ public class Home extends Fragment {
             }
         });
  //show emrollment key
-        databaseRfTeacher=FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain+"/Main");
-        if (TextUtils.isEmpty(redeem.getText().toString()) || i==1){
-            databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (!TextUtils.isEmpty(intentenroll)){
-                        coursename.setText(dataSnapshot.child("newcourse/"+Common.uid+"/subjectname").getValue().toString());
-                        if (dataSnapshot.hasChild("newcourse/"+Common.uid+"/sredeem")) {
-                            String setkey = dataSnapshot.child("newcourse/" + Common.uid + "/sredeem").getValue().toString();
+        databaseRfTeacher = FirebaseDatabase.getInstance().getReference("Teachers/" + Common.uidmain + "/Main");
+        if (TextUtils.isEmpty(redeem.getText().toString())) {
+            if (i == 1) {
+                DatabaseReference databaseRfTeacher2 = FirebaseDatabase.getInstance().getReference("Teachers/" + Common.uidmain);
+                    databaseRfTeacher2.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            coursename.setText(dataSnapshot.child("/newcourse/" + Common.uid + "/subjectname").getValue().toString());
+                            if (dataSnapshot.hasChild("/newcourse/" + Common.uid + "/sredeem")) {
+                                String setkey = dataSnapshot.child("/newcourse/" + Common.uid + "/sredeem").getValue().toString();
+                                redeem.setText(setkey);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+
+            } else {
+                databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("sredeem")) {
+                            coursename.setText(dataSnapshot.child("subject").getValue().toString());
+                            String setkey = dataSnapshot.child("sredeem").getValue().toString();
+                            tname = dataSnapshot.child("name").getValue().toString();
                             redeem.setText(setkey);
                         }
-                    }else if (dataSnapshot.hasChild("sredeem")) {
-                        coursename.setText(dataSnapshot.child("subject").getValue().toString());
-                        String setkey = dataSnapshot.child("sredeem").getValue().toString();
-                        tname=dataSnapshot.child("name").getValue().toString();
-                        redeem.setText(setkey);
                     }
 
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+        }}
 
-                }
-            });
-        }
 //add emrollment key
         copy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,15 +239,7 @@ public class Home extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Intent intent = requireActivity().getIntent();
-        intentenroll=intent.getStringExtra("enroll");
-        if (!TextUtils.isEmpty(intentenroll)){
-            i=1;
-        }
-    }
+
 
     public void readStudentId(){
         try {

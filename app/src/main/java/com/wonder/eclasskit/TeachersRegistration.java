@@ -102,7 +102,7 @@ public class TeachersRegistration extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
                                         Teachers teachers = new Teachers("SIR",email);
-                                        databaseReference.child(user.getUid()).setValue(teachers);
+                                        databaseReference.child(user.getUid()+"/Main").setValue(teachers);
 
                                         Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
