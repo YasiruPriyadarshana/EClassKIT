@@ -336,7 +336,7 @@ public class AboutTeacher extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Teachers value = dataSnapshot.getValue(Teachers.class);
-                
+
                 fburl = value.getFacebook();
                 youtubeurl = value.getYoutube();
                 twitterurl = value.getTwitter();

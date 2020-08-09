@@ -109,6 +109,7 @@ public class StudentAccount extends AppCompatActivity implements ListAdapterMyCo
                 Course course=courses.get(position);
                 Common.uid=course.getUid();
                 Common.limit=1;
+                Common.stcoursename=course.getcName();
                 Intent intent = new Intent(StudentAccount.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -145,14 +146,14 @@ public class StudentAccount extends AppCompatActivity implements ListAdapterMyCo
     }
 
     private void addCourses(String cname,String tea,String uid){
-        Course course = new Course(cname,tea,uid);
 
+        Course course = new Course(cname,tea,uid);
         if (!oldEnroll.contains(cname+"a"+tea)) {
+            adapter.clear();
             databaseRefCourse.child(databaseRefCourse.push().getKey()).setValue(course).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     Toast.makeText(StudentAccount.this, "Enrollment success", Toast.LENGTH_SHORT).show();
-                    adapter.clear();
                 }
             });
         }

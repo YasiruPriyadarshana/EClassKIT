@@ -225,7 +225,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                     publishProgress(current);
                 }
 
-            }while (currentProgress.getProgress() <= 1000);
+            }while (currentProgress.getProgress() <= 100);
 
             return null;
         }

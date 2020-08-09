@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -141,6 +142,22 @@ public class quizMain extends AppCompatActivity {
 
                     });
                     adb.setNegativeButton("Cancel", null);
+                    adb.show();
+                }else {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(
+                            quizMain.this);
+                    adb.setMessage("Set quiz password");
+                    View v1= getLayoutInflater().inflate(R.layout.textfield, null);
+                    adb.setView(v1);
+                    EditText e=(EditText)v1.findViewById(R.id.all_vriable);
+                    adb.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("quizHome/"+Common.uid+"/"+keyname);
+                            databaseReference2.child("password").setValue(e.getText().toString().trim());
+                        }
+                    });
+                    adb.setNegativeButton("Cancel",null);
                     adb.show();
                 }
 

@@ -2,17 +2,18 @@ package com.wonder.eclasskit.Object;
 
 public class QuizHm {
     String name;
-
+    String password;
     String time;
 
     public QuizHm() {
     }
 
-
-    public QuizHm(String name, String time) {
+    public QuizHm(String name, String password, String time) {
         this.name = name;
+        this.password = password;
         this.time = time;
     }
+
 
     public String getName() {
         return name;
@@ -30,4 +31,11 @@ public class QuizHm {
         this.time = time;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

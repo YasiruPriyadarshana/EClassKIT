@@ -15,4 +15,5 @@ public class Common {
     public static String studentregname;
     public static String studentregemail;
     public static String studentregkey;
+    public static String stcoursename;
 }

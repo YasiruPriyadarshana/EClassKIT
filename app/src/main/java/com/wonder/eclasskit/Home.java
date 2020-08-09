@@ -58,28 +58,25 @@ public class Home extends Fragment {
 
         copy=(Button)view.findViewById(R.id.copy_redeem);
         redeem=(EditText)view.findViewById(R.id.redeem_code_txt);
+        quiz=view.findViewById(R.id.quiz);
+        timeTable=view.findViewById(R.id.classTimetb);
+        coursename=view.findViewById(R.id.course_Home_txt);
+
         if (TextUtils.isEmpty(Common.uid)) {
             user = FirebaseAuth.getInstance().getCurrentUser();
             Common.uid = user.getUid();
             Common.uidmain = Common.uid;
-
         }
         if (Common.limit == 1){
+            Common.uidmain = Common.uid;
             redeem.setVisibility(View.GONE);
             copy.setVisibility(View.GONE);
             readStudentId();
-        }
-        Intent intent = requireActivity().getIntent();
-        year=intent.getStringExtra("year");
-        subject=intent.getStringExtra("sub");
-        intentenroll=intent.getStringExtra("enroll");
-        if (!TextUtils.isEmpty(intentenroll)){
-            i=1;
+            coursename.setText(Common.stcoursename);
         }
 
-        quiz=view.findViewById(R.id.quiz);
-        timeTable=view.findViewById(R.id.classTimetb);
-        coursename=view.findViewById(R.id.course_Home_txt);
+
+
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("EnrollmentKey/");
@@ -98,25 +95,66 @@ public class Home extends Fragment {
                 startActivity(intent);
             }
         });
- //show emrollment key
+        if (Common.limit != 1){
+            Intent intent = requireActivity().getIntent();
+            year=intent.getStringExtra("year");
+            subject=intent.getStringExtra("sub");
+            intentenroll=intent.getStringExtra("enroll");
+            if (!TextUtils.isEmpty(intentenroll)){
+                i=1;
+            }
+            setEnrollment();
+        }
+
+        return view;
+    }
+
+
+
+    private void readStudentId(){
+        try {
+            FileInputStream fileInputStream = requireActivity().openFileInput("student.txt");
+            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuffer stringBuffer =new StringBuffer();
+
+
+            String lines;
+            while ((lines = bufferedReader.readLine()) != null){
+                stringBuffer.append(lines + "\n");
+            }
+            String str =stringBuffer.toString();
+            Common.studentId =str;
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void setEnrollment(){
+
+        //show emrollment key
         databaseRfTeacher = FirebaseDatabase.getInstance().getReference("Teachers/" + Common.uidmain + "/Main");
         if (TextUtils.isEmpty(redeem.getText().toString())) {
             if (i == 1) {
                 DatabaseReference databaseRfTeacher2 = FirebaseDatabase.getInstance().getReference("Teachers/" + Common.uidmain);
-                    databaseRfTeacher2.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            coursename.setText(dataSnapshot.child("/newcourse/" + Common.uid + "/subjectname").getValue().toString());
-                            if (dataSnapshot.hasChild("/newcourse/" + Common.uid + "/sredeem")) {
-                                String setkey = dataSnapshot.child("/newcourse/" + Common.uid + "/sredeem").getValue().toString();
-                                redeem.setText(setkey);
-                            }
+                databaseRfTeacher2.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        coursename.setText(dataSnapshot.child("/newcourse/" + Common.uid + "/subjectname").getValue().toString());
+                        if (dataSnapshot.hasChild("/newcourse/" + Common.uid + "/sredeem")) {
+                            String setkey = dataSnapshot.child("/newcourse/" + Common.uid + "/sredeem").getValue().toString();
+                            redeem.setText(setkey);
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
 
             } else {
                 databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -134,7 +172,7 @@ public class Home extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-        }}
+            }}
 
 //add emrollment key
         copy.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +181,7 @@ public class Home extends Fragment {
                 String redeemcd=redeem.getText().toString();
                 String teacher=Common.uid;
 
-               //main course
+                //main course
                 if (redeemcd.isEmpty()) {
                     Toast.makeText(getActivity(), "Give Enrollment Key", Toast.LENGTH_SHORT).show();
                 }else if (redeemcd.length() < 6){
@@ -206,7 +244,7 @@ public class Home extends Fragment {
                         });
                     }else {
 
-                       //other coursese
+                        //other coursese
                         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("Teachers/"+Common.uidmain+"/newcourse/"+Common.uid);
                         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -235,33 +273,6 @@ public class Home extends Fragment {
                 }
             }
         });
-
-        return view;
-    }
-
-
-
-    public void readStudentId(){
-        try {
-            FileInputStream fileInputStream = requireActivity().openFileInput("student.txt");
-            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
-
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuffer stringBuffer =new StringBuffer();
-
-
-            String lines;
-            while ((lines = bufferedReader.readLine()) != null){
-                stringBuffer.append(lines + "\n");
-            }
-            String str =stringBuffer.toString();
-            Common.studentId =str;
-
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
     }
 
 }

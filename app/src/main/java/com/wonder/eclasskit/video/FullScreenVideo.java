@@ -226,7 +226,7 @@ public class FullScreenVideo extends AppCompatActivity {
                     publishProgress(currentV);
                 }
 
-            }while (seekBar.getProgress() <= 100000);
+            }while (seekBar.getProgress() <= 100);
 
             return null;
         }

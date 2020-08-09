@@ -3,8 +3,11 @@ package com.wonder.eclasskit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -46,12 +49,53 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
         QuizHometListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(QuizHome.this,quizMain.class);
-                intent.putExtra("key",keys.get(position));
-                intent.putExtra("time",times.get(position));
-                startActivity(intent);
+                if (Common.limit == 1) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(
+                            QuizHome.this);
+                    adb.setMessage("Enter quiz password");
+                    View v1 = getLayoutInflater().inflate(R.layout.textfield, null);
+                    adb.setView(v1);
+                    EditText e = (EditText) v1.findViewById(R.id.all_vriable);
+                    adb.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("quizHome/"+Common.uid+"/"+keys.get(position));
+                            databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String passserver=dataSnapshot.child("password").getValue().toString();
+                                    String pass=e.getText().toString();
+                                    if (TextUtils.equals(passserver,"no")){
+                                        Toast.makeText(QuizHome.this, "You cant attempt now", Toast.LENGTH_SHORT).show();
+                                    }else if (TextUtils.equals(pass,passserver)){
+                                        Intent intent = new Intent(QuizHome.this, quizMain.class);
+                                        intent.putExtra("key", keys.get(position));
+                                        intent.putExtra("time", times.get(position));
+                                        startActivity(intent);
+                                    }else {
+                                        Toast.makeText(QuizHome.this, "Password incorrect", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+                    });
+                    adb.setNegativeButton("Cancel", null);
+                    adb.show();
+                }else{
+                    Intent intent = new Intent(QuizHome.this, quizMain.class);
+                    intent.putExtra("key", keys.get(position));
+                    intent.putExtra("time", times.get(position));
+                    startActivity(intent);
+                }
             }
         });
+
         quizHms=new ArrayList<>();
         viewAllFiles();
     }
@@ -121,7 +165,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
     }
 
     private void uplodeFile(String quiz,String time) {
-        QuizHm quizHm=new QuizHm(quiz,time);
+        QuizHm quizHm=new QuizHm(quiz,"no",time);
         adapter.clear();
         databaseReference.child(databaseReference.push().getKey()).setValue(quizHm).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
