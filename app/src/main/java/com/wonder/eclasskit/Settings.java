@@ -16,7 +16,7 @@ import com.wonder.eclasskit.Services.BackgroundService;
 public class Settings extends AppCompatActivity {
 
     private boolean aBoolean,n;
-    SharedPreferences sharedpreference;
+    private SharedPreferences sharedpreference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

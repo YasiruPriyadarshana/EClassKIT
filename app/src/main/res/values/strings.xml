@@ -4,12 +4,121 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="aboutusdesc">***  CLICK HERE To ADD DETAILS *** \n A teacher is a person who helps people to learn. A teacher often works in a classroom. There are many different kinds of teachers. Some teachers teach young children in kindergarten or primary schools. Others teach older children in middle</string>
+
     <string name="eventtitle">Seminar</string>
     <string name="eventdesc">One day is all it takes to change your results</string>
     <string name="eventtime">00 Days 00 Hours 00 Minutes 00 Seconds</string>
     <string name="science_journey">‘Teaching is the highest form of understanding.’ –Aristotle</string>
     <string name="click_here_to_login_as_teacher"><u>Click HERE To Login As Teacher </u></string>
+
+    <string name="set_teacher_name">SET Teacher Name</string>
+    <string name="todo">IMAGE</string>
+    <string name="aboutusdesc">***  CLICK HERE To ADD DETAILS *** \n A teacher is a person who helps people to learn. A teacher often works in a classroom. There are many different kinds of teachers. Some teachers teach young children in kindergarten or primary schools. Others teach older children in middle</string>
+
+    <string name="save">save</string>
+    <string name="first_course">First Course</string>
+    <string name="other_courses">Other Courses</string>
+    <string name="class_year">Class year</string>
+
+    <string name="type_question">Type Question</string>
+    <string name="answer_2">Answer 2</string>
+    <string name="answer_1">Answer 1</string>
+    <string name="answer_3">Answer 3</string>
+    <string name="answer_4">Answer 4</string>
+    <string name="answer_5_if_need">Answer 5(if need)</string>
+    <string name="add_new_question">Add New Question</string>
+
+    <string name="_0_00">0.00</string>
+
+    <string name="lectures">Lectures</string>
+    <string name="note">Note</string>
+    <string name="events">Events</string>
+
+    <string name="yasiru">Yasiru</string>
+    <string name="_64">64</string>
+
+    <string name="time_left">Time left</string>
+    <string name="delete">Delete</string>
+    <string name="next">Next</string>
+
+    <string name="get_notification_about_event">Get notification about Event</string>
+    <string name="get_notification_about_comment">Get notification about Comment</string>
+
+    <string name="enter_enrollment_key">Enter Enrollment Key</string>
+    <string name="enroll">Enroll</string>
+    <string name="my_courses">My Courses</string>
+
+    <string name="account_login">Account login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="if_you_dont_have_a_eclasskit_account_n_click_here">If You Dont Have a eClassKit Account\n CLICK HERE</string>
+
+    <string name="register_new_account">Register new account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="if_you_already_have_an_account_click_here">If You Already Have An Account CLICK HERE</string>
+
+    <string name="student">Student</string>
+    <string name="user_gmail_com">user@gmail.com</string>
+    <string name="number">Number</string>
+    <string name="dash">--</string>
+    <string name="classst">Class</string>
+
+    <string name="select_pdf">Select PDF</string>
+    <string name="uplode">uplode</string>
+
+    <string name="add_new_courses">Add New Courses</string>
+    <string name="subject_name">Subject Name</string>
+    <string name="class_year_ex_2021_a_l">Class Year ( ex - 2021 A/L)</string>
+    <string name="add_course">Add Course</string>
+
+    <string name="add_new_timetable">Add New Timetable</string>
+    <string name="day">DAY</string>
+    <string name="grade">GRADE</string>
+    <string name="time">TIME</string>
+    <string name="click_to_set_time">Click To Set Time</string>
+    <string name="institute">INSTITUTE</string>
+    <string name="add_class">Add Class</string>
+
+    <string name="past_paper_2010">Past paper 2010</string>
+    <string name="model_papers">MODEL PAPERS</string>
+    <string name="notes">NOTES</string>
+    <string name="past_papers">PAST PAPERS</string>
+
+    <string name="textview">TextView</string>
+    <string name="maths">Maths</string>
+    <string name="_2021_a_l">2021 A/L</string>
+
+    <string name="monday">Monday</string>
+    <string name="grade_10_english_medium">Grade 10 (English Medium)</string>
+    <string name="_3_30_pm_5_30_pm">3.30 pm – 5.30 pm</string>
+    <string name="osis_maharagama">OSIS Maharagama</string>
+    <string name="theory_paper">Theory / Paper</string>
+
+    <string name="name">Name</string>
+    <string name="i_have_a_problem">i have a problem</string>
+
+    <string name="teacher">teacher</string>
+    <string name="course">Course</string>
+    <string name="remove">Remove</string>
+    <string name="_00">00</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="days_till_event">Days Till Event</string>
+
+
+    <string name="_50">50</string>
+    <string name="distoyer">distoyer</string>
+    <string name="quiz_1">Quiz 1</string>
+    <string name="_30_min">30 min</string>
+    <string name="_0">0</string>
+    <string name="question_1">Question 1</string>
+    <string name="_80">80%</string>
+    <string name="eclasskit">eClassKIT</string>
+    <string name="video_title">video title</string>
 
 
 </resources>

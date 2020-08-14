@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,7 +42,6 @@ import com.wonder.eclasskit.Adpter.ListAdapterComments;
 
 import com.wonder.eclasskit.Object.CommentM;
 import com.wonder.eclasskit.Object.Common;
-import com.wonder.eclasskit.Object.Enroll;
 
 
 import java.io.BufferedReader;

@@ -16,11 +16,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginTop="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
         android:maxWidth="145dp"
-        android:text="Select PDF"
+        android:text="@string/select_pdf"
         android:textAlignment="center"
         android:textColor="#000000" />
 
@@ -28,9 +28,10 @@
         android:id="@+id/pdfImgBtn"
         android:layout_width="135dp"
         android:layout_height="130dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="4dp"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/todo"
         android:src="@mipmap/uploadepdf"
         tools:src="@mipmap/uploadepdf"
         tools:srcCompat="@mipmap/uploadepdf" />
@@ -39,11 +40,11 @@
         android:id="@+id/update_btn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginTop="70dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/button_background"
-        android:text="uplode"
+        android:text="@string/uplode"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
 </androidx.cardview.widget.CardView>

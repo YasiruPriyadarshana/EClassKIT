@@ -61,8 +61,8 @@ public class quizMain extends AppCompatActivity {
     private ListAdapterQuizList adapter;
     private ListAdapterQuiz adapterQuiz;
     private View v;
-    TabLayout mTabLayout;
-    ViewPager mPager;
+    private TabLayout mTabLayout;
+    private ViewPager mPager;
     private Context context;
     private List<FragmentQuestion> fragmentlist=new ArrayList<>();
     private Button next,delete;

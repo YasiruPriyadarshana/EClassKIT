@@ -15,24 +15,25 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:text="Name"
+        android:text="@string/name"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/rep_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:text="i have a problem" />
+        android:layout_marginEnd="10dp"
+        android:text="@string/i_have_a_problem" />
 
     <ImageView
         android:id="@+id/rep_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/todo" />
 
 
 </LinearLayout>

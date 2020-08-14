@@ -24,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.UploadVideo;
 import com.wonder.eclasskit.R;
@@ -34,7 +33,7 @@ import java.util.ArrayList;
 public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
     private static final String TAG="ListAdapterVideo";
     private Context mContext;
-    int mResource;
+    private int mResource;
     private ArrayList<String> keys;
     private ArrayList<UploadVideo> uploadVideos;
     private CallbackDelete mCallback;

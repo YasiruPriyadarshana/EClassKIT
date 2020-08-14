@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ListAdapterReview extends ArrayAdapter<Answer> {
     private static final String TAG = "ListAdapterReview";
     private Context mContext;
-    int mResource;
+    private int mResource;
 
 
 

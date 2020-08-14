@@ -35,19 +35,19 @@
                 android:id="@+id/cls"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lectures" />
+                android:text="@string/lectures" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/note"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Note" />
+                android:text="@string/note" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Events" />
+                android:text="@string/events" />
 
         </com.google.android.material.tabs.TabLayout>
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,13 +23,6 @@ import com.wonder.eclasskit.Adpter.ListAdapterAddClass;
 import com.wonder.eclasskit.Object.AddCourse;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.Teachers;
-
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class AddNewCourse extends AppCompatActivity implements ListAdapterAddClass.CallbackDelete{

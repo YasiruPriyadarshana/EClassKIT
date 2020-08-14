@@ -10,5 +10,5 @@
         android:layout_height="26dp"
         android:layout_margin="10dp"
         android:background="#4FD2D4D5"
-        android:text="0" />
+        android:text="@string/_0" />
 </LinearLayout>

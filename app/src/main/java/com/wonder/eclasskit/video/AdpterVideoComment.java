@@ -36,7 +36,7 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
     private static final String TAG="ListAdapterComment";
     private AdpterVideoComment.CallbackInterface mCallback;
     private Context mContext;
-    int mResource;
+    private int mResource;
 
     private String name1,name;
     private ArrayList<String> keys;

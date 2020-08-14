@@ -16,8 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="80dp"
-        android:text="TextView"
+        android:layout_marginStart="80dp"
+        android:text="@string/textview"
         android:textAlignment="center"
         android:textColor="#610D0D" />
 
@@ -25,8 +25,9 @@
         android:id="@+id/pdfView"
         android:layout_width="110dp"
         android:layout_height="128dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
+        android:contentDescription="@string/todo"
         android:scaleType="fitXY"
         app:srcCompat="@color/colorPrimary" />
 
@@ -34,12 +35,12 @@
         android:id="@+id/delete_npm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_margin="10dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_more_horiz"
+        android:contentDescription="@string/todo"
         android:focusable="false"
         android:focusableInTouchMode="false"
-         />
+        android:src="@drawable/ic_more_horiz" />
 
 </androidx.cardview.widget.CardView>

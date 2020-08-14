@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:checked="false"
-        android:text="Get notification about Event" />
+        android:text="@string/get_notification_about_event" />
 
     <Switch
         android:id="@+id/notification_switch_cmt"
@@ -21,5 +21,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:checked="false"
-        android:text="Get notification about Comment" />
+        android:text="@string/get_notification_about_comment" />
 </LinearLayout>

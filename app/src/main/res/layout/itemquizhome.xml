@@ -14,13 +14,14 @@
         android:id="@+id/myresult_btn"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_margin="10dp"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/todo"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:src="@drawable/ic_more_horiz"
-        android:text="E" />
+        android:text="@string/todo" />
 
     <TextView
         android:id="@+id/quest_home_name"
@@ -28,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="-15dp"
-        android:text="Quiz 1"
+        android:text="@string/quiz_1"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp" />
@@ -37,8 +38,8 @@
         android:id="@+id/time_lbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
-        android:text="30 min" />
+        android:text="@string/_30_min" />
 
 </androidx.cardview.widget.CardView>

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ListAdapterReply extends ArrayAdapter<Reply> {
     private static final String TAG="ListAdapterReply";
     private Context mContext;
-    int mResource;
+    private int mResource;
     private ArrayList<String> keys;
     private DatabaseReference databaseReference;
 

@@ -47,7 +47,7 @@ public class Home extends Fragment {
     private Enroll enroll;
     private String year,subject,tname,delkey;
     private String intentenroll;
-    int i=0;
+    private int i=0;
 
 
     View view;

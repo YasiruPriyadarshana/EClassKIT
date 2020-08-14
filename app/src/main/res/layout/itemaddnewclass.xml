@@ -14,31 +14,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Maths"
+        android:text="@string/maths"
         android:textColor="#000000"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/class_yr_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|left"
+        android:layout_gravity="center|start"
         android:layout_margin="20dp"
-        android:text="2021 A/L"
+        android:text="@string/_2021_a_l"
         android:textColor="#000000"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/delete_course"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_gravity="center|right"
+        android:layout_gravity="center|end"
         android:layout_margin="10dp"
         android:background="@drawable/button_background"
         android:focusable="false"
         android:focusableInTouchMode="false"
 
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
 </androidx.cardview.widget.CardView>

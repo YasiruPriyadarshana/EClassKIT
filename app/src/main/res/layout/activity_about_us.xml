@@ -14,7 +14,8 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_margin="30dp"
-        android:background="@drawable/button_states" />
+        android:background="@drawable/button_states"
+        android:contentDescription="@string/todo" />
 
     <Button
         android:id="@+id/teacherN_btn"
@@ -25,7 +26,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
-        android:text="SET Teacher Name"
+        android:text="@string/set_teacher_name"
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -54,7 +55,8 @@
             android:layout_margin="17dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            app:srcCompat="@mipmap/facebook" />
+            app:srcCompat="@mipmap/facebook"
+            android:contentDescription="@string/todo" />
 
         <ImageButton
             android:id="@+id/twitter"
@@ -63,7 +65,8 @@
             android:layout_margin="17dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            app:srcCompat="@mipmap/twitter" />
+            app:srcCompat="@mipmap/twitter"
+            android:contentDescription="@string/todo" />
 
         <ImageButton
             android:id="@+id/youtube"
@@ -72,7 +75,8 @@
             android:layout_margin="17dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            app:srcCompat="@mipmap/youtube" />
+            app:srcCompat="@mipmap/youtube"
+            android:contentDescription="@string/todo" />
 
         <ImageButton
             android:id="@+id/web"
@@ -81,7 +85,8 @@
             android:layout_margin="17dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            app:srcCompat="@mipmap/web" />
+            app:srcCompat="@mipmap/web"
+            android:contentDescription="@string/todo" />
 
     </LinearLayout>
 </LinearLayout>

@@ -10,8 +10,8 @@ import android.widget.ImageButton;
 
 
 public class NotesAndPastPapers extends Fragment {
-    ImageButton PastPapers,ModelPapers,Notes;
-    View view;
+    private ImageButton PastPapers,ModelPapers,Notes;
+    private View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

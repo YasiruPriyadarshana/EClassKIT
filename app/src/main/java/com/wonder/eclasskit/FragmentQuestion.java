@@ -25,9 +25,9 @@ public class FragmentQuestion extends Fragment {
     private Quizobj quizobj;
     private int count;
     private ImageView imageView;
+    private int a=0,b=0;
 
-    int a=0,b=0;
-    public FragmentQuestion(Quizobj quizobj,int i) {
+    FragmentQuestion(Quizobj quizobj,int i) {
         this.quizobj = quizobj;
         count=i;
         Common.answer.add(count,0);

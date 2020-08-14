@@ -3,29 +3,21 @@ package com.wonder.eclasskit.Adpter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.wonder.eclasskit.MyResult;
 import com.wonder.eclasskit.Object.AddCourse;
 import com.wonder.eclasskit.Object.Common;
-import com.wonder.eclasskit.Object.QuizHm;
 import com.wonder.eclasskit.R;
 
 import java.util.ArrayList;

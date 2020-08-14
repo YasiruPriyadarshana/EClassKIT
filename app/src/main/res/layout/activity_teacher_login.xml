@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="Account login"
+        android:text="@string/account_login"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -23,9 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/password"
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textStyle="bold" />
 
@@ -42,7 +43,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     <Button
@@ -53,7 +54,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:background="#FFFFFF"
-        android:text="If You Dont Have a eClassKit Account\n CLICK HERE" />
+        android:text="@string/if_you_dont_have_a_eclasskit_account_n_click_here" />
 
     <ProgressBar
         android:id="@+id/progressBar_login"
