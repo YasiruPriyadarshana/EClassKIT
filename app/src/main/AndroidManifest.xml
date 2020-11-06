@@ -31,7 +31,7 @@
         <activity android:name=".StudentAccount" />
         <activity android:name=".MyResult" />
         <activity
-            android:name=".QuizHome"
+            android:name=".QuizTopic"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ReviewQuiz" />
         <activity android:name=".addQuestions" />

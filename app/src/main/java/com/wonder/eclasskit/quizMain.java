@@ -143,7 +143,7 @@ public class quizMain extends AppCompatActivity {
                     });
                     adb.setNegativeButton("Cancel", null);
                     adb.show();
-                }else {
+                }else if(position==adapterQuiz.getCount() ){
                     setQuizPassword();
                 }
 
@@ -358,6 +358,7 @@ public class quizMain extends AppCompatActivity {
         });
         Intent intent = new Intent(quizMain.this, MainActivity.class);
         Common.answer.clear();
+        Common.completelist.clear();
         startActivity(intent);
     }
 
@@ -385,6 +386,7 @@ public class quizMain extends AppCompatActivity {
                     countdown.cancel();
                 }
                 Common.answer.clear();
+                Common.completelist.clear();
                 finish();
             }
         });

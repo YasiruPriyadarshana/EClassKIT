@@ -85,9 +85,6 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     UploadVideo uploadP = uploadVideos.get(position);
-
-                                    StorageReference vthumbRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getThumbnailUrl());
-                                    vthumbRef.delete();
                                     StorageReference vidRef = FirebaseStorage.getInstance().getReferenceFromUrl(uploadP.getVideourl());
                                     vidRef.delete();
                                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Videos/" + Common.uid);

@@ -21,21 +21,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.wonder.eclasskit.Adpter.ListAdapterQuizHome;
+import com.wonder.eclasskit.Adpter.ListAdapterQuizTopic;
 import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.QuizHm;
 
 
 import java.util.ArrayList;
 
-public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.CallbackDelete{
+public class QuizTopic extends AppCompatActivity implements ListAdapterQuizTopic.CallbackDelete{
     private DatabaseReference databaseReference;
     private ListView QuizHometListView;
-    private ListAdapterQuizHome adapter;
+    private ListAdapterQuizTopic adapter;
     private ArrayList<QuizHm> quizHms;
     private View v;
     private ArrayList<String> keys,times;
-    private ListAdapterQuizHome.CallbackDelete anInterface;
+    private ListAdapterQuizTopic.CallbackDelete anInterface;
     private int i=0;
 
     @Override
@@ -51,7 +51,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (Common.limit == 1) {
                     AlertDialog.Builder adb = new AlertDialog.Builder(
-                            QuizHome.this);
+                            QuizTopic.this);
                     adb.setMessage("Enter quiz password");
                     View v1 = getLayoutInflater().inflate(R.layout.textfield, null);
                     adb.setView(v1);
@@ -66,14 +66,14 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
                                     String passserver=dataSnapshot.child("password").getValue().toString();
                                     String pass=e.getText().toString();
                                     if (TextUtils.equals(passserver,"no")){
-                                        Toast.makeText(QuizHome.this, "You can't attempt now", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(QuizTopic.this, "You can't attempt now", Toast.LENGTH_SHORT).show();
                                     }else if (TextUtils.equals(pass,passserver)){
-                                        Intent intent = new Intent(QuizHome.this, quizMain.class);
+                                        Intent intent = new Intent(QuizTopic.this, quizMain.class);
                                         intent.putExtra("key", keys.get(position));
                                         intent.putExtra("time", times.get(position));
                                         startActivity(intent);
                                     }else {
-                                        Toast.makeText(QuizHome.this, "Password incorrect", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(QuizTopic.this, "Password incorrect", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -88,7 +88,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
                     adb.setNegativeButton("Cancel", null);
                     adb.show();
                 }else{
-                    Intent intent = new Intent(QuizHome.this, quizMain.class);
+                    Intent intent = new Intent(QuizTopic.this, quizMain.class);
                     intent.putExtra("key", keys.get(position));
                     intent.putExtra("time", times.get(position));
                     startActivity(intent);
@@ -119,7 +119,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
                     times.add(quizHm.getTime());
                 }
 
-                adapter = new ListAdapterQuizHome(QuizHome.this, R.layout.itemquizhome, quizHms,keys,anInterface);
+                adapter = new ListAdapterQuizTopic(QuizTopic.this, R.layout.itemquizhome, quizHms,keys,anInterface);
 
                 if (Common.limit != 1) {
 
@@ -141,9 +141,9 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
                             String quiz_txt = quiz_name.getText().toString();
                             String quiz_tm = quiz_time.getText().toString();
                             if (quiz_txt.isEmpty()) {
-                                Toast.makeText(QuizHome.this, "Give Name", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QuizTopic.this, "Give Name", Toast.LENGTH_SHORT).show();
                             } else if(Integer.parseInt(quiz_tm) <=5){
-                                Toast.makeText(QuizHome.this, "Give Time grater then 5 minutes", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QuizTopic.this, "Give Time grater then 5 minutes", Toast.LENGTH_SHORT).show();
                             }else {
                                 uplodeFile(quiz_txt, quiz_tm);
                             }
@@ -170,7 +170,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
         databaseReference.child(databaseReference.push().getKey()).setValue(quizHm).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(QuizHome.this, "New Quiz Added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(QuizTopic.this, "New Quiz Added", Toast.LENGTH_SHORT).show();
             }
         });
     }

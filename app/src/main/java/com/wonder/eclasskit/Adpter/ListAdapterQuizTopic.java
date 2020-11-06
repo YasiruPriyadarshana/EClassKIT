@@ -28,7 +28,7 @@ import com.wonder.eclasskit.R;
 
 import java.util.ArrayList;
 
-public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
+public class ListAdapterQuizTopic extends ArrayAdapter<QuizHm> {
     private static final String TAG="ListAdapterQuizHome";
     private Context mContext;
     int mResource;
@@ -39,7 +39,7 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
         void onHandledelete();
     }
 
-    public ListAdapterQuizHome(Context context, int resource, ArrayList<QuizHm> objects, ArrayList<String> keys, CallbackDelete callback) {
+    public ListAdapterQuizTopic(Context context, int resource, ArrayList<QuizHm> objects, ArrayList<String> keys, CallbackDelete callback) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;

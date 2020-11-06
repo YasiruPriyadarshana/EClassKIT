@@ -217,7 +217,7 @@ public class addQuestions extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this,QuizHome.class);
+        Intent intent = new Intent(this, QuizTopic.class);
         startActivity(intent);
     }
 }

@@ -223,9 +223,10 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                 uplode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (videoUri!=null) {
+                        if(uploadVideos.size()>2){
+                            Toast.makeText(getContext(), "pay to get full version", Toast.LENGTH_SHORT).show();
+                        }else if (videoUri!=null) {
                             uplodeFile(videoUri);
-
                         }else
                             Toast.makeText(getActivity(), "select a File", Toast.LENGTH_SHORT).show();
                     }
@@ -242,10 +243,8 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
     }
 
     private void uplodeFile(final Uri vidUri) {
-        final ProgressDialog progressDialog=new ProgressDialog(getActivity());
-        progressDialog.setTitle("Uploading File");
-        progressDialog.show();
-
+        final ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(getContext());
         //videoimage
 //        StorageReference reference2 =storage.child("videos/"+System.currentTimeMillis()+".png");
 //        adapter.clear();
@@ -271,12 +270,34 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                         databaseReference.child(databaseReference.push().getKey()).setValue(uploadVideo);
                         Toast.makeText(getActivity(), "Video File uploaded", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
+                        adapter.clear();
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                        double currentProgress=(100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                        progressDialog.setMessage("Uploaded: "+(int)currentProgress+"%");
+
+                        progressDialog.setMax(100); // Progress Dialog Max Value
+                        progressDialog.setMessage("Loading..."); // Setting Message
+                        progressDialog.setTitle("ProgressDialog"); // Setting Title
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); // Progress Dialog Style Horizontal
+                        progressDialog.show(); // Display Progress Dialog
+                        progressDialog.setCancelable(false);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    while (progressDialog.getProgress() <= progressDialog.getMax()) {
+                                        Thread.sleep(200);
+                                        progressDialog.incrementProgressBy((int)(100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount()));
+                                        if (progressDialog.getProgress() == progressDialog.getMax()) {
+
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                     }
                 });
                 //end

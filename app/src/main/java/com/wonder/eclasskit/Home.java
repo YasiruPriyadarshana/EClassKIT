@@ -84,7 +84,7 @@ public class Home extends Fragment {
         quiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),QuizHome.class);
+                Intent intent=new Intent(getActivity(), QuizTopic.class);
                 startActivity(intent);
             }
         });

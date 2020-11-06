@@ -60,13 +60,13 @@ public class ListAdapterAddClass extends ArrayAdapter<AddCourse> {
                 adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+ Common.uid+"/newcourse");
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Teachers/"+ Common.uidmain+"/newcourse");
 
                         mCallback.onHandledelete();
                         databaseReference.child(keys.get(position)).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(mContext, "Long press deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "deleted", Toast.LENGTH_SHORT).show();
                             }
                         });
 

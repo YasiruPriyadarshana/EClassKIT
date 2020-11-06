@@ -90,15 +90,15 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(course.getText().toString())){
+               if (TextUtils.isEmpty(course.getText().toString())){
                     Toast.makeText(AddNewCourse.this, "Course name is empty", Toast.LENGTH_SHORT).show();
-                }else if (TextUtils.isEmpty(year.getText().toString())){
+               }else if (TextUtils.isEmpty(year.getText().toString())){
                     Toast.makeText(AddNewCourse.this, "Course year is empty", Toast.LENGTH_SHORT).show();
-                }else {
+               }else {
                     Teachers teachers=new Teachers(tname,course.getText().toString(),year.getText().toString());
                     databaseReference2.setValue(teachers);
                     Toast.makeText(AddNewCourse.this, "Details added", Toast.LENGTH_SHORT).show();
-                }
+               }
             }
         });
 
@@ -147,7 +147,9 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
                     public void onClick(View v) {
                         String name_st=name.getText().toString();
                         String year_st=year.getText().toString();
-                        if (name_st.isEmpty() && year_st.isEmpty()){
+                        if(addCourses.size()>1){
+                            Toast.makeText(AddNewCourse.this, "pay to get full version", Toast.LENGTH_SHORT).show();
+                        }else if (name_st.isEmpty() && year_st.isEmpty()){
                             Toast.makeText(AddNewCourse.this, "fill details", Toast.LENGTH_SHORT).show();
                         }else {
                             uplodeFile(name_st,year_st);
