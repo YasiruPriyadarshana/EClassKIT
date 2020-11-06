@@ -71,6 +71,7 @@ public class quizMain extends AppCompatActivity {
     private String[] array;
     private String name,keyname,time;
     private ArrayList<String> keys;
+    private CountDownTimer countdown;
 
 
     @Override
@@ -94,7 +95,7 @@ public class quizMain extends AppCompatActivity {
         int millisToGo = secondsToGo*1000+minutesToGo*1000*60+hoursToGo*1000*60*60;
 
 
-            new CountDownTimer(millisToGo, 1000) {
+        countdown = new CountDownTimer(millisToGo, 1000) {
 
                 @Override
                 public void onTick(long millis) {
@@ -113,7 +114,6 @@ public class quizMain extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
-                    timeleft.setText("Kabooom");
                     submit();
                 }
             }.start();
@@ -144,21 +144,7 @@ public class quizMain extends AppCompatActivity {
                     adb.setNegativeButton("Cancel", null);
                     adb.show();
                 }else {
-                    AlertDialog.Builder adb = new AlertDialog.Builder(
-                            quizMain.this);
-                    adb.setMessage("Set quiz password");
-                    View v1= getLayoutInflater().inflate(R.layout.textfield, null);
-                    adb.setView(v1);
-                    EditText e=(EditText)v1.findViewById(R.id.all_vriable);
-                    adb.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("quizHome/"+Common.uid+"/"+keyname);
-                            databaseReference2.child("password").setValue(e.getText().toString().trim());
-                        }
-                    });
-                    adb.setNegativeButton("Cancel",null);
-                    adb.show();
+                    setQuizPassword();
                 }
 
                 mPager.setCurrentItem(position);
@@ -224,6 +210,24 @@ public class quizMain extends AppCompatActivity {
         context=this;
 
         viewAllFiles();
+    }
+
+    private void setQuizPassword() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(
+                quizMain.this);
+        adb.setMessage("Set quiz password");
+        View v1= getLayoutInflater().inflate(R.layout.textfield, null);
+        adb.setView(v1);
+        EditText e=(EditText)v1.findViewById(R.id.all_vriable);
+        adb.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference("quizHome/"+Common.uid+"/"+keyname);
+                databaseReference2.child("password").setValue(e.getText().toString().trim());
+            }
+        });
+        adb.setNegativeButton("Cancel",null);
+        adb.show();
     }
 
 
@@ -292,11 +296,13 @@ public class quizMain extends AppCompatActivity {
             startActivity(intent);
             finish();
             return true;
-        }if (id == R.id.review_quest) {
+        }else if (id == R.id.review_quest) {
             Intent intent=new Intent(this,ReviewQuiz.class);
             intent.putExtra("key",keyname);
             startActivity(intent);
             return true;
+        }else if(id == R.id.set_quizpassword2){
+            setQuizPassword();
         }
 
         return super.onOptionsItemSelected(item);
@@ -317,7 +323,7 @@ public class quizMain extends AppCompatActivity {
             String str =stringBuffer.toString();
             array = str.split(",");
 
-            name=array[0];
+            name=array[1];
 
         } catch (FileNotFoundException e){
             e.printStackTrace();
@@ -325,21 +331,6 @@ public class quizMain extends AppCompatActivity {
             e.printStackTrace();
         }
         return name;
-    }
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(
-                quizMain.this);
-        adb.setMessage("Do you want to Quit?");
-        adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Common.answer.clear();
-                finish();
-            }
-        });
-        adb.setNegativeButton("No", null);
-        adb.show();
     }
 
     private void submit(){
@@ -382,5 +373,22 @@ public class quizMain extends AppCompatActivity {
         return result_tmp;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(
+                quizMain.this);
+        adb.setMessage("Do you want to Quit?");
+        adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (Common.limit == 1) {
+                    countdown.cancel();
+                }
+                Common.answer.clear();
+                finish();
+            }
+        });
+        adb.setNegativeButton("No", null);
+        adb.show();
+    }
 }

@@ -74,8 +74,9 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
                 if (Common.limit == 1) {
                     MenuItem item = popup.getMenu().findItem(R.id.action_delete);
                     item.setVisible(false);   //hide it
-                }
-
+                }else {
+                    MenuItem item2 = popup.getMenu().findItem(R.id.action_result);
+                    item2.setVisible(false);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -114,6 +115,7 @@ public class ListAdapterQuizHome  extends ArrayAdapter<QuizHm> {
                     }
                 });
                 popup.show();
+            }
             }
         });
 

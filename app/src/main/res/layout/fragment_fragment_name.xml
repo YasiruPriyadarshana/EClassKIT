@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="118dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/eclasskit" />
+        android:src="@mipmap/eclasskit" />
 
     <TextView
         android:id="@+id/textView14"

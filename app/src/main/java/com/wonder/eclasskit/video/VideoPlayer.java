@@ -3,6 +3,7 @@ package com.wonder.eclasskit.video;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -210,6 +211,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
     public class videoProgress extends AsyncTask<Void, Integer, Void> {
 
 
+        @SuppressLint("WrongThread")
         @Override
         protected Void doInBackground(Void... voids) {
 

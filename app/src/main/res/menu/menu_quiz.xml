@@ -11,5 +11,9 @@
         android:orderInCategory="100"
         android:title="Reivew Question"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/set_quizpassword2"
+        android:orderInCategory="100"
+        android:title="Set quiz password"
+        app:showAsAction="never" />
 </menu>

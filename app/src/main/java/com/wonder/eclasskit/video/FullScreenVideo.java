@@ -212,6 +212,7 @@ public class FullScreenVideo extends AppCompatActivity {
     }
 
     public class vProgress extends AsyncTask<Void, Integer, Void> {
+        @SuppressLint("WrongThread")
         @Override
         protected Void doInBackground(Void... voids) {
 

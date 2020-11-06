@@ -66,7 +66,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
                                     String passserver=dataSnapshot.child("password").getValue().toString();
                                     String pass=e.getText().toString();
                                     if (TextUtils.equals(passserver,"no")){
-                                        Toast.makeText(QuizHome.this, "You cant attempt now", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(QuizHome.this, "You can't attempt now", Toast.LENGTH_SHORT).show();
                                     }else if (TextUtils.equals(pass,passserver)){
                                         Intent intent = new Intent(QuizHome.this, quizMain.class);
                                         intent.putExtra("key", keys.get(position));
@@ -143,7 +143,7 @@ public class QuizHome extends AppCompatActivity implements ListAdapterQuizHome.C
                             if (quiz_txt.isEmpty()) {
                                 Toast.makeText(QuizHome.this, "Give Name", Toast.LENGTH_SHORT).show();
                             } else if(Integer.parseInt(quiz_tm) <=5){
-                                Toast.makeText(QuizHome.this, "Give Time grater then 5min", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(QuizHome.this, "Give Time grater then 5 minutes", Toast.LENGTH_SHORT).show();
                             }else {
                                 uplodeFile(quiz_txt, quiz_tm);
                             }

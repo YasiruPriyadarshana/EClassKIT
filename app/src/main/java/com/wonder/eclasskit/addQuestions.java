@@ -164,6 +164,11 @@ public class addQuestions extends AppCompatActivity {
             ans4.setText("");
             ans5.setText("");
             quest.setText("");
+            a1.setChecked(false);
+            a2.setChecked(false);
+            a3.setChecked(false);
+            a4.setChecked(false);
+            a5.setChecked(false);
 
         } else {
             final ProgressDialog progressDialog = new ProgressDialog(addQuestions.this);

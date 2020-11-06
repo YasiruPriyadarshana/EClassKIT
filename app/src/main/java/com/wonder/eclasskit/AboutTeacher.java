@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -361,38 +362,40 @@ public class AboutTeacher extends AppCompatActivity {
         });
     }
 
-    private void selectIMG(){
-        Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        pickImageIntent.setType("image/*");
-        pickImageIntent.putExtra("crop", "true");
-        pickImageIntent.putExtra("outputX", 400);
-        pickImageIntent.putExtra("outputY", 400);
-        pickImageIntent.putExtra("aspectX", 1);
-        pickImageIntent.putExtra("aspectY", 1);
-        pickImageIntent.putExtra("scale", true);
-//        pickImageIntent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
-        pickImageIntent.putExtra("outputFormat",
-                Bitmap.CompressFormat.JPEG.toString());
-        startActivityForResult(pickImageIntent, 76);
+    @SuppressLint("IntentReset")
+    private void selectIMG(){
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("scale", true);
+        intent.putExtra("outputX", 360);
+        intent.putExtra("outputY", 360);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, 76);
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==76 && resultCode == RESULT_OK && data!=null) {
-            imgUri=data.getData();
+        if (requestCode == 76 && resultCode == RESULT_OK && data != null) {
 
+            final Bundle extras = data.getExtras();
 
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(AboutTeacher.this.getContentResolver(),imgUri);
+            if (extras != null) {
+                Bitmap bitmap = extras.getParcelable("data");
+                assert bitmap != null;
                 Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
                 BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
                 Paint paint = new Paint();
                 paint.setShader(shader);
                 paint.setAntiAlias(true);
                 Canvas c = new Canvas(circleBitmap);
-                c.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2, paint);
+                c.drawCircle((float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2, (float) bitmap.getWidth() / 2, paint);
                 teacherimage.setImageBitmap(circleBitmap);
 
                 teacherimage.setDrawingCacheEnabled(true);
@@ -401,14 +404,11 @@ public class AboutTeacher extends AppCompatActivity {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap1.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 data1 = baos.toByteArray();
-                settodb=true;
-
-            }catch (IOException e){
-                Toast.makeText(AboutTeacher.this, "Error: "+e, Toast.LENGTH_SHORT).show();
+                settodb = true;
             }
-
 
 
         }
     }
+
 }
