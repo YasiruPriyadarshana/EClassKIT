@@ -2,6 +2,7 @@ package com.wonder.eclasskit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
     private Button save;
     private ListAdapterAddClass.CallbackDelete anInterface;
     private String tname;
+    private CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,16 @@ public class AddNewCourse extends AppCompatActivity implements ListAdapterAddCla
                     databaseReference2.setValue(teachers);
                     Toast.makeText(AddNewCourse.this, "Details added", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        cardView=(CardView)findViewById(R.id.card_maincourse);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Common.uid= Common.uidmain;
+                Intent intent=new Intent(AddNewCourse.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }
