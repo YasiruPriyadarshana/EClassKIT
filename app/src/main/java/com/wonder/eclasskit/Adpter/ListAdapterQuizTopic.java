@@ -73,21 +73,25 @@ public class ListAdapterQuizTopic extends ArrayAdapter<QuizHm> {
                 inflater.inflate(R.menu.memu_popup, popup.getMenu());
                 if (Common.limit == 1) {
                     MenuItem item = popup.getMenu().findItem(R.id.action_delete);
-                    item.setVisible(false);   //hide it
+                    item.setVisible(false);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+
+                                Intent intent=new Intent(getContext(), MyResult.class);
+                                intent.putExtra("key",key);
+                                mContext.startActivity(intent);
+                                return true;
+                        }
+                    });
+                    popup.show();
                 }else {
                     MenuItem item2 = popup.getMenu().findItem(R.id.action_result);
                     item2.setVisible(false);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
 
-                        if (id == R.id.action_result) {
-                            Intent intent=new Intent(getContext(), MyResult.class);
-                            intent.putExtra("key",key);
-                            mContext.startActivity(intent);
-                            return true;
-                        }else {
                             AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
                             adb.setMessage("Are you sure you want to delete this quiz?");
                             adb.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -109,8 +113,6 @@ public class ListAdapterQuizTopic extends ArrayAdapter<QuizHm> {
                             adb.setNegativeButton("No",null);
                             adb.show();
                             return true;
-                        }
-
 
                     }
                 });

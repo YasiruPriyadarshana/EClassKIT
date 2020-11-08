@@ -34,8 +34,8 @@
     <string name="note">Note</string>
     <string name="events">Events</string>
 
-    <string name="yasiru">Yasiru</string>
-    <string name="_64">64</string>
+    <string name="namest">name</string>
+    <string name="marks">75</string>
 
     <string name="time_left">Time left</string>
     <string name="delete">Delete</string>
@@ -64,6 +64,7 @@
     <string name="number">Number</string>
     <string name="dash">--</string>
     <string name="classst">Class</string>
+    <string name="classty">Type</string>
 
     <string name="select_pdf">Select PDF</string>
     <string name="uplode">uplode</string>

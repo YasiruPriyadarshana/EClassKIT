@@ -92,7 +92,7 @@ public class MyResult extends AppCompatActivity {
             String str =stringBuffer.toString();
             array = str.split(",");
 
-            Name=array[0];
+            Name=array[1];
 
         } catch (FileNotFoundException e){
             e.printStackTrace();

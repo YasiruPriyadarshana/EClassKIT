@@ -37,7 +37,7 @@ public class TimeTable extends AppCompatActivity implements ListAdapterTimetable
     private ListView TimetableListView;
     private View v,v1,v2;
     private Spinner Category_day;
-    private Spinner Category_grade;
+    private EditText Category_grade;
     private EditText Category_institute;
     private Spinner Category_class;
     private Button Addclassdet,sort,time;
@@ -150,7 +150,7 @@ public class TimeTable extends AppCompatActivity implements ListAdapterTimetable
                 }
 
                 Category_day = (Spinner) v.findViewById(R.id.category_day);
-                Category_grade = (Spinner) v.findViewById(R.id.category_grade);
+                Category_grade = (EditText) v.findViewById(R.id.category_grade);
                 Category_institute = (EditText) v.findViewById(R.id.category_institute);
                 Category_class = (Spinner) v.findViewById(R.id.category_class);
                 Addclassdet = (Button) v.findViewById(R.id.addclassdet);
@@ -209,7 +209,7 @@ public class TimeTable extends AppCompatActivity implements ListAdapterTimetable
                             Toast.makeText(TimeTable.this, "class record has been inserted", Toast.LENGTH_SHORT).show();
                             TimetableObj timetableObj = new TimetableObj();
                             timetableObj.setDate(Category_day.getSelectedItem().toString());
-                            timetableObj.setGrade(Category_grade.getSelectedItem().toString());
+                            timetableObj.setGrade(Category_grade.getText().toString());
                             timetableObj.setTime(time.getText().toString());
                             timetableObj.setInstitute(Category_institute.getText().toString());
                             timetableObj.setGcalss(Category_class.getSelectedItem().toString());

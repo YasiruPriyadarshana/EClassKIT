@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
@@ -18,142 +17,131 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView1"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/day"
-            android:textColor="#3B447A"
-            android:textColorHighlight="#3F51B5"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/category_day"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:entries="@array/day_categories"
-            android:textAlignment="center" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/day"
+                android:textColor="#3B447A"
+                android:textColorHighlight="#3F51B5"
+                android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/classst"
+                android:textColor="#3B447A"
+                android:textColorHighlight="#3F51B5"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView2"
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/time"
+                android:textColor="#3B447A"
+                android:textColorHighlight="#3F51B5"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/institute"
+                android:textColor="#3B447A"
+                android:textColorHighlight="#3F51B5"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title_event"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/classty"
+                android:textColor="#3B447A"
+                android:textColorHighlight="#3F51B5"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/grade"
-            android:textColor="#3B447A"
-            android:textColorHighlight="#3F51B5"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/category_grade"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:entries="@array/grade_categories"
-            android:textAlignment="center" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/category_day"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:entries="@array/day_categories"
+                android:textAlignment="center" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/category_grade"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:hint="@string/subject_name"
+                android:inputType="textShortMessage|text"
+                android:textAlignment="center"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time"
-            android:textColor="#3B447A"
-            android:textColorHighlight="#3F51B5"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/click_to_set_time" />
 
-        <Button
-            android:id="@+id/time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:hint="@string/click_to_set_time"
-            android:paddingStart="0dp"
-            android:paddingEnd="45dp" />
+            <EditText
+                android:id="@+id/category_institute"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:hint="@string/institute"
+                android:inputType="textShortMessage|text"
+                android:textAlignment="center"
+                android:textSize="14sp" />
 
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/category_class"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:entries="@array/class1_categories"
+                android:textAlignment="center" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/institute"
-            android:textColor="#3B447A"
-            android:textColorHighlight="#3F51B5"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/category_institute"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="17dp"
-            android:layout_weight="1"
-            android:autofillHints=""
-            android:hint="@string/institute"
-            android:inputType="textShortMessage|text"
-            android:textAlignment="center"
-            android:textSize="14sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/title_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/classst"
-            android:textColor="#3B447A"
-            android:textColorHighlight="#3F51B5"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/category_class"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/class1_categories"
-            android:textAlignment="center" />
-
-
+        </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/addclassdet"
         android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="@drawable/button_background"
         android:text="@string/add_class"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
 </LinearLayout>

@@ -249,7 +249,7 @@ public class Comments extends AppCompatActivity implements ListAdapterComments.C
             String str = stringBuffer.toString();
             array = str.split(",");
 
-            name = array[0];
+            name = array[1];
           }else{
                 databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
