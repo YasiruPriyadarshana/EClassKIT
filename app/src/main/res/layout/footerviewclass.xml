@@ -81,17 +81,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/category_day"
+            <Button
+                android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginStart="20dp"
                 android:layout_weight="1"
-                android:entries="@array/day_categories"
-                android:textAlignment="center" />
+                android:background="@android:color/transparent"
+                android:hint="@string/click_to_set_time" />
 
             <EditText
                 android:id="@+id/category_grade"
@@ -104,14 +104,6 @@
                 android:textAlignment="center"
                 android:textSize="14sp" />
 
-            <Button
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:hint="@string/click_to_set_time" />
-
             <EditText
                 android:id="@+id/category_institute"
                 android:layout_width="match_parent"
@@ -122,6 +114,15 @@
                 android:inputType="textShortMessage|text"
                 android:textAlignment="center"
                 android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/category_day"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                android:entries="@array/day_categories"
+                android:textAlignment="center" />
 
             <Spinner
                 android:id="@+id/category_class"
