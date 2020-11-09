@@ -52,6 +52,7 @@ public class ListAdpterVideo extends ArrayAdapter<UploadVideo> {
         mCallback=callback;
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 

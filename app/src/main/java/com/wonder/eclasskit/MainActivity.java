@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         MobileAds.initialize(this,"ca-app-pub-3940256099942544~3347511713");
         adView=(AdView)findViewById(R.id.adView);
-        AdRequest adRequest= new AdRequest.Builder().build();
+
 
 
         mToolbar = findViewById(R.id.toolbar);
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 mPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 2){
+                    AdRequest adRequest= new AdRequest.Builder().build();
                     adView.setVisibility(View.VISIBLE);
                     adView.loadAd(adRequest);
                 }else if (tab.getPosition() != 3){

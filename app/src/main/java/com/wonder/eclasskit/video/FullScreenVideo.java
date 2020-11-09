@@ -69,7 +69,7 @@ public class FullScreenVideo extends AppCompatActivity {
             public void onPrepared(MediaPlayer mp) {
                 mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
                 durationV = mp.getDuration() / 1000;
-                String durationString = String.format("%02d:%02d", durationV / 60, durationV % 60);
+                @SuppressLint("DefaultLocale") String durationString = String.format("%02d:%02d", durationV / 60, durationV % 60);
                 duration.setText(durationString);
                 seekBar.setMax(100);
                 videoView.start();
@@ -211,6 +211,7 @@ public class FullScreenVideo extends AppCompatActivity {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class vProgress extends AsyncTask<Void, Integer, Void> {
         @SuppressLint("WrongThread")
         @Override
@@ -239,11 +240,11 @@ public class FullScreenVideo extends AppCompatActivity {
                 int currentPercent = values[0] * 100 / durationV;
                 seekBar.setProgress(currentPercent);
 
-                String currentString = String.format("%02d:%02d", values[0] / 60, values[0] % 60);
+                @SuppressLint("DefaultLocale") String currentString = String.format("%02d:%02d", values[0] / 60, values[0] % 60);
                 current.setText(currentString);
 
 
-            }catch (Exception e){
+            }catch (Exception ignored){
 
             }
         }

@@ -2,6 +2,7 @@ package com.wonder.eclasskit;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -46,7 +47,7 @@ import com.wonder.eclasskit.Object.Common;
 import com.wonder.eclasskit.Object.UploadVideo;
 import com.wonder.eclasskit.video.VideoPlayer;
 import java.util.ArrayList;
-
+import java.util.Objects;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -71,6 +72,7 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
     private Bitmap bitmap1;
     private int set;
     private ListAdpterVideo.CallbackDelete anInterface;
+    private long temp=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,13 +124,23 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 56);
     }
+    private long getFileSize(Uri fileUri) {
+        @SuppressLint("Recycle") Cursor returnCursor = requireActivity().getContentResolver().
+                query(fileUri, null, null, null, null);
+        assert returnCursor != null;
+        int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+        returnCursor.moveToFirst();
+
+        return returnCursor.getLong(sizeIndex);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==56 && resultCode == RESULT_OK && data!=null) {
             videoUri=data.getData();
-            String name1=queryName(getActivity().getContentResolver(),videoUri);
+            Toast.makeText(getContext(), "size:"+getFileSize(videoUri)/1000000+" MB", Toast.LENGTH_SHORT).show();
+            String name1=queryName(Objects.requireNonNull(getActivity()).getContentResolver(),videoUri);
 
 
             name=name1;
@@ -137,26 +149,6 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
             nameUpfile.setText(name1);
 
 
-/*
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.P) {
-                bitmap1 = ThumbnailUtils.createVideoThumbnail(fullPath, MediaStore.Video.Thumbnails.MINI_KIND);
-                selectFile.setImageBitmap(bitmap1);
-
-            }else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q){
-                try {
-                    File thumbFile = new File(fullPath);
-                    Size thumbSize = new Size(200, 200);
-                    bitmap1 = ThumbnailUtils.createVideoThumbnail(thumbFile, thumbSize,null);
-                    selectFile.setImageBitmap(bitmap1);
-                } catch (IOException e) {
-                    Toast.makeText(getContext(), "Ex:"+e, Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-            }
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap1.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            data1 = baos.toByteArray();
-*/
             Glide.with(requireContext())
                     .asBitmap()
                     .load(videoUri)
@@ -213,7 +205,7 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                 selectFile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+                        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
                             selectVideo();
                         }else {
                             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},9);
@@ -245,17 +237,8 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
     private void uplodeFile(final Uri vidUri) {
         final ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(getContext());
-        //videoimage
-//        StorageReference reference2 =storage.child("videos/"+System.currentTimeMillis()+".png");
-//        adapter.clear();
-//        reference2.putBytes(data1).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Task<Uri> uri=taskSnapshot.getStorage().getDownloadUrl();
-//                while (!uri.isComplete());
-//                url2=uri.getResult();
-//
-//                Uri p=vidUri;
+
+
                 //video uplode
                 StorageReference reference =storage.child("videos/"+name);
                 reference.putFile(vidUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -265,9 +248,10 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                         while (!uri.isComplete());
                         Uri url=uri.getResult();
 
+                        assert url != null;
                         UploadVideo uploadVideo=new UploadVideo(url.toString(),name);
 
-                        databaseReference.child(databaseReference.push().getKey()).setValue(uploadVideo);
+                        databaseReference.child(Objects.requireNonNull(databaseReference.push().getKey())).setValue(uploadVideo);
                         Toast.makeText(getActivity(), "Video File uploaded", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                         adapter.clear();
@@ -288,10 +272,19 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                                 try {
                                     while (progressDialog.getProgress() <= progressDialog.getMax()) {
                                         Thread.sleep(200);
-                                        progressDialog.incrementProgressBy((int)(100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount()));
+
+                                        int increase=(int)(100*(taskSnapshot.getBytesTransferred() -temp)/taskSnapshot.getTotalByteCount());
+                                        if (increase>0) {
+                                            progressDialog.incrementProgressBy(increase);
+                                            temp=taskSnapshot.getBytesTransferred();
+                                        }else {
+                                            progressDialog.incrementProgressBy(1);
+                                        }
+
                                         if (progressDialog.getProgress() == progressDialog.getMax()) {
 
                                         }
+
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -302,9 +295,7 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                 });
                 //end
             }
-//        });//end
-//
-//    }
+
 
     private int permission() {
         set=2;
@@ -317,7 +308,6 @@ public class VideoHome extends Fragment  implements ListAdpterVideo.CallbackDele
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
                         set=2;
                         break;
                 }

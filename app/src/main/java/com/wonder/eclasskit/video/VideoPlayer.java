@@ -131,7 +131,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
             @Override
             public void onPrepared(MediaPlayer mp) {
                 duration = mp.getDuration()/1000;
-                String durationString = String.format("%02d:%02d",duration/60,duration%60);
+                @SuppressLint("DefaultLocale") String durationString = String.format("%02d:%02d",duration/60,duration%60);
                 durationtime.setText(durationString);
                 currentProgress.setMax(100);
                 videoView.start();
@@ -208,6 +208,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
 
 
 
+    @SuppressLint("StaticFieldLeak")
     public class videoProgress extends AsyncTask<Void, Integer, Void> {
 
 
@@ -237,7 +238,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                 int currentPercent = values[0] * 100 / duration;
                 currentProgress.setProgress(currentPercent);
 
-                String currentString = String.format("%02d:%02d", values[0] / 60, values[0] % 60);
+                @SuppressLint("DefaultLocale") String currentString = String.format("%02d:%02d", values[0] / 60, values[0] % 60);
                 currentTime.setText(currentString);
 
 
@@ -347,7 +348,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                 String str = stringBuffer.toString();
                 array = str.split(",");
 
-                name = array[0];
+                name = array[1];
             }else{
                 databaseRfTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -365,8 +366,6 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
                 });
             }
 
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -459,7 +458,7 @@ public class VideoPlayer extends AppCompatActivity implements AdpterVideoComment
             }
         });
         adb2.show();
-//        Toast.makeText(Comments.this, "reply: "+dr+"key: "+key, Toast.LENGTH_SHORT).show();
+
 
     }
 

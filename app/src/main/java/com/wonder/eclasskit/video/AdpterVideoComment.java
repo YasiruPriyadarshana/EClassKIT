@@ -1,5 +1,6 @@
 package com.wonder.eclasskit.video;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -54,7 +55,7 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
         void popUpReply(final String key,final String uri,final DatabaseReference dr);
 
     }
-    public AdpterVideoComment(Context context, int resource, ArrayList<CommentM> objects, String name1, ArrayList<String> keys, String name, AdpterVideoComment.CallbackInterface mCallback) {
+    AdpterVideoComment(Context context, int resource, ArrayList<CommentM> objects, String name1, ArrayList<String> keys, String name, AdpterVideoComment.CallbackInterface mCallback) {
         super(context, resource, objects);
         mContext=context;
         mResource=resource;
@@ -68,6 +69,8 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
     }
 
 
+    @NonNull
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -213,20 +216,18 @@ public class AdpterVideoComment extends ArrayAdapter<CommentM> {
 
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView myListView,int v) {
+    private static void setListViewHeightBasedOnChildren(ListView myListView, int v) {
         ListAdapter adapter = myListView.getAdapter();
-        if (myListView != null) {
-            int totalHeight = 0;
-            for (int i = 0; i < adapter.getCount(); i++) {
-                View item= adapter.getView(i, null, myListView);
-                item.measure(0, 0);
-                totalHeight += item.getMeasuredHeight();
-            }
-
-            ViewGroup.LayoutParams params = myListView.getLayoutParams();
-            params.height = totalHeight + (myListView.getDividerHeight() * (adapter.getCount() - 1)) + v;
-            myListView.setLayoutParams(params);
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View item= adapter.getView(i, null, myListView);
+            item.measure(0, 0);
+            totalHeight += item.getMeasuredHeight();
         }
+
+        ViewGroup.LayoutParams params = myListView.getLayoutParams();
+        params.height = totalHeight + (myListView.getDividerHeight() * (adapter.getCount() - 1)) + v;
+        myListView.setLayoutParams(params);
 
     }
 

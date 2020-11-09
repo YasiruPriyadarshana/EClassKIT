@@ -55,7 +55,9 @@
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:max="100"
+            android:progressBackgroundTint="#FFFFFF"
             android:progressTint="#E2F6F4"
+            android:secondaryProgressTint="#F6F0B8"
             android:thumbTint="#E2F6F4" />
 
         <TextView
