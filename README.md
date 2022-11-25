@@ -9,8 +9,10 @@ Quizzes, Time Tables and Events.
 
 ## Screenshots
 
-![App Screenshot](https://github.com/YasiruPriyadarshana/EClassKIT/blob/master/assets/IMG-20200618-WA0009.jpg?raw=true)
-
-![App Screenshot](https://github.com/YasiruPriyadarshana/EClassKIT/blob/master/assets/IMG-20200620-WA0017.jpg?raw=true)
-
-![App Screenshot](https://github.com/YasiruPriyadarshana/EClassKIT/blob/master/assets/IMG-20200806-WA0008.jpg?raw=true)
+<p align="center">
+  <img src="https://github.com/YasiruPriyadarshana/EClassKIT/blob/master/assets/IMG-20200618-WA0009.jpg" width="250">
+  <img width="30">
+  <img src="https://github.com/YasiruPriyadarshana/EClassKIT/blob/master/assets/IMG-20200620-WA0017.jpg" width="250">
+  <img width="30">
+  <img src="https://github.com/YasiruPriyadarshana/EClassKIT/blob/master/assets/IMG-20200806-WA0008.jpg" width="250">
+</p>
